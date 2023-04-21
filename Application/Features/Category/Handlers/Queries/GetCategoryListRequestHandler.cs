@@ -1,8 +1,8 @@
-﻿using Application.DTOs.Shop.Category;
-using Application.Features.Category.Requests.Queries;
-using Application.Persistence.Contracts;
+﻿using MediatR;
 using AutoMapper;
-using MediatR;
+using Application.DTOs.Category;
+using Application.Persistence.Contracts;
+using Application.Features.Category.Requests.Queries;
 
 namespace Application.Features.Category.Handlers.Queries;
 

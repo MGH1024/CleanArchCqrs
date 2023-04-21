@@ -1,6 +1,6 @@
-﻿using Application.DTOs.Shop.Category.Base;
+﻿using Application.DTOs.Category.Base;
 
-namespace Application.DTOs.Shop.Category;
+namespace Application.DTOs.Category;
 
 public class CategoryDetail : CategoryDto
 {

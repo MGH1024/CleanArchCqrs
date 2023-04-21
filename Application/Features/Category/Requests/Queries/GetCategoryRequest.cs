@@ -1,5 +1,5 @@
-﻿using Application.DTOs.Shop.Category;
-using MediatR;
+﻿using MediatR;
+using Application.DTOs.Category;
 
 namespace Application.Features.Category.Requests.Queries;
 

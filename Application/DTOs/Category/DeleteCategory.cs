@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.Base;
 
-namespace Application.DTOs.Shop.Category;
+namespace Application.DTOs.Category;
 
 public class DeleteCategory : BaseDto
 {

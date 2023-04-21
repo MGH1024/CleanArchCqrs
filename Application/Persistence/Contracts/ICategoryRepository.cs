@@ -1,5 +1,4 @@
-﻿using Application.DTOs.Shop.Category;
-using Domain.Shop;
+﻿using Domain.Shop;
 
 namespace Application.Persistence.Contracts;
 

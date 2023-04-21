@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.Base;
 
-namespace Application.DTOs.Shop.Category.Base
+namespace Application.DTOs.Category.Base
 {
     public class CategoryDto:BaseDto
     {

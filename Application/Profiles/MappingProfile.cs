@@ -1,6 +1,6 @@
-﻿using Application.DTOs.Shop.Category;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Shop;
+using Application.DTOs.Category;
 
 namespace Application.Profiles;
 
