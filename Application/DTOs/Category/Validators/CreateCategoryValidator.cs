@@ -1,16 +1,16 @@
 ﻿using FluentValidation;
 using Application.Persistence.Contracts;
 
-namespace Application.DTOs.Category.Validators.Public;
+namespace Application.DTOs.Category.Validators;
 
-public class CreateStateValidator : AbstractValidator<CreateCategory>
+public class CreateCategoryValidator : AbstractValidator<CreateCategory>
 {
     private readonly ICategoryRepository _categoryRepository;
-    public CreateStateValidator(ICategoryRepository categoryRepository)
+    public CreateCategoryValidator(ICategoryRepository categoryRepository)
     {
         _categoryRepository=categoryRepository;
 
-        Include(new StateDtoValidator(_categoryRepository));
+        Include(new CategoryDtoValidator(_categoryRepository));
 
         RuleFor(x => x.Code)
             .GreaterThan(0).WithMessage("must greater than zero");

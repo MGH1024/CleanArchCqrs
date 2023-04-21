@@ -2,13 +2,13 @@
 using Application.DTOs.Category.Base;
 using Application.Persistence.Contracts;
 
-namespace Application.DTOs.Category.Validators.Public
+namespace Application.DTOs.Category.Validators
 {
-    public class StateDtoValidator : AbstractValidator<CategoryDto>
+    public class CategoryDtoValidator : AbstractValidator<CategoryDto>
     {
 
         private readonly ICategoryRepository _categoryRepository;
-        public StateDtoValidator(ICategoryRepository categoryRepository)
+        public CategoryDtoValidator(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
 

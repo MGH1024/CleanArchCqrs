@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Application.DTOs.Category.Validators.Public;
+namespace Application.DTOs.Category.Validators;
 
-public class GetStateByIdValidator : AbstractValidator<GetCategoryById>
+public class GetCategoryByIdValidator : AbstractValidator<GetCategoryById>
 {
-    public GetStateByIdValidator()
+    public GetCategoryByIdValidator()
     {
         RuleFor(x => x.Id)
             .NotEmpty().WithMessage("Not null")
