@@ -1,0 +1,16 @@
+﻿using Application.DTOs.Shop.Category;
+using AutoMapper;
+using Domain.Shop;
+
+namespace Application.Profiles;
+
+public class MappingProfile : Profile
+{
+    public MappingProfile()
+    {
+        CreateMap<Category, CreateCategory>().ReverseMap();
+        CreateMap<Category, UpdateCategory>().ReverseMap();
+        CreateMap<Category, DeleteCategory>().ReverseMap();
+        CreateMap<Category, CategoryDetail>().ReverseMap();
+    }
+}
