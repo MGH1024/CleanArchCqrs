@@ -13,4 +13,5 @@ public interface ICategoryRepository
     Task<Category> UpdateCategoryAsync(Category category);
     Task DeleteCategoryAsync(Category category);
     Task<Category> GetCategoryByTitle(string title);
+    Task<bool> IsCategoryRegistered(string title);
 }
