@@ -1,34 +1,48 @@
-﻿using Application.DTOs.Category.Validators;
-using MediatR;
+﻿using MediatR;
 using AutoMapper;
-using Application.Exceptions;
+using Application.Responses;
 using Application.Persistence.Contracts;
+using Application.DTOs.Category.Validators;
 using Application.Features.Category.Requests.Commands;
 
 
 namespace Application.Features.Category.Handlers.Commands;
 
-public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, int>
+public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, BaseCommandResponse>
 {
-    private readonly ICategoryRepository _categoryRepository;
     private readonly IMapper _mapper;
+    private readonly ICategoryRepository _categoryRepository;
 
     public CreateCategoryCommandHandler(IMapper mapper, ICategoryRepository categoryRepository)
     {
-        _mapper = mapper;
-        _categoryRepository = categoryRepository;
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
     }
 
-    public async Task<int> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var validator = new CreateCategoryValidator(_categoryRepository);
         var validationResult = await validator
             .ValidateAsync(request.CreateCategory, cancellationToken);
         if (!validationResult.IsValid)
-            throw new ValidationException(validationResult);
-        
-        var category =  _mapper.Map<Domain.Shop.Category>(request.CreateCategory);
+            return new BaseCommandResponse
+            {
+                Errors = validationResult
+                    .Errors
+                    .Select(a => a.ErrorMessage)
+                    .ToList(),
+                Message = "create failed",
+                Success = false,
+            };
+
+        var category = _mapper.Map<Domain.Shop.Category>(request.CreateCategory);
         category = await _categoryRepository.CreateCategoryAsync(category);
-        return category.Id;
+
+        return new BaseCommandResponse
+        {
+            Id = category.Id,
+            Message = "create success",
+            Success = true,
+        };
     }
 }

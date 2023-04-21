@@ -1,36 +1,51 @@
-﻿using Application.DTOs.Category;
-using MediatR;
-using Application.Exceptions;
+﻿using MediatR;
+using Application.Responses;
 using Application.Persistence.Contracts;
 using Application.DTOs.Category.Validators;
 using Application.Features.Category.Requests.Commands;
 
 namespace Application.Features.Category.Handlers.Commands;
 
-public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand>
+public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, BaseCommandResponse>
 {
     private readonly ICategoryRepository _categoryRepository;
 
     public DeleteCategoryCommandHandler(ICategoryRepository categoryRepository)
     {
-        _categoryRepository = categoryRepository;
+        _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
     }
 
-    public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<BaseCommandResponse> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var validator = new DeleteCategoryValidator();
         var validationResult = await validator
             .ValidateAsync(request.DeleteCategory, cancellationToken);
         if (!validationResult.IsValid)
-            throw new ValidationException(validationResult);
+            return new BaseCommandResponse
+            {
+                Success = false,
+                Errors = validationResult
+                    .Errors
+                    .Select(a => a.ErrorMessage)
+                    .ToList(),
+                Message = "delete failed"
+            };
 
         var category = await _categoryRepository.GetByIdAsync(request.DeleteCategory.Id);
 
         if (category is null)
-            throw new NotFoundException(nameof(Domain.Shop.Category),request.DeleteCategory.Id);
-        
-        
+            return new BaseCommandResponse
+            {
+                Success = false,
+                Message = "category is null. delete failed"
+            };
+
+
         await _categoryRepository.DeleteCategoryAsync(category);
-        return Unit.Value;
+        return new BaseCommandResponse
+        {
+            Success = true,
+            Message = "delete success"
+        };
     }
 }

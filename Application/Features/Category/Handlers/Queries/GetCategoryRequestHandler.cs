@@ -3,10 +3,11 @@ using AutoMapper;
 using Application.DTOs.Category;
 using Application.Persistence.Contracts;
 using Application.Features.Category.Requests.Queries;
+using Application.Responses;
 
 namespace Application.Features.Category.Handlers.Queries;
 
-public class GetCategoryRequestHandler : IRequestHandler<GetCategoryRequest, CategoryDetail>
+public class GetCategoryRequestHandler : IRequestHandler<GetCategoryRequest, BaseQueryResponse<CategoryDetail>>
 {
     private readonly ICategoryRepository _categoryRepository;
     private readonly IMapper _mapper;
@@ -17,9 +18,14 @@ public class GetCategoryRequestHandler : IRequestHandler<GetCategoryRequest, Cat
         _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
     }
 
-    public async Task<CategoryDetail> Handle(GetCategoryRequest request, CancellationToken cancellationToken)
+    public async Task<BaseQueryResponse<CategoryDetail>> Handle(GetCategoryRequest request, CancellationToken cancellationToken)
     {
         var category = await _categoryRepository.GetByIdAsync(request.Id);
-        return _mapper.Map<CategoryDetail>(category);
+        return new BaseQueryResponse<CategoryDetail>
+        {
+            Success = true,
+            Data = _mapper.Map<CategoryDetail>(category),
+            Message = "success"
+        };
     }
 }
