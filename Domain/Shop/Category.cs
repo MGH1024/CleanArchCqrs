@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Domain.Base;
+﻿using Domain.Base;
 
 namespace Domain.Shop;
 
