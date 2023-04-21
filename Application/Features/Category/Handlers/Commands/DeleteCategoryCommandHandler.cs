@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Application.Responses;
-using Application.Persistence.Contracts;
+using Application.Contracts.Persistence;
 using Application.DTOs.Category.Validators;
 using Application.Features.Category.Requests.Commands;
 

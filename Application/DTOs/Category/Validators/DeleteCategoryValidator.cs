@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Application.Persistence.Contracts;
 
 namespace Application.DTOs.Category.Validators;
 

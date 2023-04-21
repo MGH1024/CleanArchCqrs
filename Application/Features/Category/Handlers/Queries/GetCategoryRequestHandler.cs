@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using AutoMapper;
-using Application.DTOs.Category;
-using Application.Persistence.Contracts;
-using Application.Features.Category.Requests.Queries;
 using Application.Responses;
+using Application.DTOs.Category;
+using Application.Contracts.Persistence;
+using Application.Features.Category.Requests.Queries;
 
 namespace Application.Features.Category.Handlers.Queries;
 
