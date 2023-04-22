@@ -1,38 +1,81 @@
-using Api.Middleware;
-using Application;
-using Infrastructures;
+using Serilog;
 using Persistence;
+using Application;
+using Api.Middleware;
+using Infrastructures;
 
-var builder = WebApplication.CreateBuilder(args);
+var serilogConfig = new ConfigurationBuilder()
+    .AddJsonFile("logSettings.json", optional: true, reloadOnChange: true)
+    .Build();
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.ConfigureApplicationServices();
-builder.Services.ConfigureInfrastructuresServices(builder.Configuration);
-builder.Services.ConfigurePersistenceService(builder.Configuration);
-builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(serilogConfig)
+    .CreateLogger();
 
-builder.Services.AddCors(options =>
+
+try
 {
-    options.AddPolicy("CorsPolicy",
-        builder => builder.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
-});
+    var builder = WebApplication
+        .CreateBuilder(args);
+    Log.Information("web starting up ...");
+    
+    builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+    builder.Services.ConfigureApplicationServices();
+    builder.Services.ConfigureInfrastructuresServices(builder.Configuration);
+    builder.Services.ConfigurePersistenceService(builder.Configuration);
+    builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
-var app = builder.Build();
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("CorsPolicy",
+            builder => builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+    });
 
-if (app.Environment.IsDevelopment())
+    builder.Host.UseSerilog();
+    var app = builder.Build();
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
+    app.UseAuthorization();
+    app.UseCors("CorsPolicy");
+    app.MapControllers();
+
+    app.Run();
+}
+catch (Exception ex)
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    Log.Fatal(ex, "Error in web");
+}
+finally
+{
+    Log.CloseAndFlush();
 }
 
-app.UseHttpsRedirection();
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.UseAuthorization();
-app.UseCors("CorsPolicy");
-app.MapControllers();
 
-app.Run();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
