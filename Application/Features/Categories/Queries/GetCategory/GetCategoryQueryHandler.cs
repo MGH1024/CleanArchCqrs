@@ -1,24 +1,23 @@
-﻿using MediatR;
-using AutoMapper;
-using Application.Responses;
-using Application.DTOs.Category;
+﻿using Application.Contracts.Messaging;
 using Application.Contracts.Persistence;
-using Application.Features.Category.Requests.Queries;
+using Application.DTOs.Category;
+using Application.Responses;
+using AutoMapper;
 
-namespace Application.Features.Category.Handlers.Queries;
+namespace Application.Features.Categories.Queries.GetCategory;
 
-public class GetCategoryRequestHandler : IRequestHandler<GetCategoryRequest, BaseQueryResponse<CategoryDetail>>
+public class GetCategoryQueryHandler : IQueryHandler<GetCategoryQuery, BaseQueryResponse<CategoryDetail>>
 {
-    private readonly ICategoryRepository _categoryRepository;
     private readonly IMapper _mapper;
+    private readonly ICategoryRepository _categoryRepository;
 
-    public GetCategoryRequestHandler(IMapper mapper, ICategoryRepository categoryRepository)
+    public GetCategoryQueryHandler(IMapper mapper, ICategoryRepository categoryRepository)
     {
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
     }
 
-    public async Task<BaseQueryResponse<CategoryDetail>> Handle(GetCategoryRequest request, CancellationToken cancellationToken)
+    public async Task<BaseQueryResponse<CategoryDetail>> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
     {
         var category = await _categoryRepository.GetByIdAsync(request.Id);
         if(category is null)

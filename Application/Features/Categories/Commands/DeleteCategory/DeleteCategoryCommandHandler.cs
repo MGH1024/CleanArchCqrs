@@ -1,12 +1,11 @@
-﻿using MediatR;
-using Application.Responses;
+﻿using Application.Contracts.Messaging;
 using Application.Contracts.Persistence;
 using Application.DTOs.Category.Validators;
-using Application.Features.Category.Requests.Commands;
+using Application.Responses;
 
-namespace Application.Features.Category.Handlers.Commands;
+namespace Application.Features.Categories.Commands.DeleteCategory;
 
-public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, BaseCommandResponse>
+public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryCommand, BaseCommandResponse>
 {
     private readonly ICategoryRepository _categoryRepository;
 

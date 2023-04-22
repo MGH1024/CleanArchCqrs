@@ -1,25 +1,23 @@
-﻿using MediatR;
-using AutoMapper;
-using Application.Responses;
-using Application.DTOs.Category;
+﻿using Application.Contracts.Messaging;
 using Application.Contracts.Persistence;
-using Application.Features.Category.Requests.Queries;
+using Application.DTOs.Category;
+using Application.Responses;
+using AutoMapper;
 
-namespace Application.Features.Category.Handlers.Queries;
+namespace Application.Features.Categories.Queries.GetCategories;
 
-public class
-    GetCategoryListRequestHandler : IRequestHandler<GetCategoryListRequest, BaseQueryResponse<List<CategoryDetail>>>
+public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, BaseQueryResponse<List<CategoryDetail>>>
 {
     private readonly IMapper _mapper;
     private readonly ICategoryRepository _categoryRepository;
 
-    public GetCategoryListRequestHandler(IMapper mapper, ICategoryRepository categoryRepository)
+    public GetCategoriesQueryHandler(IMapper mapper, ICategoryRepository categoryRepository)
     {
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
     }
 
-    public async Task<BaseQueryResponse<List<CategoryDetail>>> Handle(GetCategoryListRequest request,
+    public async Task<BaseQueryResponse<List<CategoryDetail>>> Handle(GetCategoriesQuery request,
         CancellationToken cancellationToken)
     {
         var categories = await _categoryRepository.GetAllAsync();

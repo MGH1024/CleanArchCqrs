@@ -1,13 +1,12 @@
-﻿using MediatR;
-using Application.Responses;
+﻿using Application.Contracts.Messaging;
 using Application.Contracts.Persistence;
 using Application.DTOs.Category.Validators;
-using Application.Features.Category.Requests.Commands;
+using Application.Responses;
 using AutoMapper;
 
-namespace Application.Features.Category.Handlers.Commands;
+namespace Application.Features.Categories.Commands.UpdateCategory;
 
-public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, BaseCommandResponse>
+public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryCommand, BaseCommandResponse>
 {
     private readonly IMapper _mapper; 
     private readonly ICategoryRepository _categoryRepository;

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
-using Application.Features.Category.Handlers.Commands;
+using Application.Behavior;
+using Application.Features.Categories.Commands.CreateCategory;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,8 @@ public static class ApplicationServiceRegistration
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(typeof(CreateCategoryCommandHandler).Assembly);
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddTransient(typeof(IPipelineBehavior<,>), 
+            typeof(ValidationBehavior<,>));
         return services;
     }
 }

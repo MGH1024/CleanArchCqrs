@@ -1,3 +1,4 @@
+using Api.Middleware;
 using Application;
 using Infrastructures;
 using Persistence;
@@ -10,6 +11,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigureInfrastructuresServices(builder.Configuration);
 builder.Services.ConfigurePersistenceService(builder.Configuration);
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 builder.Services.AddCors(options =>
 {
@@ -28,7 +30,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseAuthorization();
 app.UseCors("CorsPolicy");
 app.MapControllers();
