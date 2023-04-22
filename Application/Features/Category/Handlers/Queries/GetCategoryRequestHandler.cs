@@ -21,6 +21,12 @@ public class GetCategoryRequestHandler : IRequestHandler<GetCategoryRequest, Bas
     public async Task<BaseQueryResponse<CategoryDetail>> Handle(GetCategoryRequest request, CancellationToken cancellationToken)
     {
         var category = await _categoryRepository.GetByIdAsync(request.Id);
+        if(category is null)
+            return new BaseQueryResponse<CategoryDetail>
+            {
+                Success = false,
+                Message = "category not found"
+            };
         return new BaseQueryResponse<CategoryDetail>
         {
             Success = true,

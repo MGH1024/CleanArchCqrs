@@ -3,15 +3,19 @@ using Application.Responses;
 using Application.Contracts.Persistence;
 using Application.DTOs.Category.Validators;
 using Application.Features.Category.Requests.Commands;
+using AutoMapper;
 
 namespace Application.Features.Category.Handlers.Commands;
 
 public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, BaseCommandResponse>
 {
+    private readonly IMapper _mapper; 
     private readonly ICategoryRepository _categoryRepository;
+    
 
-    public UpdateCategoryCommandHandler(ICategoryRepository categoryRepository)
+    public UpdateCategoryCommandHandler(ICategoryRepository categoryRepository, IMapper mapper)
     {
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
     }
 
@@ -41,7 +45,10 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
                 Message = "category is null. update failed"
             };
 
-
+        category.Title = request.UpdateCategory.Title;
+        category.Code = request.UpdateCategory.Code;
+        category.Description = request.UpdateCategory.Description;
+        
         await _categoryRepository.UpdateCategoryAsync(category);
 
         return new BaseCommandResponse

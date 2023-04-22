@@ -45,7 +45,7 @@ namespace Persistence.Repositories
         {
             return await _appDbContext
                 .Categories
-                .FirstAsync(a => a.Id == categoryId);
+                .FirstOrDefaultAsync(a => a.Id == categoryId);
         }
 
         public async Task<Category> CreateCategoryAsync(Category category)
@@ -77,7 +77,7 @@ namespace Persistence.Repositories
 
         public async Task<bool> IsCategoryRegistered(string title)
         {
-            return await _appDbContext
+            return !await _appDbContext
                 .Categories
                 .AnyAsync(a => a.Title == title);
         }

@@ -15,7 +15,10 @@ namespace Application.DTOs.Category.Validators
             RuleFor(a => a.Title)
                 .NotEmpty().WithMessage("not empty")
                 .MaximumLength(64).WithMessage("length error")
-                .MustAsync(async (title, token) => await _categoryRepository.IsCategoryRegistered(title));
+                .MustAsync(
+                    async (title, token) =>
+                    await _categoryRepository.IsCategoryRegistered(title))
+                .WithMessage("title is repetitive");
 
             RuleFor(x => x.Code)
                 .GreaterThan(0).WithMessage("must greater than 0");
