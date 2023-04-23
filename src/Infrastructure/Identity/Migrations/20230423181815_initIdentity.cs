@@ -265,19 +265,19 @@ namespace Identity.Migrations
                 schema: "core",
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { 1, "05c03d8d-8b5d-4778-a837-73f09eb2945c", "admin", "Administrator", "administrator" });
+                values: new object[] { 1, "8ab7fb7a-3a13-4ebe-bc3f-1df572424b27", "admin", "Administrator", "administrator" });
 
             migrationBuilder.InsertData(
                 schema: "core",
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { 2, "0c66ef95-a8f6-4f75-81ad-bc5ff6eaf089", "user", "User", "user" });
+                values: new object[] { 2, "e227dd15-28ff-40d5-8533-3efd575e0bd9", "user", "User", "user" });
 
             migrationBuilder.InsertData(
                 schema: "core",
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "Address", "BirthDate", "CellNumber", "ConcurrencyStamp", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "Email", "EmailConfirmed", "Firstname", "Image", "IsActive", "IsDeleted", "IsUpdated", "Lastname", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedBy", "UpdatedDate", "UserName" },
-                values: new object[] { 1, 0, "address", new DateTime(1988, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "09187108429", "04e358f5-143a-41ba-b377-d5f8fd20b48e", "System", new DateTime(2023, 4, 23, 17, 1, 32, 565, DateTimeKind.Utc).AddTicks(4700), null, null, "admin@admin.com", false, "admin", "Image", true, false, false, "admin", false, null, "admin@admin.com", "admin", null, "77245845", false, null, false, null, null, "admin" });
+                values: new object[] { 1, 0, "address", new DateTime(1988, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "09187108429", "d65f3af8-4403-4f5f-b152-726b2d07d3c6", "System", new DateTime(2023, 4, 23, 18, 18, 14, 775, DateTimeKind.Utc).AddTicks(7915), null, null, "admin@localhost.com", false, "System", "Image", true, false, false, "Admin", false, null, "ADMIN@LOCALHOST.COM", "admin", "AQAAAAEAACcQAAAAEJLio3/ZIK9cPDCq80QEKhp1MJd9smKJAmLlNbUcx9tov2/TjIvkijoVj1XjBGQIHA==", "77245845", false, null, false, null, null, "admin" });
 
             migrationBuilder.InsertData(
                 schema: "core",

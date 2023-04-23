@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20230423170132_initIdentity")]
+    [Migration("20230423181815_initIdentity")]
     partial class initIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,7 +91,7 @@ namespace Identity.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "05c03d8d-8b5d-4778-a837-73f09eb2945c",
+                            ConcurrencyStamp = "8ab7fb7a-3a13-4ebe-bc3f-1df572424b27",
                             Description = "admin",
                             Name = "Administrator",
                             NormalizedName = "administrator"
@@ -99,7 +99,7 @@ namespace Identity.Migrations
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "0c66ef95-a8f6-4f75-81ad-bc5ff6eaf089",
+                            ConcurrencyStamp = "e227dd15-28ff-40d5-8533-3efd575e0bd9",
                             Description = "user",
                             Name = "User",
                             NormalizedName = "user"
@@ -305,20 +305,21 @@ namespace Identity.Migrations
                             Address = "address",
                             BirthDate = new DateTime(1988, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CellNumber = "09187108429",
-                            ConcurrencyStamp = "04e358f5-143a-41ba-b377-d5f8fd20b48e",
+                            ConcurrencyStamp = "d65f3af8-4403-4f5f-b152-726b2d07d3c6",
                             CreatedBy = "System",
-                            CreatedDate = new DateTime(2023, 4, 23, 17, 1, 32, 565, DateTimeKind.Utc).AddTicks(4700),
-                            Email = "admin@admin.com",
+                            CreatedDate = new DateTime(2023, 4, 23, 18, 18, 14, 775, DateTimeKind.Utc).AddTicks(7915),
+                            Email = "admin@localhost.com",
                             EmailConfirmed = false,
-                            Firstname = "admin",
+                            Firstname = "System",
                             Image = "Image",
                             IsActive = true,
                             IsDeleted = false,
                             IsUpdated = false,
-                            Lastname = "admin",
+                            Lastname = "Admin",
                             LockoutEnabled = false,
-                            NormalizedEmail = "admin@admin.com",
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "admin",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJLio3/ZIK9cPDCq80QEKhp1MJd9smKJAmLlNbUcx9tov2/TjIvkijoVj1XjBGQIHA==",
                             PhoneNumber = "77245845",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,

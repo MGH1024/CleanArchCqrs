@@ -12,6 +12,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
+        var hasher = new PasswordHasher<User>();
         builder.ToTable(DatabaseTableName.User, DatabaseSchema.SecuritySchema);
 
 
@@ -22,9 +23,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
              {
                  Id = 1,
                  UserName = "admin",
-                 Email = "admin@admin.com",
-                 Firstname = "admin",
-                 Lastname = "admin",
+                 Email = "admin@localhost.com",
+                 Firstname = "System",
+                 Lastname = "Admin",
                  IsActive = true,
                  CreatedBy = "System",
                  CreatedDate = DateTime.UtcNow,
@@ -33,8 +34,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                  CellNumber = "09187108429",
                  Image = "Image",
                  PhoneNumber = "77245845",
-                 NormalizedEmail = "admin@admin.com",
+                 NormalizedEmail = "ADMIN@LOCALHOST.COM",
                  NormalizedUserName = "admin",
+                 PasswordHash = hasher.HashPassword(null,"Abcd@1234")
              }
             );
 
