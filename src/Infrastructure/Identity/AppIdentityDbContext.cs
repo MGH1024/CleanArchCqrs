@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Domain;
 using Domain.Identity;
-using Identity.Configurations.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

@@ -19,10 +19,10 @@ public class ClaimService : IClaimService
     {
         var claims = new List<Claim>
                         {
-                            new Claim(ClaimTypes.Name,user.UserName),
-                            new Claim(ClaimTypes.Email,user.Email),
-                            new Claim(ClaimTypes.GivenName,user.Firstname),
-                            new Claim(ClaimTypes.Surname,user.Lastname)
+                            new Claim("userName",user.UserName),
+                            new Claim("email",user.Email),
+                            new Claim("givenName",user.Firstname),
+                            new Claim("surName",user.Lastname)
                         };
         return await _userManager.AddClaimsAsync(user, claims);
     }
@@ -31,9 +31,9 @@ public class ClaimService : IClaimService
     {
         var oldClaims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Email,user.Email),
-                        new Claim(ClaimTypes.GivenName,user.Firstname),
-                        new Claim(ClaimTypes.Surname,user.Lastname)
+                        new Claim("email",user.Email),
+                        new Claim("givenName",user.Firstname),
+                        new Claim("surName",user.Lastname)
                     };
         return await _userManager.RemoveClaimsAsync(user, oldClaims);
     }
@@ -42,9 +42,9 @@ public class ClaimService : IClaimService
     {
         var newClaims = new List<Claim>
                                 {
-                                    new Claim(ClaimTypes.Email,updateUser.Email),
-                                    new Claim(ClaimTypes.GivenName,updateUser.Firstname),
-                                    new Claim(ClaimTypes.Surname,updateUser.Lastname)
+                                    new Claim("email",updateUser.Email),
+                                    new Claim("givenName",updateUser.Firstname),
+                                    new Claim("surName",updateUser.Lastname)
                                 };
         return await _userManager.AddClaimsAsync(user, newClaims);
     }

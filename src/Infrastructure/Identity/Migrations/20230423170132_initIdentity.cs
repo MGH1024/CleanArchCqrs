@@ -261,6 +261,52 @@ namespace Identity.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                schema: "core",
+                table: "Roles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
+                values: new object[] { 1, "05c03d8d-8b5d-4778-a837-73f09eb2945c", "admin", "Administrator", "administrator" });
+
+            migrationBuilder.InsertData(
+                schema: "core",
+                table: "Roles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
+                values: new object[] { 2, "0c66ef95-a8f6-4f75-81ad-bc5ff6eaf089", "user", "User", "user" });
+
+            migrationBuilder.InsertData(
+                schema: "core",
+                table: "Users",
+                columns: new[] { "Id", "AccessFailedCount", "Address", "BirthDate", "CellNumber", "ConcurrencyStamp", "CreatedBy", "CreatedDate", "DeletedBy", "DeletedDate", "Email", "EmailConfirmed", "Firstname", "Image", "IsActive", "IsDeleted", "IsUpdated", "Lastname", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UpdatedBy", "UpdatedDate", "UserName" },
+                values: new object[] { 1, 0, "address", new DateTime(1988, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "09187108429", "04e358f5-143a-41ba-b377-d5f8fd20b48e", "System", new DateTime(2023, 4, 23, 17, 1, 32, 565, DateTimeKind.Utc).AddTicks(4700), null, null, "admin@admin.com", false, "admin", "Image", true, false, false, "admin", false, null, "admin@admin.com", "admin", null, "77245845", false, null, false, null, null, "admin" });
+
+            migrationBuilder.InsertData(
+                schema: "core",
+                table: "RoleClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
+                values: new object[,]
+                {
+                    { 1, "roleName", "Administrator", 1 },
+                    { 2, "roleName", "User", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "core",
+                table: "UserClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "userName", "admin", 1 },
+                    { 2, "email", "admin@admin.com", 1 },
+                    { 3, "givenName", "admin", 1 },
+                    { 4, "surName", "admin", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "core",
+                table: "UserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { 1, 1 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_RoleClaims_RoleId",
                 schema: "core",

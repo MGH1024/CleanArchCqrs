@@ -1,16 +1,45 @@
 ﻿using Domain;
 using Domain.Identity;
 using Identity.Configurations.Base;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Security.Claims;
 
-namespace Identity.Configurations.Models;
+namespace Identity.Configurations.Entities;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable(DatabaseTableName.User, DatabaseSchema.SecuritySchema);
+
+
+        //seed data
+        builder.HasData
+            (
+             new User
+             {
+                 Id = 1,
+                 UserName = "admin",
+                 Email = "admin@admin.com",
+                 Firstname = "admin",
+                 Lastname = "admin",
+                 IsActive = true,
+                 CreatedBy = "System",
+                 CreatedDate = DateTime.UtcNow,
+                 Address = "address",
+                 BirthDate = new DateTime(1988, 09, 10),
+                 CellNumber = "09187108429",
+                 Image = "Image",
+                 PhoneNumber = "77245845",
+                 NormalizedEmail = "admin@admin.com",
+                 NormalizedUserName = "admin",
+             }
+            );
+
+
+
 
         builder.Property(t => t.Id)
             .IsRequired()

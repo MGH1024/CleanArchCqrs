@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20230423134137_initIdentity")]
+    [Migration("20230423170132_initIdentity")]
     partial class initIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,24 @@ namespace Identity.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("Roles", "core");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "05c03d8d-8b5d-4778-a837-73f09eb2945c",
+                            Description = "admin",
+                            Name = "Administrator",
+                            NormalizedName = "administrator"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "0c66ef95-a8f6-4f75-81ad-bc5ff6eaf089",
+                            Description = "user",
+                            Name = "User",
+                            NormalizedName = "user"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Identity.RoleClaim", b =>
@@ -112,6 +130,22 @@ namespace Identity.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RoleClaims", "core");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "roleName",
+                            ClaimValue = "Administrator",
+                            RoleId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "roleName",
+                            ClaimValue = "User",
+                            RoleId = 2
+                        });
                 });
 
             modelBuilder.Entity("Domain.Identity.RolePermission", b =>
@@ -262,6 +296,34 @@ namespace Identity.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users", "core");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            Address = "address",
+                            BirthDate = new DateTime(1988, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CellNumber = "09187108429",
+                            ConcurrencyStamp = "04e358f5-143a-41ba-b377-d5f8fd20b48e",
+                            CreatedBy = "System",
+                            CreatedDate = new DateTime(2023, 4, 23, 17, 1, 32, 565, DateTimeKind.Utc).AddTicks(4700),
+                            Email = "admin@admin.com",
+                            EmailConfirmed = false,
+                            Firstname = "admin",
+                            Image = "Image",
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsUpdated = false,
+                            Lastname = "admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "admin@admin.com",
+                            NormalizedUserName = "admin",
+                            PhoneNumber = "77245845",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Identity.UserClaim", b =>
@@ -288,6 +350,36 @@ namespace Identity.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserClaims", "core");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "userName",
+                            ClaimValue = "admin",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "email",
+                            ClaimValue = "admin@admin.com",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "givenName",
+                            ClaimValue = "admin",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClaimType = "surName",
+                            ClaimValue = "admin",
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Identity.UserLogin", b =>
@@ -366,6 +458,13 @@ namespace Identity.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles", "core");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Identity.UserToken", b =>

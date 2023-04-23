@@ -3,7 +3,7 @@ using Identity.Configurations.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Identity.Configurations.Models;
+namespace Identity.Configurations.Entities;
 
 public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
 {
