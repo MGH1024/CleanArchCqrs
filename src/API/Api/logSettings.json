@@ -29,7 +29,7 @@
       {
         "Name": "File",
         "Args": {
-          "path": "C:\\Projects\\CleanArchCqrs\\log\\Api\\log.txt",
+          "path": "C:\\Projects\\CleanArchCqrs\\log\\ApiLog\\log.txt",
           "outputTemplate": "{Timestamp:G} {Message}{NewLine:1}{Excepton:1}"
         }
       },
