@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using System.Reflection;
+using Domain;
 using Domain.Identity;
 using Identity.Configurations.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -13,7 +14,6 @@ public class AppIdentityDbContext :IdentityDbContext<User, Role, int, UserClaim,
     {
     }
     
-    //identity
     public DbSet<Permission> Permissions { get; set; }
     public DbSet<RolePermission> RolePermissions { get; set; }
     public DbSet<UserRefreshToken> UserRefreshToken { get; set; }
@@ -21,18 +21,6 @@ public class AppIdentityDbContext :IdentityDbContext<User, Role, int, UserClaim,
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-
-        //identity config
-        builder.ApplyConfiguration(new PermissionConfiguration());
-        builder.ApplyConfiguration(new RoleClaimConfiguration());
-        builder.ApplyConfiguration(new RoleConfiguration());
-        builder.ApplyConfiguration(new RolePermissionConfiguration());
-        builder.ApplyConfiguration(new UserClaimConfiguration());
-        builder.ApplyConfiguration(new UserConfiguration());
-        builder.ApplyConfiguration(new UserLoginConfiguration());
-        builder.ApplyConfiguration(new UserRoleConfiguration());
-        builder.ApplyConfiguration(new UserTokenConfiguration());
-        builder.ApplyConfiguration(new UserRefreshTokenConfiguration());
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }

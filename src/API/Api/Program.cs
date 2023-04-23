@@ -1,4 +1,5 @@
 using Serilog;
+using Identity;
 using Persistence;
 using Application;
 using Api.Middleware;
@@ -19,13 +20,14 @@ try
         .CreateBuilder(args);
     Log.Information("web starting up ...");
     
+    builder.Services.AddSwaggerGen();
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
     builder.Services.ConfigureApplicationServices();
-    builder.Services.ConfigureInfrastructuresServices(builder.Configuration);
-    builder.Services.ConfigurePersistenceService(builder.Configuration);
     builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+    builder.Services.ConfigureIdentityService(builder.Configuration);
+    builder.Services.ConfigurePersistenceService(builder.Configuration);
+    builder.Services.ConfigureInfrastructuresServices(builder.Configuration);
 
     builder.Services.AddCors(options =>
     {
