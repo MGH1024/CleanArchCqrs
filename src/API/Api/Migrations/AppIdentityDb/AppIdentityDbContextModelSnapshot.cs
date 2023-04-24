@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Identity.Migrations
+namespace Api.Migrations.AppIdentityDb
 {
     [DbContext(typeof(AppIdentityDbContext))]
     partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
@@ -89,7 +89,7 @@ namespace Identity.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "8ab7fb7a-3a13-4ebe-bc3f-1df572424b27",
+                            ConcurrencyStamp = "ccdd32e9-633b-418d-8667-08d9181df9fc",
                             Description = "admin",
                             Name = "Administrator",
                             NormalizedName = "administrator"
@@ -97,7 +97,7 @@ namespace Identity.Migrations
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "e227dd15-28ff-40d5-8533-3efd575e0bd9",
+                            ConcurrencyStamp = "f67fd722-8b9b-43f5-ac30-ec15148da226",
                             Description = "user",
                             Name = "User",
                             NormalizedName = "user"
@@ -303,9 +303,9 @@ namespace Identity.Migrations
                             Address = "address",
                             BirthDate = new DateTime(1988, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CellNumber = "09187108429",
-                            ConcurrencyStamp = "d65f3af8-4403-4f5f-b152-726b2d07d3c6",
+                            ConcurrencyStamp = "7f1f7b6b-0bf1-4925-ad86-9b8ee65e3bf3",
                             CreatedBy = "System",
-                            CreatedDate = new DateTime(2023, 4, 23, 18, 18, 14, 775, DateTimeKind.Utc).AddTicks(7915),
+                            CreatedDate = new DateTime(2023, 4, 24, 18, 11, 4, 348, DateTimeKind.Utc).AddTicks(5161),
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             Firstname = "System",
@@ -317,7 +317,7 @@ namespace Identity.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJLio3/ZIK9cPDCq80QEKhp1MJd9smKJAmLlNbUcx9tov2/TjIvkijoVj1XjBGQIHA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGZH+3d1ILdjNOCJl4b4mNdtMRcA5n0m/d41kgJG4bXI0eNREEtHBFNwuqrQjdQ/TQ==",
                             PhoneNumber = "77245845",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,

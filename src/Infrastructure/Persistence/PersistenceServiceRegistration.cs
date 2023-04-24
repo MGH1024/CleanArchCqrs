@@ -23,7 +23,8 @@ public static class PersistenceServiceRegistration
             .AddDbContextCheck<AppDbContext>();
         
         services
-            .AddDbContext<AppDbContext>(options => options.UseSqlServer(sqlConfig));
+            .AddDbContext<AppDbContext>(options => options.UseSqlServer(sqlConfig,
+                a=>a.MigrationsAssembly("Api")));
 
         services.AddScoped<ICategoryRepository,CategoryRepository>();
 

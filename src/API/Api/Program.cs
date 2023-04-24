@@ -56,7 +56,13 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Error in web");
+    var type = ex.GetType().Name;
+    if (type.Equals("StopTheHostException", StringComparison.Ordinal))
+    {
+        throw;
+    }
+
+    Log.Fatal(ex, "Error in web Unhandled exception");
 }
 finally
 {

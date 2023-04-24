@@ -9,10 +9,10 @@ using Persistence;
 
 #nullable disable
 
-namespace Persistence.Migrations
+namespace Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230423181710_init")]
+    [Migration("20230424180720_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

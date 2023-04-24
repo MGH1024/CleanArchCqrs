@@ -31,7 +31,8 @@ public static class IdentityServiceRegistration
             .AddDbContextCheck<AppIdentityDbContext>();
 
         services
-            .AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(sqlConfig));
+            .AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(sqlConfig,
+                a=>a.MigrationsAssembly("Api")));
 
         var auth = configuration.GetSection(nameof(Auth)).Get<Auth>();
 
