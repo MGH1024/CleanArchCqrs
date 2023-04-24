@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Application.Contracts.Infrastructure.Identity;
 using Application.DTOs.User;
+using Application.Models.Identity;
 using Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -20,7 +21,7 @@ public class SignInService : ISignInService
         await _signInManager.SignOutAsync();
     }
 
-    public async Task<SignInResult> SignIn(User user, Login login)
+    public async Task<SignInResult> SignIn(User user, AuthRequest login)
     {
         return await _signInManager.PasswordSignInAsync
             (user.UserName,

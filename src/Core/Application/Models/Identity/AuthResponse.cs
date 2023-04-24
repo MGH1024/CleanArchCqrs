@@ -1,6 +1,6 @@
-﻿namespace Application.DTOs.User;
+﻿namespace Application.Models.Identity;
 
-public class LoginResult
+public class AuthResponse
 {
     public string Token { get; set; }
     public string RefreshToken { get; set; }

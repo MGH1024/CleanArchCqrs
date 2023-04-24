@@ -1,5 +1,6 @@
 ﻿using Application.Contracts.Infrastructure;
 using Application.Models;
+using Application.Models.Email;
 using Infrastructures.Mail;
 using Infrastructures.TimeProvider;
 using Microsoft.Extensions.Configuration;

@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.User
+﻿namespace Application.Models.Identity
 {
     public class RefreshToken
     {

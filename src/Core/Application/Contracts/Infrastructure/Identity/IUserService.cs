@@ -6,8 +6,6 @@ namespace Application.Contracts.Infrastructure.Identity;
 
 public interface IUserService
 {
-    Task<IdentityResult> CreateUser(User user);
-    Task<IdentityResult> CreateUser(User user, string password);
     Task<User> GetUserById(int userId);
     Task<IdentityResult> UpdateUser(User user);
     Task<User> GetCurrentUser();
@@ -20,5 +18,5 @@ public interface IUserService
     Task<User> GetByEmail(string email);
     Task CreateUserRefreshToken(UserRefreshToken userRefreshToken);
     Task<User> GetUserByToken(GetUserByToken getUserByToken);
-    Task DeactiveRefreshTokenRefreshToken(string refreshToken);
+    Task DeActiveRefreshToken(string refreshToken);
 }

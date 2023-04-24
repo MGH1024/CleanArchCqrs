@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs.User;
 
-public class UpdateUser
+public abstract class UpdateUser
 {
     public int Id { get; set; }
     public string Username { get; set; }

@@ -2,6 +2,7 @@
 using Application.Contracts.Infrastructure.Identity;
 using Application.Contracts.Persistence;
 using Application.Models;
+using Application.Models.Identity;
 using Domain;
 using Domain.Identity;
 using Identity.Configurations.IdentityConfig;

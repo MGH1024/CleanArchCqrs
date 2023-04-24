@@ -11,9 +11,9 @@ namespace Identity.Services;
 
 public class UserService : IUserService
 {
+    private readonly IUserRepository _userRep;
     private readonly UserManager<User> _userManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IUserRepository _userRep;
 
     public UserService(UserManager<User> userManager, IHttpContextAccessor httpContextAccessor, IUserRepository userRep)
     {
@@ -21,17 +21,7 @@ public class UserService : IUserService
         _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         _userRep = userRep ?? throw new ArgumentNullException(nameof(userRep));
     }
-
-    public async Task<IdentityResult> CreateUser(User user)
-    {
-        return await _userManager.CreateAsync(user);
-    }
-
-    public async Task<IdentityResult> CreateUser(User user, string password)
-    {
-        return await _userManager.CreateAsync(user, password);
-    }
-
+    
     public async Task<User> GetUserById(int userId)
     {
         return await _userManager.FindByIdAsync(userId.ToString());
@@ -100,16 +90,16 @@ public class UserService : IUserService
 
     public Task<User> GetUserByToken(GetUserByToken getUserByToken)
     {
-        var username = GetUserNameClaimBytoken(getUserByToken.Token);
+        var username = GetUserNameClaimByToken(getUserByToken.Token);
         return GetByUsername(username);
     }
 
-    public async Task DeactiveRefreshTokenRefreshToken(string refreshToken)
+    public async Task DeActiveRefreshToken(string refreshToken)
     {
         await _userRep.InvalidateRefreshToken(refreshToken);
     }
 
-    private string GetUserNameClaimBytoken(string token)
+    private string GetUserNameClaimByToken(string token)
     {
         var handler = new JwtSecurityTokenHandler();
         var jwtSecurityToken = handler.ReadJwtToken(token);
