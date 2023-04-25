@@ -51,20 +51,17 @@ namespace Persistence.Repositories
         public async Task<Category> CreateCategoryAsync(Category category)
         {
             await _appDbContext.Categories.AddAsync(category);
-            await _appDbContext.SaveChangesAsync();
             return category;
         }
 
-        public async Task UpdateCategoryAsync(Category category)
+        public void UpdateCategory(Category category)
         {
             _appDbContext.Categories.Update(category);
-            await _appDbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteCategoryAsync(Category category)
+        public void DeleteCategory(Category category)
         {
             _appDbContext.Categories.Remove(category);
-            await _appDbContext.SaveChangesAsync();
         }
 
         public async Task<Category> GetCategoryByTitle(string title)

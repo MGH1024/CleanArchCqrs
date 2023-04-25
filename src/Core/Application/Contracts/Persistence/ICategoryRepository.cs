@@ -10,8 +10,8 @@ public interface ICategoryRepository
     Task<IEnumerable<Category>> GetAllDeletedAsync();
     Task<Category> GetByIdAsync(int categoryId);
     Task<Category> CreateCategoryAsync(Category category);
-    Task UpdateCategoryAsync(Category category);
-    Task DeleteCategoryAsync(Category category);
+    void UpdateCategory(Category category);
+    void DeleteCategory(Category category);
     Task<Category> GetCategoryByTitle(string title);
     Task<bool> IsCategoryRegistered(string title);
 }

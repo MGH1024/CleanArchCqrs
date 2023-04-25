@@ -39,8 +39,7 @@ public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryComman
                 Message = "category is null. delete failed"
             };
 
-
-        await _unitOfWork.CategoryRepository.DeleteCategoryAsync(category);
+        _unitOfWork.CategoryRepository.DeleteCategory(category);
         await _unitOfWork.Save();
         return new BaseCommandResponse
         {

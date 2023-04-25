@@ -31,8 +31,8 @@ public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryComman
         category.Code = request.UpdateCategory.Code;
         category.Description = request.UpdateCategory.Description;
 
-        await _unitOfWork.CategoryRepository
-            .UpdateCategoryAsync(category);
+        _unitOfWork.CategoryRepository
+            .UpdateCategory(category);
 
         await _unitOfWork.Save();
 
