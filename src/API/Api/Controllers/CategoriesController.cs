@@ -2,11 +2,11 @@ using MediatR;
 using Application.Models;
 using Microsoft.AspNetCore.Mvc;
 using Application.DTOs.Category;
+using Application.Features.Categories.Queries.GetCategory;
+using Application.Features.Categories.Queries.GetCategories;
+using Application.Features.Categories.Commands.UpdateCategory;
 using Application.Features.Categories.Commands.CreateCategory;
 using Application.Features.Categories.Commands.DeleteCategory;
-using Application.Features.Categories.Commands.UpdateCategory;
-using Application.Features.Categories.Queries.GetCategories;
-using Application.Features.Categories.Queries.GetCategory;
 
 namespace Api.Controllers
 {
@@ -31,9 +31,8 @@ namespace Api.Controllers
             return Ok(await Sender.Send(new GetCategoryQuery { Id = getCategoryById.Id }));
         }
 
-        // POST: api/Categories
         [HttpPost("create-category")]
-        public async Task<ActionResult> Post([FromBody] CreateCategory createCategory)
+        public async Task<IActionResult> Postaaa([FromBody] CreateCategory createCategory)
         {
             var command = new CreateCategoryCommand { CreateCategory = createCategory };
             return Ok(await Sender.Send(command));
@@ -49,7 +48,7 @@ namespace Api.Controllers
 
         // DELETE: api/Categories/5
         [HttpDelete("delete-category")]
-        public async Task<ActionResult> Delete(DeleteCategory deleteCategory)
+        public async Task<IActionResult> Delete(DeleteCategory deleteCategory)
         {
             var command = new DeleteCategoryCommand { DeleteCategory = deleteCategory };
             return Ok(await Sender.Send(command));

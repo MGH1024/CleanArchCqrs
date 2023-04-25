@@ -89,7 +89,7 @@ namespace Api.Migrations.AppIdentityDb
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "ccdd32e9-633b-418d-8667-08d9181df9fc",
+                            ConcurrencyStamp = "161a74cb-2278-4d19-bb67-18624c295cf0",
                             Description = "admin",
                             Name = "Administrator",
                             NormalizedName = "administrator"
@@ -97,7 +97,7 @@ namespace Api.Migrations.AppIdentityDb
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "f67fd722-8b9b-43f5-ac30-ec15148da226",
+                            ConcurrencyStamp = "45783157-aea4-42c8-8482-aded3bc3da5a",
                             Description = "user",
                             Name = "User",
                             NormalizedName = "user"
@@ -303,11 +303,11 @@ namespace Api.Migrations.AppIdentityDb
                             Address = "address",
                             BirthDate = new DateTime(1988, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CellNumber = "09187108429",
-                            ConcurrencyStamp = "7f1f7b6b-0bf1-4925-ad86-9b8ee65e3bf3",
+                            ConcurrencyStamp = "2001798c-97f7-4de1-8db9-b9373079c721",
                             CreatedBy = "System",
-                            CreatedDate = new DateTime(2023, 4, 24, 18, 11, 4, 348, DateTimeKind.Utc).AddTicks(5161),
+                            CreatedDate = new DateTime(2023, 4, 25, 11, 59, 3, 595, DateTimeKind.Utc).AddTicks(3646),
                             Email = "admin@localhost.com",
-                            EmailConfirmed = false,
+                            EmailConfirmed = true,
                             Firstname = "System",
                             Image = "Image",
                             IsActive = true,
@@ -317,9 +317,10 @@ namespace Api.Migrations.AppIdentityDb
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGZH+3d1ILdjNOCJl4b4mNdtMRcA5n0m/d41kgJG4bXI0eNREEtHBFNwuqrQjdQ/TQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELk1cvTAZolcf2fX4FKi1mCFQrygv1RFjXTzIkLGjqiegtTLjVqPSQnGTrTE2YjS3A==",
                             PhoneNumber = "77245845",
-                            PhoneNumberConfirmed = false,
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "c222428d-817c-4a41-a7c1-f4281a45a71c",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });

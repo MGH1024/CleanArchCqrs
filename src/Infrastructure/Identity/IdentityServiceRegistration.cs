@@ -27,14 +27,20 @@ public static class IdentityServiceRegistration
             .Get<DbConnection>()
             .SqlConnection;
 
+        var auth = configuration
+            .GetSection(nameof(Auth))
+            .Get<Auth>();
+
+        services.Configure<Auth>(option =>
+          configuration.GetSection(nameof(Auth)).Bind(option));
+
+
         services.AddHealthChecks()
             .AddDbContextCheck<AppIdentityDbContext>();
 
         services
             .AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(sqlConfig,
-                a=>a.MigrationsAssembly("Api")));
-
-        var auth = configuration.GetSection(nameof(Auth)).Get<Auth>();
+                a => a.MigrationsAssembly("Api")));
 
         services.AddIdentity<User, Role>(op =>
             {
@@ -61,10 +67,10 @@ public static class IdentityServiceRegistration
             .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddErrorDescriber<PersianIdentityErrorDescriber>()
             .AddDefaultTokenProviders();
-        
-        
-        
-        
+
+
+
+
         services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -87,16 +93,15 @@ public static class IdentityServiceRegistration
 
                 };
             });
-        
+
+        services.AddTransient<IClaimService, ClaimService>();
+        services.AddTransient<IRoleService, RoleService>();
+        services.AddTransient<ISignInService, SignInService>();
+        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IUserService, UserService>();
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<IPermissionService, PermissionService>();
-        services.AddTransient<IUserService, UserService>();
-        services.AddTransient<IRoleService, RoleService>();
-        services.AddTransient<IClaimService, ClaimService>();
-        services.AddTransient<ISignInService, SignInService>();
-        
-        services.AddTransient<IUserRepository, UserRepository>();
-        
+        services.AddTransient<IAuthService, AuthService>();
         return services;
     }
 }

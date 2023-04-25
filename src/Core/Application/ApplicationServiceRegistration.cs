@@ -1,9 +1,11 @@
-﻿using System.Reflection;
-using Application.Behavior;
-using Application.Features.Categories.Commands.CreateCategory;
+﻿using MediatR;
 using FluentValidation;
-using MediatR;
+using System.Reflection;
+using Application.Behavior;
+using Application.Models.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Application.Contracts.Infrastructure.Identity;
+using Application.Features.Categories.Commands.CreateCategory;
 
 namespace Application;
 

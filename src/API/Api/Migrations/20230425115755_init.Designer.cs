@@ -12,7 +12,7 @@ using Persistence;
 namespace Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230424180720_init")]
+    [Migration("20230425115755_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

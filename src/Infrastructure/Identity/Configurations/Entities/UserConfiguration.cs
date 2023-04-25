@@ -3,6 +3,7 @@ using Identity.Configurations.Base;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Security;
 
 namespace Identity.Configurations.Entities;
 
@@ -34,7 +35,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 PhoneNumber = "77245845",
                 NormalizedEmail = "ADMIN@LOCALHOST.COM",
                 NormalizedUserName = "admin",
-                PasswordHash = hasher.HashPassword(null, "Abcd@1234")
+                PasswordHash = hasher.HashPassword(null, "Abcd@1234"),
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                EmailConfirmed=true,
+                PhoneNumberConfirmed=true,
+                ConcurrencyStamp = Guid.NewGuid().ToString("D"),  
             }
         );
 
