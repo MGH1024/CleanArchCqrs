@@ -29,11 +29,13 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.ConfigureApplicationServices();
     builder.Services.AddTransient<ExceptionHandlingMiddleware>();
-
-
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddMemoryCache();
-    builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
+
+    builder.Services.Configure<ApiBehaviorOptions>(options =>
+    { 
+        options.SuppressModelStateInvalidFilter = true;
+    });
 
 
     builder.Services.AddMvc(setup =>
@@ -47,8 +49,6 @@ try
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
-
-
 
 
     builder.Services.ConfigureIdentityService(builder.Configuration);
