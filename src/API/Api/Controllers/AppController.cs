@@ -12,13 +12,8 @@ public abstract class AppController : ControllerBase
         Sender = sender;
     }
 
-    protected string IpAddress
-    {
-        get
-        {
-            return HttpContext.Connection.RemoteIpAddress.ToString();
-        }
-    }
+    protected string IpAddress =>
+        HttpContext.Connection.RemoteIpAddress != null ? HttpContext.Connection.RemoteIpAddress.ToString() : "";
 
     protected string CurrentUser
     {
@@ -26,10 +21,9 @@ public abstract class AppController : ControllerBase
         {
             var name =
                 User.Claims
-                .FirstOrDefault(x => x.Type.Equals("userName", StringComparison.InvariantCultureIgnoreCase));
-            if (name == null)
-                return "";
-            return name.Value;
+                    .FirstOrDefault(x => x.Type
+                        .Equals("userName", StringComparison.InvariantCultureIgnoreCase));
+            return name == null ? "" : name.Value;
         }
     }
 }

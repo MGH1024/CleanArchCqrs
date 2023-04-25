@@ -14,7 +14,7 @@ public class AuthenticationController : AppController
     {
     }
 
-    [HttpPost("auth")]
+    [HttpPost("signin")]
     public async Task<IActionResult> Login([FromBody] AuthRequest authRequest)
     {
         var command = new AuthCommand { AuthRequest = authRequest,IpAddress=IpAddress };
