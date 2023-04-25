@@ -1,17 +1,17 @@
-﻿using Application.Contracts.Messaging;
+﻿using Application.Responses;
+using Application.Contracts.Messaging;
 using Application.Contracts.Persistence;
 using Application.DTOs.Category.Validators;
-using Application.Responses;
 
 namespace Application.Features.Categories.Commands.DeleteCategory;
 
 public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryCommand, BaseCommandResponse>
 {
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteCategoryCommandHandler(ICategoryRepository categoryRepository)
+    public DeleteCategoryCommandHandler(IUnitOfWork unitOfWork)
     {
-        _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     public async Task<BaseCommandResponse> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryComman
                 Message = "delete failed"
             };
 
-        var category = await _categoryRepository.GetByIdAsync(request.DeleteCategory.Id);
+        var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.DeleteCategory.Id);
 
         if (category is null)
             return new BaseCommandResponse
@@ -40,7 +40,8 @@ public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryComman
             };
 
 
-        await _categoryRepository.DeleteCategoryAsync(category);
+        await _unitOfWork.CategoryRepository.DeleteCategoryAsync(category);
+        await _unitOfWork.Save();
         return new BaseCommandResponse
         {
             Success = true,

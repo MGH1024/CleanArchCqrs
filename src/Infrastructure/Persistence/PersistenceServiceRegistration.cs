@@ -1,10 +1,10 @@
-﻿using Persistence.Repositories;
+﻿using Application.Models;
+using Persistence.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Application.Contracts.Persistence;
-using Application.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Persistence;
@@ -26,6 +26,7 @@ public static class PersistenceServiceRegistration
             .AddDbContext<AppDbContext>(options => options.UseSqlServer(sqlConfig,
                 a=>a.MigrationsAssembly("Api")));
 
+        services.AddScoped<IUnitOfWork,UnitOfWork>();
         services.AddScoped<ICategoryRepository,CategoryRepository>();
 
         services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

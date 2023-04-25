@@ -1,25 +1,25 @@
-﻿using Application.Contracts.Messaging;
-using Application.Contracts.Persistence;
-using Application.DTOs.Category;
+﻿using AutoMapper;
 using Application.Responses;
-using AutoMapper;
+using Application.DTOs.Category;
+using Application.Contracts.Messaging;
+using Application.Contracts.Persistence;
 
 namespace Application.Features.Categories.Queries.GetCategory;
 
 public class GetCategoryQueryHandler : IQueryHandler<GetCategoryQuery, BaseQueryResponse<CategoryDetail>>
 {
     private readonly IMapper _mapper;
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCategoryQueryHandler(IMapper mapper, ICategoryRepository categoryRepository)
+    public GetCategoryQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     public async Task<BaseQueryResponse<CategoryDetail>> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
     {
-        var category = await _categoryRepository.GetByIdAsync(request.Id);
+        var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.Id);
         if(category is null)
             return new BaseQueryResponse<CategoryDetail>
             {

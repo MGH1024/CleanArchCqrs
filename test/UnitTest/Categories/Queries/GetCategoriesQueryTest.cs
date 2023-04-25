@@ -1,24 +1,19 @@
-﻿using Application.Contracts.Persistence;
-using Application.DTOs.Category;
-using Application.Features.Categories.Queries.GetCategories;
+﻿using Moq;
+using Shouldly;
+using AutoMapper;
+using UnitTest.Mocks;
 using Application.Profiles;
 using Application.Responses;
-using AutoMapper;
-using Moq;
-using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnitTest.Mocks;
+using Application.DTOs.Category;
+using Application.Contracts.Persistence;
+using Application.Features.Categories.Queries.GetCategories;
 
 namespace UnitTest.Categories.Queries
 {
     public class GetCategoriesQueryTest
     {
         private readonly IMapper _mapper;
-        private readonly Mock<ICategoryRepository> _mockRepo;
+        private readonly Mock<IUnitOfWork> _mockUow;
 
         public GetCategoriesQueryTest()
         {
@@ -28,14 +23,14 @@ namespace UnitTest.Categories.Queries
             });
 
             _mapper = mapperConfig.CreateMapper();
-            _mockRepo = MockCategoryRepository.GetCategoryRepository();
+            _mockUow = MockUnitOfWork.GetUnitOfWork();
         }
 
         [Fact]
         public async Task GetCategories()
         {
             var handler = 
-                new GetCategoriesQueryHandler(_mapper,_mockRepo.Object);
+                new GetCategoriesQueryHandler(_mapper,_mockUow.Object);
 
             var result = await handler
                 .Handle(new GetCategoriesQuery(),CancellationToken.None);

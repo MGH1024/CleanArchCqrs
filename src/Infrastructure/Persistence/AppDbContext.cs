@@ -1,33 +1,14 @@
-﻿using Application.Contracts.Infrastructure;
-using Domain.Shop;
-using Microsoft.AspNetCore.Http;
+﻿using Domain.Shop;
 using Microsoft.EntityFrameworkCore;
+using Application.Contracts.Infrastructure;
 
 namespace Persistence;
 
 public class AppDbContext : DbContext
 {
-    private readonly IDateTime _dateTime;
-    private readonly IHttpContextAccessor _httpContext;
-    public AppDbContext(DbContextOptions<AppDbContext> options, IDateTime dateTime, IHttpContextAccessor httpContext)
+    public AppDbContext(DbContextOptions<AppDbContext> options, IDateTime dateTime)
         : base(options)
     {
-        _dateTime = dateTime ?? throw new ArgumentNullException(nameof(dateTime));
-        _httpContext = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
-    }
-    
-    private string CurrentUsername
-    {
-        get
-        {
-            if (_httpContext.HttpContext == null) return "";
-            var name = _httpContext.HttpContext
-                .User
-                .Claims
-                .FirstOrDefault(x => x.Type.Equals("username", StringComparison.InvariantCultureIgnoreCase));
-
-            return name == null ? "" : name.Value;
-        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,11 +17,10 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
-   public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public Task<int> SaveChangesAsync(string userName, DateTime now, CancellationToken cancellationToken = default)
     {
         var modifiedEntries = ChangeTracker.Entries()
-            .Where(p => p.State == EntityState.Modified || p.State == EntityState.Added ||
-                        p.State == EntityState.Deleted);
+            .Where(p => p.State is EntityState.Modified or EntityState.Added or EntityState.Deleted);
         foreach (var item in modifiedEntries)
         {
             var entityType = item.Context.Model.FindEntityType(item.Entity.GetType());
@@ -56,8 +36,8 @@ public class AppDbContext : DbContext
 
             if (item.State == EntityState.Added && createDate != null && createBy != null)
             {
-                item.Property("CreatedDate").CurrentValue = _dateTime.IranNow;
-                item.Property("CreatedBy").CurrentValue = CurrentUsername;
+                item.Property("CreatedDate").CurrentValue = now;
+                item.Property("CreatedBy").CurrentValue = userName;
                 item.Property("IsActive").CurrentValue = true;
                 item.Property("IsUpdated").CurrentValue = false;
                 item.Property("IsDeleted").CurrentValue = false;
@@ -65,15 +45,15 @@ public class AppDbContext : DbContext
 
             if (item.State == EntityState.Modified && updateDate != null && updateBy != null)
             {
-                item.Property("UpdatedDate").CurrentValue = _dateTime.IranNow;
-                item.Property("UpdatedBy").CurrentValue = CurrentUsername;
+                item.Property("UpdatedDate").CurrentValue = now;
+                item.Property("UpdatedBy").CurrentValue = userName;
                 item.Property("IsUpdated").CurrentValue = true;
             }
 
             if (item.State != EntityState.Deleted || deleteDate == null || deleteBy == null ||
                 isDeleted == null) continue;
-            item.Property("DeletedDate").CurrentValue = _dateTime.IranNow;
-            item.Property("DeletedBy").CurrentValue = CurrentUsername;
+            item.Property("DeletedDate").CurrentValue = now;
+            item.Property("DeletedBy").CurrentValue = userName;
             item.Property("IsDeleted").CurrentValue = true;
             item.Property("IsActive").CurrentValue = false;
         }

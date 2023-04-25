@@ -1,27 +1,27 @@
-﻿using Application.Contracts.Messaging;
-using Application.Contracts.Persistence;
-using Application.Responses;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Shop;
+using Application.Responses;
+using Application.Contracts.Messaging;
+using Application.Contracts.Persistence;
 
 namespace Application.Features.Categories.Commands.CreateCategory;
 
 public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryCommand, BaseCommandResponse>
 {
     private readonly IMapper _mapper;
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCategoryCommandHandler(IMapper mapper, ICategoryRepository categoryRepository)
+    public CreateCategoryCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     public async Task<BaseCommandResponse> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = _mapper.Map<Category>(request.CreateCategory);
-        category = await _categoryRepository.CreateCategoryAsync(category);
-
+        category = await _unitOfWork.CategoryRepository.CreateCategoryAsync(category);
+        await _unitOfWork.Save();
         return new BaseCommandResponse
         {
             Id = category.Id,

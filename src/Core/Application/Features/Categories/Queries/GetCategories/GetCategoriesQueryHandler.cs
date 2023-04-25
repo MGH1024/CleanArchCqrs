@@ -9,18 +9,18 @@ namespace Application.Features.Categories.Queries.GetCategories;
 public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, BaseQueryResponse<List<CategoryDetail>>>
 {
     private readonly IMapper _mapper;
-    private readonly ICategoryRepository _categoryRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCategoriesQueryHandler(IMapper mapper, ICategoryRepository categoryRepository)
+    public GetCategoriesQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     public async Task<BaseQueryResponse<List<CategoryDetail>>> Handle(GetCategoriesQuery request,
         CancellationToken cancellationToken)
     {
-        var categories = await _categoryRepository.GetAllAsync();
+        var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
         return new BaseQueryResponse<List<CategoryDetail>>
         {
             Success = true,

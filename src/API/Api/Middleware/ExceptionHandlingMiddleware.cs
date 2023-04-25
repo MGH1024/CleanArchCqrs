@@ -15,11 +15,11 @@ namespace Api.Middleware
             {
                 await next(context);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogError(e, e.Message);
+                _logger.LogError(ex, ex.Message);
 
-                await HandleExceptionAsync(context, e);
+                await HandleExceptionAsync(context, ex);
             }
         }
 

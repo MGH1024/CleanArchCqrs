@@ -1,41 +1,24 @@
-﻿using Application.Contracts.Messaging;
+﻿using Application.Responses;
+using Application.Contracts.Messaging;
 using Application.Contracts.Persistence;
-using Application.DTOs.Category.Validators;
-using Application.Responses;
-using AutoMapper;
 
 namespace Application.Features.Categories.Commands.UpdateCategory;
 
 public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryCommand, BaseCommandResponse>
 {
-    private readonly IMapper _mapper; 
-    private readonly ICategoryRepository _categoryRepository;
-    
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateCategoryCommandHandler(ICategoryRepository categoryRepository, IMapper mapper)
+
+    public UpdateCategoryCommandHandler(IUnitOfWork unitOfWork)
     {
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     public async Task<BaseCommandResponse> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
-        var validator = new UpdateCategoryValidator(_categoryRepository);
-        var validationResult = await validator
-            .ValidateAsync(request.UpdateCategory, cancellationToken);
-        if (!validationResult.IsValid)
-            return new BaseCommandResponse
-            {
-                Errors = validationResult
-                    .Errors
-                    .Select(a => a.ErrorMessage)
-                    .ToList(),
-                Message = "update failed",
-                Success = false,
-            };
-
-
-        var category = await _categoryRepository.GetByIdAsync(request.UpdateCategory.Id);
+        var category = await _unitOfWork
+            .CategoryRepository
+            .GetByIdAsync(request.UpdateCategory.Id);
 
         if (category is null)
             return new BaseCommandResponse
@@ -47,8 +30,11 @@ public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryComman
         category.Title = request.UpdateCategory.Title;
         category.Code = request.UpdateCategory.Code;
         category.Description = request.UpdateCategory.Description;
-        
-        await _categoryRepository.UpdateCategoryAsync(category);
+
+        await _unitOfWork.CategoryRepository
+            .UpdateCategoryAsync(category);
+
+        await _unitOfWork.Save();
 
         return new BaseCommandResponse
         {
