@@ -6,7 +6,6 @@ import {Get} from '../services/localStorageService';
 axios.defaults.baseURL=process.env.REACT_APP_API_BASEURL;
 axios.interceptors.request.use(
     async (config :any) => {
-        debugger;
         const token = Get("token");
         if (token) {
           config.headers = {

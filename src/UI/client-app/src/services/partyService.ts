@@ -16,9 +16,6 @@ export async function  Create(values :CreateCategoryValue){
         }
     })
     .then((res)=>{
-        alert('a');
-        alert(res);
-        debugger;
         resolve(res);
         console.log(res);
     })

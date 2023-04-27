@@ -5,7 +5,6 @@ import IGetUserByToken from "../types/GetUserByToken";
 
 
 export const Login = async (values: any) => {
-    debugger;
     const loginUrl = "/api/authentication/signin";
     return new Promise((resolve, reject) => {
         axiosPublic({
@@ -18,7 +17,6 @@ export const Login = async (values: any) => {
             }
         })
             .then((res) => {
-                debugger;
                 resolve(res);
                 const {appSession} = res.data;
 
@@ -32,7 +30,6 @@ export const Login = async (values: any) => {
 
             })
             .catch((err) => {
-                debugger;
                 reject(err);
                 Remove("token");
                 Remove("validDate")
