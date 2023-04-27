@@ -1,8 +1,9 @@
 import {Link, useNavigate} from "react-router-dom";
 import {Formik, FormikHelpers} from "formik";
-import SpanText from "./components/public/spanText";
 import {Create} from "../services/partyService";
-import CreateCategoryValue from "../types/createCategoryValue";
+import ICreateCategory from "../types/createCategory";
+import {SpanText} from "./components/public/spanText";
+
 
 
 const CreateParty = () => {
@@ -21,7 +22,7 @@ const CreateParty = () => {
                                     title: "",
                                     description: ""
                                 }}
-                                validate={(values: CreateCategoryValue) => {
+                                validate={(values: ICreateCategory) => {
                                     const errors: any = {};
                                     if (!values.code) {
                                         errors.partyName = "required";
@@ -34,7 +35,7 @@ const CreateParty = () => {
 
                                 onSubmit={async (
                                     values,
-                                    {setSubmitting}: FormikHelpers<CreateCategoryValue>) => {
+                                    {setSubmitting}: FormikHelpers<ICreateCategory>) => {
                                     setTimeout(() => {
                                         setSubmitting(false);
                                     }, 100);

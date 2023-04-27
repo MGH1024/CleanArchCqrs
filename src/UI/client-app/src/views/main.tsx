@@ -1,7 +1,7 @@
-import Footer from "./templates/footer";
-import Navbar from "./templates/navbar";
-import Sidebar from "./templates/sidebar";
 import Cards from "./templates/cards";
+import {Sidebar} from "./templates/sidebar";
+import {Navbar} from "./templates/navbar";
+import {Footer} from "./templates/footer";
 
 const Main = () => {
   return (

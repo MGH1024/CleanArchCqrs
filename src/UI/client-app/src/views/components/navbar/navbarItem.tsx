@@ -1,18 +1,17 @@
-import Icon from "../public/icon";
-import { Link } from "react-router-dom";
+import {Icon} from "../public/icon";
+import {Link} from "react-router-dom";
+import INavbarItem from "../../../types/navbarItem";
 
-const NavbarItem = (props:any) => {
-  return (
-    <li className="nav-item ">
-      <Link
-        to={props.to}
-        className={props.linkClassName}
-        data-toggle={props.dataToggle}
-      >
-        <Icon icon={props.icon} className={props.iconClassName} />
-      </Link>
-    </li>
-  );
+export const NavbarItem = ({to, linkClassName, dataToggle, navbarIcon, iconClassName}: INavbarItem) => {
+    return (
+        <li className="nav-item ">
+            <Link
+                to={to}
+                className={linkClassName}
+                data-toggle={dataToggle}
+            >
+                <Icon icon={navbarIcon} className={iconClassName}/>
+            </Link>
+        </li>
+    );
 };
-
-export default NavbarItem;

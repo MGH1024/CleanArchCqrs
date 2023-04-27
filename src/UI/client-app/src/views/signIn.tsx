@@ -1,8 +1,8 @@
 import {Formik, FormikHelpers} from "formik";
 import {Login} from "../services/accountService";
-import SpanText from "./components/public/spanText";
 import {Link, useNavigate} from "react-router-dom";
-import SignInValue from "../types/SignInValue";
+import ISignIn from "../types/signIn";
+import {SpanText} from "./components/public/spanText";
 
 const SignIn = () => {
     let history = useNavigate();
@@ -20,7 +20,7 @@ const SignIn = () => {
                                     password: "Abcd@1234",
                                     rememberMe: true,
                                 }}
-                                validate={(values: SignInValue) => {
+                                validate={(values: ISignIn) => {
                                     const errors: any = {};
                                     if (!values.username) {
                                         errors.username = "required";
@@ -32,7 +32,7 @@ const SignIn = () => {
                                 }}
                                 onSubmit={async (
                                     values,
-                                    {setSubmitting}: FormikHelpers<SignInValue>) => {
+                                    {setSubmitting}: FormikHelpers<ISignIn>) => {
                                     setTimeout(() => {
                                         setSubmitting(false);
                                     }, 400);

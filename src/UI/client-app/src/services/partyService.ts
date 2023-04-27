@@ -1,8 +1,8 @@
 import { axiosPublic } from "../api/axiosPublic";
 import {axiosPrivate} from "../api/axiosPrivate";
-import CreateCategoryValue from "../types/createCategoryValue";
+import ICreateCategory from "../types/createCategory";
 
-export async function  Create(values :CreateCategoryValue){
+export async function  Create(values :ICreateCategory){
     const createPartyUrl = "/fa-ir/api/Parties";
     console.log(createPartyUrl);
     return new Promise((resolve,reject)=>{

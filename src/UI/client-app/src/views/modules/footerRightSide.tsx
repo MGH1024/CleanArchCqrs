@@ -1,5 +1,5 @@
 import FooterRightSideItem from "../components/footer/footerRightSideItem";
-const FooterRightSide = () => {
+export const FooterRightSide = () => {
   return (
     <div className="col-lg-6 text-center pt-3">
       <ul className="list-inline">
@@ -26,5 +26,3 @@ const FooterRightSide = () => {
     </div>
   );
 };
-
-export default FooterRightSide;

@@ -14,10 +14,10 @@ import CurrentUser from "../components/sidebar/currentUser";
 
 
 import SidebarItem from "../modules/sidebarItem";
-import SidebarSearch from "../components/sidebar/sidebarSearch";
-import SiteTitle from "../components/sidebar/siteTitle";
+import {SiteTitle} from "../components/sidebar/siteTitle";
+import {SidebarSearch} from "../components/sidebar/sidebarSearch";
 
-const Sidebar = () => {
+export const Sidebar = () => {
   return (
     <div className="sidebar collapse show" id="sidebar">
       <SiteTitle
@@ -27,7 +27,7 @@ const Sidebar = () => {
       />
 
       <CurrentUser
-        //imageSrc={CustomImage}
+        imageSrc=""
         imageClass="rounded-circle ml-6 sidebar-user-image"
         imageAlt="MGH"
         userName="MGH"
@@ -39,83 +39,81 @@ const Sidebar = () => {
           liClass="nav-item current custom-nav-item"
           to="/#"
           linkClass="nav-link text-white mb-2"
-          icon={faHome}
+          sidebarItemIcon={faHome}
           iconClassName={"ms-3 2xl"}
           spanClass={"sidebar-li-span"}
-          spanText={"dashboard"}
+          sideBarItemSpanText={"dashboard"}
         />
 
         <SidebarItem
           liClass="nav-item custom-nav-item"
           to="/#"
           linkClass="nav-link text-white mb-2"
-          icon={faUser}
+          sidebarItemIcon={faUser}
           iconClassName={"ms-3 2xl"}
           spanClass={"sidebar-li-span"}
-          spanText={"profile"}
+          sideBarItemSpanText={"profile"}
         />
 
         <SidebarItem
           liClass="nav-item custom-nav-item"
           to="/#"
           linkClass="nav-link text-white mb-2"
-          icon={faEnvelope}
+          sidebarItemIcon={faEnvelope}
           iconClassName={"ms-3 2xl"}
           spanClass={"sidebar-li-span"}
-          spanText={"messages"}
+          sideBarItemSpanText={"messages"}
         />
 
         <SidebarItem
           liClass="nav-item custom-nav-item"
           to="/#"
           linkClass="nav-link text-white mb-2"
-          icon={faShoppingCart}
+          sidebarItemIcon={faShoppingCart}
           iconClassName={"ms-3 2xl"}
           spanClass={"sidebar-li-span"}
-          spanText={"Sell"}
+          sideBarItemSpanText={"Sell"}
         />
 
         <SidebarItem
           liClass="nav-item custom-nav-item"
           to="/#"
           linkClass="nav-link text-white mb-2"
-          icon={faChartLine}
+          sidebarItemIcon={faChartLine}
           iconClassName={"ms-3 2xl"}
           spanClass={"sidebar-li-span"}
-          spanText={"analyze"}
+          sideBarItemSpanText={"analyze"}
         />
 
         <SidebarItem
           liClass="nav-item custom-nav-item"
           to="/#"
           linkClass="nav-link text-white mb-2"
-          icon={faChartBar}
+          sidebarItemIcon={faChartBar}
           iconClassName={"ms-3 2xl"}
           spanClass={"sidebar-li-span"}
-          spanText={"charts"}
+          sideBarItemSpanText={"charts"}
         />
 
         <SidebarItem
           liClass="nav-item custom-nav-item"
           to="/#"
           linkClass="nav-link text-white mb-2"
-          icon={faTable}
+          sidebarItemIcon={faTable}
           iconClassName={"ms-3 2xl"}
           spanClass={"sidebar-li-span"}
-          spanText={"tables"}
+          sideBarItemSpanText={"tables"}
         />
         <SidebarItem
           liClass="nav-item custom-nav-item"
           to="/#"
           linkClass="nav-link text-white mb-2"
-          icon={faWrench}
+          sidebarItemIcon={faWrench}
           iconClassName={"ms-3 2xl"}
           spanClass={"sidebar-li-span"}
-          spanText={"settings"}
+          sideBarItemSpanText={"settings"}
         />
       </ul>
     </div>
   );
 };
-
-export default Sidebar;

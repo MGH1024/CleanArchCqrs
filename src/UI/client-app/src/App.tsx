@@ -2,13 +2,12 @@ import {useEffect, useState} from 'react'
 import {Routes, Route} from 'react-router-dom';
 import SignIn from './views/signIn';
 import SignUp from './views/signUp';
-import ErrorPage from './views/errorPage';
 import Main from '../src/views/main';
 import {Get} from './services/localStorageService';
 import {GetCurrentUserByToken} from './services/accountService';
 import Parties from './views/parties';
 import CreateCategory from "./views/createCategory";
-import IGetUserByToken from "./types/GetUserByToken";
+import {ErrorPage} from "./views/errorPage";
 
 function App() {
     const [token, setToken] = useState<string | null>(null);

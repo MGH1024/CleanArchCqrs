@@ -1,7 +1,8 @@
 import {Formik, FormikHelpers} from "formik";
 import {Link, useNavigate} from "react-router-dom";
-import SpanText from "./components/public/spanText";
-import RegisterValues from "../types/RegisterValue";
+import IRegisterUser from "../types/registerUser";
+import {SpanText} from "./components/public/spanText";
+
 
 const SignUp = () => {
     let history = useNavigate();
@@ -30,7 +31,7 @@ const SignUp = () => {
                                 }}
                                 onSubmit={(
                                     values,
-                                    {setSubmitting}: FormikHelpers<RegisterValues>) => {
+                                    {setSubmitting}: FormikHelpers<IRegisterUser>) => {
                                     setTimeout(() => {
                                         setSubmitting(false);
                                     }, 400);

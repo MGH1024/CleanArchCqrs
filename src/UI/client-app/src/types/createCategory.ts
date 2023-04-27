@@ -1,4 +1,4 @@
-﻿export default interface CreateCategoryValue 
+﻿export default interface ICreateCategory
 {
     code :string ,
     title:string ,

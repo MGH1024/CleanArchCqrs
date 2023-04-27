@@ -1,5 +1,6 @@
-const SpanText = (props:any) => {
-  return <span className={props.className}>{props.text}</span>;
+import ISpanText from "../../../types/span";
+
+export const SpanText = ({className, text}: ISpanText) => {
+    return <span className={className}>{text}</span>;
 };
 
-export default SpanText;

@@ -1,11 +1,11 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const Icon = (props:any) => {
-  return (
-    <FontAwesomeIcon
-      icon={props.icon}
-      className={props.className}
-    ></FontAwesomeIcon>
-  );
-};
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IIconType from "../../../types/icontype";
 
-export default Icon;
+export const Icon = ({icon, className}: IIconType) => {
+    return (
+        <FontAwesomeIcon
+            icon={icon}
+            className={className}
+        ></FontAwesomeIcon>
+    );
+};
