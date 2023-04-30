@@ -9,8 +9,8 @@ import Analytics from "./pages/Analytics";
 import {Get} from './services/localStorageService';
 import IGetUserByToken from "./types/getUserByToken";
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import {GetCurrentUserByToken} from './services/accountService';
 import ProtectedRouteHelper from "./api/ProtectedRouteHelper";
+import {GetCurrentUserByToken} from './services/accountService';
 
 
 function App() {
@@ -43,7 +43,6 @@ function App() {
             } else {
                 navigate('/');
             }
-
         }
     }
     return (
@@ -51,14 +50,12 @@ function App() {
             <Routes>
                 <Route path="/" element={<SignIn/>}/>
                 <Route path="/signUp" element={<SignUp/>}/>
-                {/*<Route path="/" element={<ProtectedRouteHelper user={user}/>}>*/}
+                <Route path="/" element={<ProtectedRouteHelper user={user}/>}>
                     <Route path="/home" element={<Home/>}/>
                     <Route path="/settings" element={<Settings/>}/>
-                {/*</Route>*/}
-
-
-                <Route path="/about" element={<About/>}/>
-                <Route path="/analytics" element={<Analytics/>}/>
+                    <Route path="/about" element={<About/>}/>
+                    <Route path="/analytics" element={<Analytics/>}/>
+                </Route>
                 <Route path="/products" element={<Products/>}/>
                 <Route path="*" element={<p>There's nothing here: 404!</p>}/>
             </Routes>

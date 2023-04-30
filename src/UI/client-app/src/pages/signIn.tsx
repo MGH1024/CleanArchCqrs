@@ -55,17 +55,7 @@ export default function SignIn() {
         if (password == '') {
             setPasswordError(true)
         }
-
-        if (username && password) {
-            console.log(username, password)
-            const data = new FormData(event.currentTarget);
-            console.log({
-                email: data.get('username'),
-                password: data.get('password'),
-                rememberMe: data.get('rememberMe'),
-            });
-        }
-
+        
         let values: ISignIn = {
             username: username,
             password: password,

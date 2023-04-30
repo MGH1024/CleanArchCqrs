@@ -1,18 +1,15 @@
-﻿import {Routes, Route, Link, Navigate,Outlet} from 'react-router-dom';
-
+﻿import {Navigate} from 'react-router-dom';
 
 interface IProtected {
     user: any,
-    children?: any | null,
 }
 
-const ProtectedRouteHelper = ({user, children}: IProtected) => {
-    debugger;
-    if (!user || user == 'undefined') {
-
+const ProtectedRouteHelper = ({user}: IProtected) => {
+    if (!user) {
         return <Navigate to="/" replace/>;
     }
-    return children ? children : <Outlet />;
+    return <Navigate to="/" />;
+   
 };
 
 export default ProtectedRouteHelper;
