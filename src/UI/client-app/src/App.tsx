@@ -1,72 +1,67 @@
-import {useEffect, useState} from 'react'
-import {Routes, Route, BrowserRouter} from 'react-router-dom';
-
-import Main from '../src/views/main';
-import {Get} from './services/localStorageService';
-import {GetCurrentUserByToken} from './services/accountService';
-import Parties from './views/parties';
-import CreateCategory from "./views/createCategory";
-import {ErrorPage} from "./views/errorPage";
-import Sidenav from "./components/sidenav";
 import Home from "./pages/home";
-import Settings from "./pages/settings";
 import About from "./pages/about";
-import Analytics from "./pages/Analytics";
-import Products from "./pages/products";
-import SignIn from "./pages/signIn";
 import SignUp from './pages/signUp';
+import SignIn from "./pages/signIn";
+import Products from "./pages/products";
+import Settings from "./pages/settings";
+import {useEffect, useState} from 'react'
+import Analytics from "./pages/Analytics";
+import {Get} from './services/localStorageService';
+import IGetUserByToken from "./types/getUserByToken";
+import {Routes, Route, useNavigate} from 'react-router-dom';
+import {GetCurrentUserByToken} from './services/accountService';
+import ProtectedRouteHelper from "./api/ProtectedRouteHelper";
 
-// function App() {
-//     const [token, setToken] = useState<string | null>(null);
-//     const [user, setUser] = useState<string>("");
-//
-//     useEffect(() => {
-//         if (!token) {
-//             //getToken()
-//         }
-//     });
-//
-//     // const getToken = async () => {
-//     //     const userToken = Get('token');
-//     //     setToken(userToken);
-//     //     if (!userToken || !user) {
-//     //         const user = await GetCurrentUserByToken(userToken);
-//     //         setUser(user);
-//     //     } else {
-//     //
-//     //     }
-//     // }
-//
-//     return (
-//         <>
-//             <Routes>
-//                 <Route path="/" element={<SignIn/>}/>
-//                 <Route path="/signup" element={<SignUp/>}/>
-//                 <Route path="/main" element={<Main/>}/>
-//                 <Route path="/parties" element={<Parties/>}/>
-//                 <Route path="/createCategory" element={<CreateCategory/>}/>
-//                 <Route path="*" element={<ErrorPage/>}/>
-//             </Routes>
-//         </>
-//     );
-// }
-//
-// export default App;
 
 function App() {
+    const navigate = useNavigate();
+    const [user, setUser] = useState<IGetUserByToken>();
+    const [token, setToken] = useState<string | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            const userToken = Get('token');
+            if (!userToken) {
+                await getToken();
+            } else {
+                const user = await GetCurrentUserByToken(userToken);
+                setUser(user.data.Data);
+                navigate('/home');
+            }
+
+        })()
+    });
+
+    const getToken = async () => {
+        const userToken = Get('token');
+        if (userToken) {
+            setToken(userToken);
+            const user = await GetCurrentUserByToken(userToken);
+            if (user) {
+                setUser(user.data.Data);
+                navigate('/home');
+            } else {
+                navigate('/');
+            }
+
+        }
+    }
     return (
         <>
-
             <Routes>
                 <Route path="/" element={<SignIn/>}/>
                 <Route path="/signUp" element={<SignUp/>}/>
-                <Route path="/home" element={<Home/>}/>
-                <Route path="/settings" element={<Settings/>}/>
+                {/*<Route path="/" element={<ProtectedRouteHelper user={user}/>}>*/}
+                    <Route path="/home" element={<Home/>}/>
+                    <Route path="/settings" element={<Settings/>}/>
+                {/*</Route>*/}
+
+
                 <Route path="/about" element={<About/>}/>
                 <Route path="/analytics" element={<Analytics/>}/>
                 <Route path="/products" element={<Products/>}/>
+                <Route path="*" element={<p>There's nothing here: 404!</p>}/>
             </Routes>
-           
         </>
     )
 }

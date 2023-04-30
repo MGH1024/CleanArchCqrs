@@ -21,7 +21,7 @@ public class UserService : IUserService
         _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         _userRep = userRep ?? throw new ArgumentNullException(nameof(userRep));
     }
-    
+
     public async Task<User> GetUserById(int userId)
     {
         return await _userManager.FindByIdAsync(userId.ToString());
@@ -45,6 +45,7 @@ public class UserService : IUserService
                 return null;
             return await _userManager.FindByNameAsync(name.Value);
         }
+
         return null;
     }
 
@@ -102,7 +103,7 @@ public class UserService : IUserService
     private string GetUserNameClaimByToken(string token)
     {
         var handler = new JwtSecurityTokenHandler();
-        var jwtSecurityToken = handler.ReadJwtToken(token);
-        return jwtSecurityToken.Claims.First(claim => claim.Type == "username").Value;
+        var jwtSecurityToken = handler.ReadJwtToken(token.Trim('"'));
+        return jwtSecurityToken.Claims.First(claim => claim.Type == "userName").Value;
     }
 }

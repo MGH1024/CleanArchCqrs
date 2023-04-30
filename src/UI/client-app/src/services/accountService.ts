@@ -26,7 +26,6 @@ export const Login = async (values: ISignIn) => {
                     Remove("token");
                     Remove("validDate");
                 }
-
                 Set("token", res.data.Token);
                 Set("validDate", res.data.TokenValidDate);
 
