@@ -1,7 +1,7 @@
 ﻿import React from "react";
 import Box from '@mui/material/Box';
+import Navbar from "../components/navbar";
 import Sidenav from "../components/sidenav";
-import Navbar from "../components/Navbar";
 
 export default function Settings() {
     return (

@@ -1,8 +1,8 @@
 import mem from "mem";
-import {axiosPublic} from "../api/axiosPublic";
-import {Set, Remove} from './localStorageService';
-import IGetUserByToken from "../types/getUserByToken";
 import ISignIn from "../types/signIn";
+import {Set, Remove} from './localStorageService';
+import {axiosPublic} from "../utilities/axiosPublic";
+import IGetUserByToken from "../types/getUserByToken";
 
 
 export const Login = async (values: ISignIn) => {

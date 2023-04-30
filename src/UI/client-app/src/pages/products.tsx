@@ -1,9 +1,7 @@
 ﻿import React from "react";
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Sidenav from "../components/sidenav";
-import Navbar from "../components/Navbar";
-import ProductList from "./products/ProductList";
+import Navbar from "../components/navbar";
 import ProductList2 from "./products/ProductList2";
 
 export default function Products() {

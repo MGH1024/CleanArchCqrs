@@ -11,10 +11,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import {useAppStore} from "../appStore";
+import {useAppStore} from "../utilities/appStore";
 import IconButton from '@mui/material/IconButton';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import InfoIcon from '@mui/icons-material/Info';
+import SettingsIcon from '@mui/icons-material/Settings';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import ProductionQuantityLimitsSharpIcon from '@mui/icons-material/ProductionQuantityLimitsSharp';
 
 const drawerWidth = 240;
 
@@ -124,7 +128,7 @@ const Sidenav: React.FC<{}> = () => {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <InboxIcon/>
+                                <InfoIcon/>
                             </ListItemIcon>
                             <ListItemText primary="About" sx={{opacity: open ? 1 : 0}}/>
                         </ListItemButton>
@@ -146,7 +150,7 @@ const Sidenav: React.FC<{}> = () => {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <InboxIcon/>
+                                <SettingsIcon/>
                             </ListItemIcon>
                             <ListItemText primary="Settings" sx={{opacity: open ? 1 : 0}}/>
                         </ListItemButton>
@@ -168,7 +172,7 @@ const Sidenav: React.FC<{}> = () => {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <InboxIcon/>
+                                <AnalyticsIcon/>
                             </ListItemIcon>
                             <ListItemText primary="Analytics" sx={{opacity: open ? 1 : 0}}/>
                         </ListItemButton>
@@ -190,7 +194,7 @@ const Sidenav: React.FC<{}> = () => {
                                     justifyContent: 'center',
                                 }}
                             >
-                                <InboxIcon/>
+                                <ProductionQuantityLimitsSharpIcon/>
                             </ListItemIcon>
                             <ListItemText primary="Products" sx={{opacity: open ? 1 : 0}}/>
                         </ListItemButton>

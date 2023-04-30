@@ -5,12 +5,12 @@ import SignIn from "./pages/signIn";
 import Products from "./pages/products";
 import Settings from "./pages/settings";
 import {useEffect, useState} from 'react'
-import Analytics from "./pages/Analytics";
+import Analytics from "./pages/analytics";
 import {Get} from './services/localStorageService';
 import IGetUserByToken from "./types/getUserByToken";
 import {Routes, Route, useNavigate} from 'react-router-dom';
-import ProtectedRouteHelper from "./api/ProtectedRouteHelper";
 import {GetCurrentUserByToken} from './services/accountService';
+import ProtectedRouteHelper from "./utilities/ProtectedRouteHelper";
 
 
 function App() {

@@ -15,7 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import {useAppStore} from "../appStore";
+import {useAppStore} from "../utilities/appStore";
 
 const AppBar = styled(MuiAppBar, {})(({theme}) => ({
     zIndex: theme.zIndex.drawer + 1,
