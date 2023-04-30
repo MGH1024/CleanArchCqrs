@@ -103,7 +103,7 @@ public class UserService : IUserService
     private string GetUserNameClaimByToken(string token)
     {
         var handler = new JwtSecurityTokenHandler();
-        var jwtSecurityToken = handler.ReadJwtToken(token.Trim('"'));
+        var jwtSecurityToken = handler.ReadJwtToken(token);
         return jwtSecurityToken.Claims.First(claim => claim.Type == "userName").Value;
     }
 }

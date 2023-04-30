@@ -1,11 +1,17 @@
 import IUserToken from "../types/userToken";
 
 export function Set(key: string, value: IUserToken) {
-    localStorage.setItem(key, JSON.stringify(value))
+    try {
+        localStorage.setItem(key, JSON.stringify(value))    
+    }
+    catch (err) {}
 }
 
 export function Get(key: string) {
-    return localStorage.getItem(key)
+    const value = localStorage.getItem(key);
+    if(value){
+        return JSON.parse(value);
+    }
 }
 
 export function Remove(key: any) {
