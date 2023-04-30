@@ -2,9 +2,10 @@ import mem from "mem";
 import {axiosPublic} from "../api/axiosPublic";
 import {Set, Remove} from './localStorageService';
 import IGetUserByToken from "../types/getUserByToken";
+import ISignIn from "../types/signIn";
 
 
-export const Login = async (values: any) => {
+export const Login = async (values: ISignIn) => {
     const loginUrl = "/api/authentication/signin";
     return new Promise((resolve, reject) => {
         axiosPublic({
@@ -17,6 +18,7 @@ export const Login = async (values: any) => {
             }
         })
             .then((res) => {
+                debugger;
                 resolve(res);
                 const {appSession} = res.data;
 
