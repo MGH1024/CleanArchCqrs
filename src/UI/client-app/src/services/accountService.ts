@@ -1,9 +1,8 @@
 import mem from "mem";
 import ISignIn from "../types/signIn";
 import {Set, Remove} from './localStorageService';
-import {axiosPublic} from "../utilities/axiosPublic";
+import axiosPublic from "../utilities/axiosPublic";
 import IGetUserByToken from "../types/getUserByToken";
-
 
 export const Login = async (values: ISignIn) => {
     const loginUrl = "/api/authentication/signin";
@@ -18,7 +17,6 @@ export const Login = async (values: ISignIn) => {
             }
         })
             .then((res) => {
-                debugger;
                 resolve(res);
                 const {appSession} = res.data;
 
@@ -56,4 +54,3 @@ export async function GetCurrentUserByToken(token: string | null) {
             .catch((err) => reject(err));
     })
 }
- 

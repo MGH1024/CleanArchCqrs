@@ -90,7 +90,7 @@ const Sidenav: React.FC<{}> = () => {
                 <List>
 
                     <ListItem disablePadding sx={{display: 'block'}} onClick={() => {
-                        navigate("/")
+                        navigate("/home")
                     }}>
                         <ListItemButton
                             sx={{

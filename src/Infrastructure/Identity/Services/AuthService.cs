@@ -89,7 +89,7 @@ public class AuthService : IAuthService
         var user = await _userService.GetByUsername(authRequest.UserName);
 
         //2do if user signed in redirect to returnUrl
-        var Errors = new List<string>();
+        var errors = new List<string>();
 
         if (user != null)
         {
@@ -99,16 +99,16 @@ public class AuthService : IAuthService
             if (signinResult.IsNotAllowed)
             {
                 if (!await _userService.IsEmailConfirmed(user))
-                    Errors.Add("email not confirmed");
+                    errors.Add("email not confirmed");
 
 
                 if (!await _userService.IsPhoneNumberConfirmed(user))
-                    Errors.Add("Tell not confirmed");
+                    errors.Add("Tell not confirmed");
 
                 return new AuthResponse
                 {
                     Success = false,
-                    Errors = Errors,
+                    Errors = errors,
                     ReturnUrl = returnUrl,
                 };
             }
@@ -141,7 +141,7 @@ public class AuthService : IAuthService
                 return new AuthResponse
                 {
                     Success = true,
-                    Errors = Errors,
+                    Errors = errors,
                     ReturnUrl = returnUrl,
                     Token = tokenAsString,
                     RefreshToken = refreshToken,
@@ -157,19 +157,19 @@ public class AuthService : IAuthService
 
             if (signinResult.IsLockedOut)
             {
-                Errors.Add("your account is lock");
+                errors.Add("your account is lock");
                 return new AuthResponse
                 {
                     Success=false,
-                    Errors = Errors,
+                    Errors = errors,
                 };
             }
         }
 
-        Errors.Add("user not found");
+        errors.Add("user not found");
         return new AuthResponse
         {
-            Errors=Errors,
+            Errors=errors,
             Success=false,
         };
     }

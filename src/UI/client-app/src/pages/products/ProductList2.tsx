@@ -84,7 +84,6 @@ const rows = [
 ];
 const deleteHandler = (e: any, row: any) => {
     e.stopPropagation();
-    alert(row.id);
 };
 
 const updateHandler = (e: any, row: any) => {

@@ -7,11 +7,14 @@ using Application.Features.Categories.Queries.GetCategories;
 using Application.Features.Categories.Commands.UpdateCategory;
 using Application.Features.Categories.Commands.CreateCategory;
 using Application.Features.Categories.Commands.DeleteCategory;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CategoriesController : AppController
     {
         public CategoriesController(ISender sender) : base(sender)
@@ -32,7 +35,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("create-category")]
-        public async Task<IActionResult> Postaaa([FromBody] CreateCategory createCategory)
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategory createCategory)
         {
             var command = new CreateCategoryCommand { CreateCategory = createCategory };
             return Ok(await Sender.Send(command));
@@ -40,7 +43,7 @@ namespace Api.Controllers
 
         // PUT: api/Categories/5
         [HttpPut("update-category")]
-        public async Task<ActionResult> Put([FromBody] UpdateCategory updateCategory)
+        public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategory updateCategory)
         {
             var command = new UpdateCategoryCommand { UpdateCategory = updateCategory };
             return Ok(await Sender.Send(command));
@@ -48,7 +51,7 @@ namespace Api.Controllers
 
         // DELETE: api/Categories/5
         [HttpDelete("delete-category")]
-        public async Task<IActionResult> Delete(DeleteCategory deleteCategory)
+        public async Task<IActionResult> DeleteCategory(DeleteCategory deleteCategory)
         {
             var command = new DeleteCategoryCommand { DeleteCategory = deleteCategory };
             return Ok(await Sender.Send(command));

@@ -21,41 +21,29 @@ function App() {
     useEffect(() => {
         (async () => {
             const userToken = Get('token');
-            if (!userToken) {
-                await getToken();
+            if (userToken === undefined || userToken === '' || userToken === null) {
+                navigate('/');
             } else {
                 const user = await GetCurrentUserByToken(userToken);
-                setUser(user.data.Data);
+                if (user) {
+                    setUser(user.data.Data);
+                }
                 navigate('/home');
             }
-
         })()
-    });
+    }, []);
 
-    const getToken = async () => {
-        const userToken = Get('token');
-        if (userToken) {
-            setToken(userToken);
-            const user = await GetCurrentUserByToken(userToken);
-            if (user) {
-                setUser(user.data.Data);
-                navigate('/home');
-            } else {
-                navigate('/');
-            }
-        }
-    }
     return (
         <>
             <Routes>
                 <Route path="/" element={<SignIn/>}/>
                 <Route path="/signUp" element={<SignUp/>}/>
-                <Route path="/" element={<ProtectedRouteHelper user={user}/>}>
-                    <Route path="/home" element={<Home/>}/>
-                    <Route path="/settings" element={<Settings/>}/>
-                    <Route path="/about" element={<About/>}/>
-                    <Route path="/analytics" element={<Analytics/>}/>
-                </Route>
+                {/*<Route path="/" element={<ProtectedRouteHelper user={user}/>}>*/}
+                <Route path="/home" element={<Home/>}/>
+                <Route path="/settings" element={<Settings/>}/>
+                <Route path="/about" element={<About/>}/>
+                <Route path="/analytics" element={<Analytics/>}/>
+                {/*</Route>*/}
                 <Route path="/products" element={<Products/>}/>
                 <Route path="*" element={<p>There's nothing here: 404!</p>}/>
             </Routes>
