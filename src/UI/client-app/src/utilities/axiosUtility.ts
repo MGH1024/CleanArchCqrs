@@ -9,16 +9,15 @@ const GetAuthorizationHeader = () => {
 }
 
 
-const axiosPublic = axios.create({
+const axiosUtility = axios.create({
     baseURL: process.env.REACT_APP_API_BASEURL,
     timeout: 3000,
     headers: {
         "Content-Type": "application/json",
-        // "Authorization": GetAuthorizationHeader()
     },
 });
 
-axiosPublic.interceptors.request.use((config) => {
+axiosUtility.interceptors.request.use((config) => {
     let tokenHeader = GetAuthorizationHeader();
     if (tokenHeader) {
         config.headers["Authorization"] = tokenHeader;
@@ -30,11 +29,10 @@ axiosPublic.interceptors.request.use((config) => {
 
     return config;
 }, function (error) {
-    // Do something with request error
     return Promise.reject(error);
 });
 
-axiosPublic.interceptors.response.use((response) => {
+axiosUtility.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     if (error.name === "AxiosError")
@@ -46,4 +44,4 @@ axiosPublic.interceptors.response.use((response) => {
     return Promise.reject(error);
 });
 
-export default axiosPublic;
+export default axiosUtility;

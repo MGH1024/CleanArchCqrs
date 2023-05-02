@@ -1,13 +1,14 @@
 import mem from "mem";
 import ISignIn from "../types/signIn";
 import {Set, Remove} from './localStorageService';
-import axiosPublic from "../utilities/axiosPublic";
+import axiosUtility from "../utilities/axiosUtility";
 import IGetUserByToken from "../types/getUserByToken";
 
 export const Login = async (values: ISignIn) => {
     const loginUrl = "/api/authentication/signin";
     return new Promise((resolve, reject) => {
-        axiosPublic({
+        debugger;
+        axiosUtility({
             method: 'post',
             url: loginUrl,
             data: {
@@ -27,7 +28,6 @@ export const Login = async (values: ISignIn) => {
                 }
                 Set("token", res.data.Token);
                 Set("validDate", res.data.TokenValidDate);
-
             })
             .catch((err) => {
                 reject(err);
@@ -48,7 +48,7 @@ export const memoizedToken = mem(Login, {
 export async function GetCurrentUserByToken(token: string | null) {
     const getUserByTokenUrl = "/api/authentication/get-user-by-token";
     return new Promise<IGetUserByToken>((resolve, reject) => {
-        axiosPublic.get(getUserByTokenUrl, {params: {token: token}})
+        axiosUtility.get(getUserByTokenUrl, {params: {token: token}})
             .then((res: any) => {
                 resolve(res);
             })

@@ -1,15 +1,17 @@
-﻿import React from 'react'
-import { Navigate } from 'react-router-dom'
+﻿import {useContext} from 'react'
+import {Navigate} from 'react-router-dom'
+import {UserContext} from "../contexts/userContext";
 
 type Protect = {
-    isSignedIn: any,
     children: any
 }
 
-function Protected({ isSignedIn, children }:Protect) {
-    if (!isSignedIn) {
-        return <Navigate to="/signin" replace />
+function Protected({children}: Protect) {
+    const user = useContext(UserContext);
+    if (user.user.username === '' || user.user.username === null) {
+        return <Navigate to="/signin" replace/>
     }
     return children
 }
+
 export default Protected

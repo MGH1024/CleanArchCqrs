@@ -1,10 +1,10 @@
-﻿import IGetCategoryById from "../types/getCategoryById";
-import axiosPublic from "../utilities/axiosPublic";
+﻿import axiosUtility from "../utilities/axiosUtility";
+import IGetCategoryById from "../types/getCategoryById";
 
 export const GetCategoryById = async (value: IGetCategoryById) => {
     const url = '/api/categories/get-category-by-id';
     return new Promise((resolve, reject) => {
-        axiosPublic({
+        axiosUtility({
             method: 'get',
             url: url,
             params: {

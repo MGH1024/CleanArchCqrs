@@ -10,4 +10,8 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\assets\fonts" />
+    <Folder Include="src\assets\images" />
+  </ItemGroup>
 </Project>

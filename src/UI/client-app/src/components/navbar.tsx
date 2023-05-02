@@ -1,23 +1,25 @@
 ﻿import * as React from 'react';
-import {styled, alpha} from '@mui/material/styles';
-import MuiAppBar from '@mui/material/AppBar';
+import {useContext} from 'react';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import {useAppStore} from "../utilities/appStore";
+import Badge from '@mui/material/Badge';
+import Toolbar from '@mui/material/Toolbar';
+import MuiAppBar from '@mui/material/AppBar';
 import {useNavigate} from 'react-router-dom';
+import MenuItem from '@mui/material/MenuItem';
+import InputBase from '@mui/material/InputBase';
+import MenuIcon from '@mui/icons-material/Menu';
+import MailIcon from '@mui/icons-material/Mail';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import {useAppStore} from "../utilities/appStore";
 import {Logout} from '../services/accountService';
+import {styled, alpha} from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import {UserContext} from "../contexts/userContext";
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const AppBar = styled(MuiAppBar, {})(({theme}) => ({
     zIndex: theme.zIndex.drawer + 1,
@@ -65,6 +67,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 
 export default function Navbar() {
     const navigate = useNavigate();
+    const {setUser} = useContext(UserContext)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -84,9 +87,15 @@ export default function Navbar() {
     };
 
     const handleMenuClose = async () => {
+        debugger;
         await Logout();
         setAnchorEl(null);
         handleMobileMenuClose();
+
+        setUser({
+            username: '',
+        });
+
         navigate('/signin');
     };
 
@@ -112,7 +121,7 @@ export default function Navbar() {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>SignOut</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem>My account</MenuItem>
         </Menu>
     );
 

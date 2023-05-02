@@ -1,11 +1,11 @@
 ﻿import * as React from 'react';
-import {useState} from "react";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import ISignIn from "../types/signIn";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
@@ -16,6 +16,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {UserContext} from "../contexts/userContext";
 
 
 function Copyright(props: any) {
@@ -35,7 +36,14 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
+
+    const {setUser} = useContext(UserContext)
+    
+    
     let navigate = useNavigate();
+    
+    
+    
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [rememberMe, setRememberMe] = useState(true)
@@ -61,9 +69,12 @@ export default function SignIn() {
             password: password,
             rememberMe: rememberMe,
         };
-        await Login(values);
         debugger;
+        await Login(values);
 
+        setUser({
+            username : values.username,
+        });
         navigate("/");
 
     };
