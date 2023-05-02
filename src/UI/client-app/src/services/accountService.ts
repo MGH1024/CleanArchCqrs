@@ -17,6 +17,7 @@ export const Login = async (values: ISignIn) => {
             }
         })
             .then((res) => {
+                debugger;
                 resolve(res);
                 const {appSession} = res.data;
 
@@ -53,4 +54,10 @@ export async function GetCurrentUserByToken(token: string | null) {
             })
             .catch((err) => reject(err));
     })
+}
+
+export async function Logout() {
+    Remove('my-app-store');
+    Remove('validDate');
+    Remove('token');
 }

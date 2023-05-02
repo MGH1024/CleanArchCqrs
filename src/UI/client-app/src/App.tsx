@@ -6,11 +6,11 @@ import Products from "./pages/products";
 import Settings from "./pages/settings";
 import {useEffect, useState} from 'react'
 import Analytics from "./pages/analytics";
+import Protected from "./utilities/protected";
 import {Get} from './services/localStorageService';
 import IGetUserByToken from "./types/getUserByToken";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 import {GetCurrentUserByToken} from './services/accountService';
-import ProtectedRouteHelper from "./utilities/ProtectedRouteHelper";
 
 
 function App() {
@@ -18,33 +18,65 @@ function App() {
     const [user, setUser] = useState<IGetUserByToken>();
     const [token, setToken] = useState<string | null>(null);
 
+
+    const [isSignedIn, setIsSignedIn] = useState<boolean>(true)
+
     useEffect(() => {
         (async () => {
             const userToken = Get('token');
             if (userToken === undefined || userToken === '' || userToken === null) {
-                navigate('/');
+                setIsSignedIn(false)
             } else {
-                const user = await GetCurrentUserByToken(userToken);
-                if (user) {
-                    setUser(user.data.Data);
+                const userObj = await GetCurrentUserByToken(userToken);
+                if (userObj) {
+                    setUser(userObj.data.Data);
+                    setIsSignedIn(true)
                 }
-                navigate('/home');
             }
+            navigate('/');
         })()
     }, []);
 
     return (
         <>
             <Routes>
-                <Route path="/" element={<SignIn/>}/>
+                <Route path="/signIn" element={<SignIn/>}/>
                 <Route path="/signUp" element={<SignUp/>}/>
-                {/*<Route path="/" element={<ProtectedRouteHelper user={user}/>}>*/}
-                <Route path="/home" element={<Home/>}/>
-                <Route path="/settings" element={<Settings/>}/>
-                <Route path="/about" element={<About/>}/>
-                <Route path="/analytics" element={<Analytics/>}/>
-                {/*</Route>*/}
-                <Route path="/products" element={<Products/>}/>
+                <Route path="/" element={<Home/>}/>
+                <Route
+                    path="/analytics"
+                    element={
+                        <Protected isSignedIn={isSignedIn}>
+                            <Analytics/>
+                        </Protected>
+                    }
+                />
+
+                <Route
+                    path="/settings"
+                    element={
+                        <Protected isSignedIn={isSignedIn}>
+                            <Settings/>
+                        </Protected>
+                    }
+                />
+                <Route
+                    path="/about"
+                    element={
+                        <Protected isSignedIn={isSignedIn}>
+                            <About/>
+                        </Protected>
+                    }
+                />
+                <Route
+                    path="/products"
+                    element=
+                        {
+                            <Protected isSignedIn={isSignedIn}>
+                                <Products/>
+                            </Protected>
+                        }
+                />
                 <Route path="*" element={<p>There's nothing here: 404!</p>}/>
             </Routes>
         </>

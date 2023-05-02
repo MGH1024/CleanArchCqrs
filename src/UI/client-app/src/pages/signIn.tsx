@@ -1,25 +1,25 @@
 ﻿import * as React from 'react';
+import {useState} from "react";
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import ISignIn from "../types/signIn";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useState} from "react";
-import ISignIn from "../types/signIn";
-import {Login} from "../services/accountService";
 import {useNavigate} from "react-router-dom";
+import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
+import Container from '@mui/material/Container';
+import {Login} from "../services/accountService";
+import Typography from '@mui/material/Typography';
+import CssBaseline from '@mui/material/CssBaseline';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 
 
 function Copyright(props: any) {
-    
+
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
@@ -35,7 +35,7 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
-    let history = useNavigate();
+    let navigate = useNavigate();
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [rememberMe, setRememberMe] = useState(true)
@@ -55,14 +55,16 @@ export default function SignIn() {
         if (password == '') {
             setPasswordError(true)
         }
-        
+
         let values: ISignIn = {
             username: username,
             password: password,
             rememberMe: rememberMe,
         };
         await Login(values);
-        history("/home");
+        debugger;
+
+        navigate("/");
 
     };
     const handleRememberMeChange = (event: React.ChangeEvent<HTMLInputElement>) => {

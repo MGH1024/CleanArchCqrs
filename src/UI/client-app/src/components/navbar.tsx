@@ -16,6 +16,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {useAppStore} from "../utilities/appStore";
+import {useNavigate} from 'react-router-dom';
+import {Logout} from '../services/accountService';
 
 const AppBar = styled(MuiAppBar, {})(({theme}) => ({
     zIndex: theme.zIndex.drawer + 1,
@@ -62,12 +64,13 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 export default function Navbar() {
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
 
     const updateOpen = useAppStore((state: any) => state.updateOpen);
-    const doOpen=useAppStore((state:any)=>state.doOpen);
+    const doOpen = useAppStore((state: any) => state.doOpen);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -80,9 +83,11 @@ export default function Navbar() {
         setMobileMoreAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
+    const handleMenuClose = async () => {
+        await Logout();
         setAnchorEl(null);
         handleMobileMenuClose();
+        navigate('/signin');
     };
 
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -106,7 +111,7 @@ export default function Navbar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleMenuClose}>SignOut</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
@@ -165,7 +170,7 @@ export default function Navbar() {
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position="fixed" elevation={0} sx={{backgroundColor: "#ffffff",color:"#2f2f2f"}}>
+            <AppBar position="fixed" elevation={0} sx={{backgroundColor: "#ffffff", color: "#2f2f2f"}}>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -173,7 +178,7 @@ export default function Navbar() {
                         color="inherit"
                         aria-label="open drawer"
                         sx={{mr: 2}}
-                        onClick={()=>updateOpen(!doOpen)}
+                        onClick={() => updateOpen(!doOpen)}
                     >
                         <MenuIcon/>
                     </IconButton>
@@ -183,7 +188,7 @@ export default function Navbar() {
                         component="div"
                         sx={{display: {xs: 'none', sm: 'block'}}}
                     >
-                        MUI
+                        MGH1024
                     </Typography>
                     <Search>
                         <SearchIconWrapper>
