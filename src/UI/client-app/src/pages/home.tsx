@@ -12,7 +12,7 @@ import '../assets/css/Dash.css' ;
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import BarChart from "../charts/BarChart";
+import BarChart from "../components/charts/BarChart";
 import CountUp from 'react-countup';
 
 export default function Home() {

@@ -1,27 +1,17 @@
-﻿import { AlertColor } from '@mui/material';
-import {createContext, Dispatch, ReactNode, SetStateAction, useState} from 'react';
+﻿import IUser from '../types/context/user';
+import IToast from "../types/context/toast";
+import {createContext, ReactNode, useState} from 'react';
+import IUserContextInterface from "../types/context/userContextInterface";
 
-export type User = {
-    username: string
-}
-
-type Toast = {message: string, show: boolean, severity: AlertColor | undefined}
-
-export interface UserContextInterface {
-    user: User
-    setUser: Dispatch<SetStateAction<User>>
-    showToast: Toast
-    setShowToast: Function
-}
 
 const defaultState = {
     user: {
         username: '',
     },
-    setUser: (user: User) => {
+    setUser: (user: IUser) => {
     },
     showToast: {message: '', severity: 'success', show: false},
-} as UserContextInterface
+} as IUserContextInterface
 export const AppContext = createContext(defaultState)
 
 
@@ -29,10 +19,10 @@ type UserProviderProps = {
     children: ReactNode
 }
 export default function UserProvider({children}: UserProviderProps) {
-    const [user, setUser] = useState<User>({
-        username: '', 
+    const [user, setUser] = useState<IUser>({
+        username: '',
     });
-    const [showToast, setShowToast] = useState<Toast>({message: '', severity: 'success', show: false});
+    const [showToast, setShowToast] = useState<IToast>({message: '', severity: 'success', show: false});
     return (
         <AppContext.Provider value={{user, setUser, showToast, setShowToast}}>
             {children}

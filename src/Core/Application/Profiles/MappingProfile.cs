@@ -22,12 +22,12 @@ public class MappingProfile : Profile
 
         //product
         CreateMap<Product, CreateProduct>().ReverseMap();
-        CreateMap<Product, ProductDetail>().ReverseMap();
+        CreateMap<Product, ProductDetail>()
+            .ForMember(dest => dest.CategoryTitle,
+                a
+                    => a.MapFrom(src => src.Category.Title));
 
         //Identity
         CreateMap<CreateUser, User>();
-
-
-
     }
 }

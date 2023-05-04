@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import {
     DataGrid,
     GridColDef,
-    GridValueGetterParams,
     GridToolbar,
 } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
@@ -24,7 +23,7 @@ export default function ProductList() {
     }, [])
 
     const fetchProducts = async () => {
-        let productsList: any = await GetProducts();
+        let productsList = await GetProducts();
         setProducts(productsList);
     }
 
@@ -49,11 +48,11 @@ export default function ProductList() {
             align: 'center'
         },
         {
-            field: 'CategoryId',
-            headerName: 'CategoryId',
-            minWidth: 40,
+            field: 'CategoryTitle',
+            headerName: 'CategoryTitle',
+            minWidth: 140,
             editable: true,
-            type: 'number',
+            type: 'string',
             align: 'center',
             headerAlign: 'left'
         },

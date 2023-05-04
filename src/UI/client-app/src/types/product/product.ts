@@ -7,4 +7,5 @@
     Order: number,
     Quantity: number,
     Title: string,
+    CategoryTitle :string,
 }

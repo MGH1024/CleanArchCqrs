@@ -2,9 +2,11 @@
 import axiosUtility from "../utilities/axiosUtility";
 import IGetProductById from "../types/product/getProductById";
 import IProduct from "../types/product/product";
+import ICreateProductResponse from "../types/product/createProductResponse";
 
-export const CreateCategory = async (value: IAddProduct) => {
+export const CreateProduct = async (value: IAddProduct): Promise<ICreateProductResponse> => {
     return new Promise((resolve, reject) => {
+        debugger;
         axiosUtility({
             method: 'post',
             url: '/api/products/create-product',
@@ -12,13 +14,15 @@ export const CreateCategory = async (value: IAddProduct) => {
                 code: value.code,
                 title: value.title,
                 quantity: value.quantity,
-                categoryId:value.categoryId,
+                categoryId: value.categoryId,
                 description: value.description,
             }
         })
             .then((res) => {
                 debugger;
-                resolve(res);
+                if (res.data.Success)
+                    resolve(res.data);
+                resolve({Id: 0, Success: false, Message: 'create product failed'})
             })
             .catch((err) => {
                 reject(err);
@@ -27,15 +31,16 @@ export const CreateCategory = async (value: IAddProduct) => {
 }
 
 
-export const GetProducts = async () => {
-    const url = '/api/products';
+export const GetProducts = async (): Promise<IProduct[]> => {
     return new Promise((resolve, reject) => {
         axiosUtility({
-            url: url,
+            url: '/api/products',
             method: 'get',
         })
             .then((res) => {
-                resolve(res.data.Data);
+                if (res.data.Success)
+                    resolve(res.data.Data);
+                resolve([]);
             })
             .catch((err) => {
                 reject(err);
@@ -44,7 +49,7 @@ export const GetProducts = async () => {
 }
 
 
-export const GetProductById = async (value: IGetProductById) : Promise<IProduct> => {
+export const GetProductById = async (value: IGetProductById): Promise<IProduct> => {
     return new Promise((resolve, reject) => {
         axiosUtility({
             method: 'get',
@@ -54,7 +59,19 @@ export const GetProductById = async (value: IGetProductById) : Promise<IProduct>
             }
         })
             .then((res) => {
-                resolve(res.data.Data);
+                if (res.data.Success)
+                    resolve(res.data.Data);
+                resolve({
+                    Id: 0,
+                    Title: '',
+                    CategoryId: 0,
+                    Code: 0,
+                    Order: 0,
+                    CreatedDate: new Date(),
+                    Quantity: 0,
+                    Description: '',
+                    CategoryTitle: ''
+                })
             })
             .catch((err) => {
                 reject(err);

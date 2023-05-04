@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import CssBaseline from '@mui/material/CssBaseline';
-import {CreateCategory, GetProductById} from "../../services/productService";
+import {CreateProduct, GetProductById} from "../../services/productService";
 import {GetCategories} from "../../services/categoryServices";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import IProduct from "../../types/product/product";
@@ -106,7 +106,7 @@ export default function EditProduct() {
                 categoryId,
                 description,
             });
-            let result: any = await CreateCategory({
+            let result: any = await CreateProduct({
                 code,
                 title,
                 quantity,

@@ -1,9 +1,10 @@
 import ISignIn from "../types/signIn";
 import {Set, Remove} from './localStorageService';
 import axiosUtility from "../utilities/axiosUtility";
-import IGetUserByToken from "../types/getUserByToken";
+import IAuthResponse from "../types/auth/authRespose";
+import ICurrentUser from "../types/auth/currentUser";
 
-export const Login = async (values: ISignIn) => {
+export const Login = async (values: ISignIn): Promise<IAuthResponse> => {
     return new Promise((resolve, reject) => {
         axiosUtility({
             method: 'post',
@@ -15,14 +16,8 @@ export const Login = async (values: ISignIn) => {
             }
         })
             .then((res) => {
+                resolve(res.data);
                 if (res.status === 200) {
-                    resolve(res);
-                    const {appSession} = res.data;
-
-                    if (!appSession?.Token) {
-                        Remove("token");
-                        Remove("validDate");
-                    }
                     Set("token", res.data.Token);
                     Set("validDate", res.data.TokenValidDate);
                 }
@@ -35,12 +30,13 @@ export const Login = async (values: ISignIn) => {
     })
 }
 
-export async function GetCurrentUserByToken(token: string | null) {
+export const GetCurrentUserByToken = async (token: string) : Promise<ICurrentUser> => {
     const getUserByTokenUrl = "/api/authentication/get-user-by-token";
-    return new Promise<IGetUserByToken>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         axiosUtility.get(getUserByTokenUrl, {params: {token: token}})
-            .then((res: any) => {
-                resolve(res);
+            .then((res) => {
+                if(res.data.Success)
+                    resolve(res.data.Data);
             })
             .catch((err) => reject(err));
     })

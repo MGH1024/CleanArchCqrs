@@ -7,6 +7,7 @@ type Protect = {
 }
 
 function Protected({children}: Protect) {
+    debugger;
     const user = useContext(AppContext);
     if (user.user.username === '' || user.user.username === null) {
         return <Navigate to="/signin" replace/>

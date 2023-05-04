@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import CssBaseline from '@mui/material/CssBaseline';
-import {CreateCategory} from "../../services/productService";
+import {CreateProduct} from "../../services/productService";
 import {GetCategories} from "../../services/categoryServices";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {AppContext} from "../../contexts/appContext";
@@ -28,7 +28,7 @@ export default function AddProduct() {
     }, [])
 
     const fetchCategories = async () => {
-        let categories: any = await GetCategories();
+        let categories = await GetCategories();
         setCategories(categories);
     }
 
@@ -53,19 +53,19 @@ export default function AddProduct() {
         if (value)
             setCategoryIdError(false);
     };
-    const handleTitleChange = (event: any) => {
+    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = event.target.value;
         setTitle(value);
         if (value)
             setTitleError(false);
     }
-    const handleQuantityChange = (event: any) => {
+    const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = parseInt(event.currentTarget.value);
         setQuantity(value);
         if (value)
             setQuantityError(false);
     }
-    const handleCodeChange = (event: any) => {
+    const handleCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = parseInt(event.currentTarget.value);
         setCode(value);
         if (value)
@@ -84,7 +84,7 @@ export default function AddProduct() {
         if (!categoryId)
             setCategoryIdError(true);
 
-
+        debugger;
         if (title && code && quantity && categoryId) {
 
             console.log({
@@ -94,14 +94,15 @@ export default function AddProduct() {
                 categoryId,
                 description,
             });
-            let result: any = await CreateCategory({
+            let result = await CreateProduct({
                 code,
                 title,
                 quantity,
                 categoryId,
                 description,
             });
-            if (result.data.Success === true) {
+            debugger;
+            if (result.Success) {
                 setShowToast({message: 'New product created', show: true, severity: 'success'})
                 navigate(`/products`);
             }

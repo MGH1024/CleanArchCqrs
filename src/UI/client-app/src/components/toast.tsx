@@ -15,7 +15,7 @@ export default function Toast() {
     const {showToast, setShowToast} = useContext(AppContext);
     return (
 
-        <Snackbar open={showToast.show} autoHideDuration={8000} onClose={() => {
+        <Snackbar open={showToast.show} autoHideDuration={1000} onClose={() => {
             setShowToast({show: false})
         }}>
             <Alert onClose={() => {
