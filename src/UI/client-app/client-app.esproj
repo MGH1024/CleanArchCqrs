@@ -11,7 +11,6 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\assets\fonts" />
-    <Folder Include="src\assets\images" />
+    <Folder Include="src\assets" />
   </ItemGroup>
 </Project>

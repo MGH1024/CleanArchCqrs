@@ -1,8 +1,9 @@
 ﻿import React from "react";
 import Box from '@mui/material/Box';
-import Sidenav from "../components/sidenav";
-import Navbar from "../components/navbar";
-import ProductList2 from "./products/ProductList2";
+import Sidenav from "../../components/sidenav";
+import Navbar from "../../components/navbar";
+import ProductList from "./ProductList";
+import Toast from "../../components/toast";
 
 export default function Products() {
     return (
@@ -13,7 +14,8 @@ export default function Products() {
                 <Box sx={{display: "flex"}}>
                     <Sidenav/>
                     <Box component="main" sx={{flexGrow: 1, p: 3}}>
-                        <ProductList2 />
+                        <Toast/>
+                        <ProductList />
                     </Box>
                 </Box>
             </div>

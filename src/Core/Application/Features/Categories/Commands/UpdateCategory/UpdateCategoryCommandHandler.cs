@@ -1,6 +1,7 @@
 ﻿using Application.Responses;
 using Application.Contracts.Messaging;
 using Application.Contracts.Persistence;
+using Application.Exceptions;
 
 namespace Application.Features.Categories.Commands.UpdateCategory;
 
@@ -21,11 +22,7 @@ public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryComman
             .GetByIdAsync(request.UpdateCategory.Id);
 
         if (category is null)
-            return new BaseCommandResponse
-            {
-                Success = false,
-                Message = "category is null. update failed"
-            };
+            throw new BadRequestException("category not found");
 
         category.Title = request.UpdateCategory.Title;
         category.Code = request.UpdateCategory.Code;

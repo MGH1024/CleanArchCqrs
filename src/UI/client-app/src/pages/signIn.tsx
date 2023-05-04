@@ -2,7 +2,6 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import ISignIn from "../types/signIn";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import {useContext, useState} from "react";
@@ -13,10 +12,10 @@ import Container from '@mui/material/Container';
 import {Login} from "../services/accountService";
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
+import {AppContext} from "../contexts/appContext";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {UserContext} from "../contexts/userContext";
 
 
 function Copyright(props: any) {
@@ -37,46 +36,46 @@ const theme = createTheme();
 
 export default function SignIn() {
 
-    const {setUser} = useContext(UserContext)
-    
-    
-    let navigate = useNavigate();
-    
-    
-    
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [rememberMe, setRememberMe] = useState(true)
+    const {setUser} = useContext(AppContext)
 
-    const [usernameError, setUsernameError] = useState(false)
-    const [passwordError, setPasswordError] = useState(false)
+
+    let navigate = useNavigate();
+
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [loginFailedMessage, setLoginFailedMessage] = useState("");
+    const [rememberMe, setRememberMe] = useState(true);
+    const [usernameError, setUsernameError] = useState<boolean>(false);
+    const [passwordError, setPasswordError] = useState<boolean>(false);
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        setUsernameError(false)
-        setPasswordError(false)
-
-        if (username == '') {
-            setUsernameError(true)
+        if (!username || !password) {
+            if (!username) {
+                setUsernameError(true);
+            }
+            if (!password) {
+                setPasswordError(true);
+            }
+            return;
         }
-        if (password == '') {
-            setPasswordError(true)
-        }
 
-        let values: ISignIn = {
-            username: username,
-            password: password,
-            rememberMe: rememberMe,
-        };
-        debugger;
-        await Login(values);
-
-        setUser({
-            username : values.username,
+        let result: any = await Login({
+            username,
+            password,
+            rememberMe,
         });
-        navigate("/");
 
+        if (result.data.Success === true) {
+            setUser({
+                username: username,
+            });
+            navigate("/");
+        } else {
+            setLoginFailedMessage("Login failed");
+        }
     };
     const handleRememberMeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -113,7 +112,12 @@ export default function SignIn() {
                             autoFocus
                             value={username}
                             error={usernameError}
-                            onChange={e => setUsername(e.target.value)}
+                            onChange={(e) => {
+                                const value = e.target.value
+                                setUsername(value);
+                                if (value)
+                                    setUsernameError(false);
+                            }}
                         />
                         <TextField
                             margin="normal"
@@ -126,7 +130,12 @@ export default function SignIn() {
                             autoComplete="current-password"
                             value={password}
                             error={passwordError}
-                            onChange={e => setPassword(e.target.value)}
+                            onChange={(e) => {
+                                const value = e.target.value
+                                setPassword(value);
+                                if (value)
+                                    setPasswordError(false);
+                            }}
                         />
 
                         <FormControlLabel
@@ -150,6 +159,8 @@ export default function SignIn() {
                         >
                             Sign In
                         </Button>
+
+                        <Typography variant="h6">{loginFailedMessage}</Typography>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
@@ -164,6 +175,7 @@ export default function SignIn() {
                         </Grid>
                     </Box>
                 </Box>
+
                 <Copyright sx={{mt: 8, mb: 4}}/>
             </Container>
         </ThemeProvider>

@@ -8,9 +8,9 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import '../assets/css/Dash.css' ;
-import {GeoChart} from "../charts/GeoChart";
-import PieChart from "../charts/PieChart";
-import {HBarChart} from "../charts/HBarChart";
+import {GeoChart} from "../components/charts/GeoChart";
+import PieChart from "../components/charts/PieChart";
+import {HBarChart} from "../components/charts/HBarChart";
 import CountUp from 'react-countup';
 
 export default function Analytics() {

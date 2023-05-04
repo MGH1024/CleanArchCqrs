@@ -1,16 +1,13 @@
-import mem from "mem";
 import ISignIn from "../types/signIn";
 import {Set, Remove} from './localStorageService';
 import axiosUtility from "../utilities/axiosUtility";
 import IGetUserByToken from "../types/getUserByToken";
 
 export const Login = async (values: ISignIn) => {
-    const loginUrl = "/api/authentication/signin";
     return new Promise((resolve, reject) => {
-        debugger;
         axiosUtility({
             method: 'post',
-            url: loginUrl,
+            url: '/api/authentication/signin',
             data: {
                 username: values.username,
                 password: values.password,
@@ -18,16 +15,17 @@ export const Login = async (values: ISignIn) => {
             }
         })
             .then((res) => {
-                debugger;
-                resolve(res);
-                const {appSession} = res.data;
+                if (res.status === 200) {
+                    resolve(res);
+                    const {appSession} = res.data;
 
-                if (!appSession?.Token) {
-                    Remove("token");
-                    Remove("validDate");
+                    if (!appSession?.Token) {
+                        Remove("token");
+                        Remove("validDate");
+                    }
+                    Set("token", res.data.Token);
+                    Set("validDate", res.data.TokenValidDate);
                 }
-                Set("token", res.data.Token);
-                Set("validDate", res.data.TokenValidDate);
             })
             .catch((err) => {
                 reject(err);
@@ -36,14 +34,6 @@ export const Login = async (values: ISignIn) => {
             });
     })
 }
-
-
-const maxAge = 10000;
-
-export const memoizedToken = mem(Login, {
-    maxAge,
-});
-
 
 export async function GetCurrentUserByToken(token: string | null) {
     const getUserByTokenUrl = "/api/authentication/get-user-by-token";

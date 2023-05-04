@@ -36,10 +36,10 @@ axiosUtility.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     if (error.name === "AxiosError")
-        window.location.href = "/";
+        window.location.href = "/signin";
     if (error.response.status === 401 || error.response.status === 404) {
         localStorage.clear();
-        window.location.href = "/";
+        window.location.href = "/signin";
     }
     return Promise.reject(error);
 });

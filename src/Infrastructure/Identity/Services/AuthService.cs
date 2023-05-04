@@ -146,7 +146,7 @@ public class AuthService : IAuthService
                     Token = tokenAsString,
                     RefreshToken = refreshToken,
                     TokenValidDate = tokenValidDate,
-                    SuccessMessage = "token successfully returned",
+                    SuccessMessage = "successfully login!",
                 };
             }
 

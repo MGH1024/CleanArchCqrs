@@ -17,7 +17,7 @@ import {Logout} from '../services/accountService';
 import {styled, alpha} from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import {UserContext} from "../contexts/userContext";
+import {AppContext} from "../contexts/appContext";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
@@ -67,7 +67,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 
 export default function Navbar() {
     const navigate = useNavigate();
-    const {setUser} = useContext(UserContext)
+    const {setUser} = useContext(AppContext)
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
         React.useState<null | HTMLElement>(null);
@@ -87,7 +87,6 @@ export default function Navbar() {
     };
 
     const handleMenuClose = async () => {
-        debugger;
         await Logout();
         setAnchorEl(null);
         handleMobileMenuClose();
