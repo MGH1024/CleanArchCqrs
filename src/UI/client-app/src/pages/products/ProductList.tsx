@@ -135,13 +135,13 @@ export default function ProductList() {
     ]
 
 
-    const updateHandler = (e: any, row: any) => {
+    const updateHandler = (e: React.MouseEvent<SVGSVGElement, MouseEvent>, row: any) => {
         e.stopPropagation();
         navigate(`/products/${row.Id}`);
     };
 
 
-    const deleteHandler = (e: any, row: any) => {
+    const deleteHandler = (e: React.MouseEvent<SVGSVGElement>, row: any) => {
         setProductId(row.Id);
         setOpenDialog(true);
     };
@@ -157,11 +157,11 @@ export default function ProductList() {
             navigate('/products');
         }
     };
-  
+
     const handleDialogClose = () => {
         setOpenDialog(false);
     };
-    
+
 
     return (
         <>
