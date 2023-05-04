@@ -17,12 +17,12 @@ public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand,
 
     public async Task<BaseCommandResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.DeleteProduct.Id);
+        var product = await _unitOfWork.ProductRepository.GetByIdAsync(request.DeleteProduct.Id);
 
-        if (category is null)
+        if (product is null)
             throw new BadRequestException("product not found");
 
-        _unitOfWork.CategoryRepository.DeleteCategory(category);
+        _unitOfWork.ProductRepository.DeleteProduct(product);
         await _unitOfWork.Save();
         return new BaseCommandResponse
         {

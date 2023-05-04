@@ -13,18 +13,29 @@ import Button from '@mui/material/Button';
 import {useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import IProduct from "../../types/product/product";
-import {GetProducts} from "../../services/productService";
+import {GetProducts, DeleteProduct} from "../../services/productService";
+import {AppContext} from "../../contexts/appContext";
+import {useContext} from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 export default function ProductList() {
+    const {showToast, setShowToast} = useContext(AppContext);
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [productId, setProductId] = useState<number>(0);
+
     let navigate = useNavigate();
     useEffect(() => {
         fetchProducts();
     }, [])
 
     const fetchProducts = async () => {
-        let productsList = await GetProducts();
-        setProducts(productsList);
+        let productList = await GetProducts();
+        setProducts(productList);
     }
 
     const [products, setProducts] = useState<IProduct[]>([]);
@@ -113,7 +124,6 @@ export default function ProductList() {
                             <EditIcon
                                 onClick={(e) => updateHandler(e, params.row)}
                                 color="success"/>
-
                             <DeleteIcon
                                 onClick={(e) => deleteHandler(e, params.row)}
                                 color="error"/>
@@ -124,14 +134,34 @@ export default function ProductList() {
         }
     ]
 
-    const deleteHandler = (e: any, row: any) => {
-        e.stopPropagation();
-    };
 
     const updateHandler = (e: any, row: any) => {
         e.stopPropagation();
         navigate(`/products/${row.Id}`);
     };
+
+
+    const deleteHandler = (e: any, row: any) => {
+        setProductId(row.Id);
+        setOpenDialog(true);
+    };
+
+    const handleDelete_Main = async () => {
+        setOpenDialog(false);
+        const result = await DeleteProduct({
+            Id: productId
+        });
+        if (result.Success) {
+            setShowToast({message: 'product deleted', show: true, severity: 'success'})
+            setProducts(products.filter(p => p.Id !== productId));
+            navigate('/products');
+        }
+    };
+  
+    const handleDialogClose = () => {
+        setOpenDialog(false);
+    };
+    
 
     return (
         <>
@@ -159,6 +189,26 @@ export default function ProductList() {
                     />
                 </Box>
             </Paper>
+
+            <Dialog
+                open={openDialog}
+                onClose={handleDialogClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Are you sure about delete this product?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        please confirm or cancel!
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button color='error' variant="contained" onClick={handleDelete_Main}>Delete</Button>
+                    <Button color='primary' variant="contained" onClick={handleDialogClose}>Cancel</Button>
+                </DialogActions>
+            </Dialog>
         </>
     );
 }

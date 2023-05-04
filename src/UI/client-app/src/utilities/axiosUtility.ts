@@ -11,7 +11,7 @@ const GetAuthorizationHeader = () => {
 
 const axiosUtility = axios.create({
     baseURL: process.env.REACT_APP_API_BASEURL,
-    timeout: 3000,
+    timeout: 6000,
     headers: {
         "Content-Type": "application/json",
     },
@@ -35,11 +35,11 @@ axiosUtility.interceptors.request.use((config) => {
 axiosUtility.interceptors.response.use((response) => {
     return response;
 }, (error) => {
+    console.log(error);
     if (error.name === "AxiosError")
-        window.location.href = "/signin";
-    if (error.response.status === 401 || error.response.status === 404) {
-        localStorage.clear();
-        window.location.href = "/signin";
+        window.location.href = "/badRequestPage";
+    if (error.response.status === 401 || error.response.status === 404 || error.response.status === 415) {
+        window.location.href = "/badRequestPage";
     }
     return Promise.reject(error);
 });

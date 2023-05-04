@@ -26,7 +26,7 @@ public class ProductRepository : IProductRepository
         return await _appDbContext
             .Products
             .Include(a => a.Category)
-            .Where(a=>a.IsActive==true)
+            .Where(a => a.IsActive == true)
             .ToListAsync();
     }
 
@@ -35,7 +35,7 @@ public class ProductRepository : IProductRepository
         return await _appDbContext
             .Products
             .Include(a => a.Category)
-            .Where(a=>a.IsUpdated==true)
+            .Where(a => a.IsUpdated == true)
             .ToListAsync();
     }
 
@@ -44,7 +44,7 @@ public class ProductRepository : IProductRepository
         return await _appDbContext
             .Products
             .Include(a => a.Category)
-            .Where(a=>a.IsDeleted==true)
+            .Where(a => a.IsDeleted == true)
             .ToListAsync();
     }
 
@@ -52,7 +52,7 @@ public class ProductRepository : IProductRepository
     {
         return await _appDbContext
             .Products
-            .Include(a=>a.Category)
+            .Include(a => a.Category)
             .FirstOrDefaultAsync(a => a.Id == productId);
     }
 
@@ -76,7 +76,7 @@ public class ProductRepository : IProductRepository
     {
         return await _appDbContext
             .Products
-            .Include(a=>a.Category)
+            .Include(a => a.Category)
             .Where(a => a.Title == title)
             .FirstAsync();
     }

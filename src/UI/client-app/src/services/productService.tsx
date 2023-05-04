@@ -1,10 +1,28 @@
-﻿import IAddProduct from "../types/product/addProduct";
+﻿import IProduct from "../types/product/product";
 import axiosUtility from "../utilities/axiosUtility";
-import IGetProductById from "../types/product/getProductById";
-import IProduct from "../types/product/product";
-import ICommandResponse from "../types/responses/commandResponse";
+import IAddProduct from "../types/product/addProduct";
 import IUpdateProduct from "../types/product/updateProduct";
+import IDeleteProduct from "../types/product/deleteProduct";
+import IGetProductById from "../types/product/getProductById";
+import ICommandResponse from "../types/responses/commandResponse";
 
+
+export const GetProducts = async (): Promise<IProduct[]> => {
+    return new Promise((resolve, reject) => {
+        axiosUtility({
+            url: '/api/products',
+            method: 'get',
+        })
+            .then((res) => {
+                if (res.data.Success)
+                    resolve(res.data.Data);
+                resolve([]);
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    })
+}
 export const CreateProduct = async (value: IAddProduct): Promise<ICommandResponse> => {
     return new Promise((resolve, reject) => {
         axiosUtility({
@@ -31,8 +49,6 @@ export const CreateProduct = async (value: IAddProduct): Promise<ICommandRespons
             });
     })
 }
-
-
 export const UpdateProduct = async (value: IUpdateProduct): Promise<ICommandResponse> => {
 
     return new Promise((resolve, reject) => {
@@ -50,41 +66,17 @@ export const UpdateProduct = async (value: IUpdateProduct): Promise<ICommandResp
             }
         })
             .then((res) => {
-                //resolve(res);
-        
                 if (res.data.Success) {
                     resolve(res.data);
                 } else {
                     resolve({Id: 0, Success: false, Message: 'create product failed'})
                 }
-
             })
             .catch((err) => {
                 reject(err);
             });
     })
 }
-
-
-
-export const GetProducts = async (): Promise<IProduct[]> => {
-    return new Promise((resolve, reject) => {
-        axiosUtility({
-            url: '/api/products',
-            method: 'get',
-        })
-            .then((res) => {
-                if (res.data.Success)
-                    resolve(res.data.Data);
-                resolve([]);
-            })
-            .catch((err) => {
-                reject(err);
-            });
-    })
-}
-
-
 export const GetProductById = async (value: IGetProductById): Promise<IProduct> => {
     return new Promise((resolve, reject) => {
         axiosUtility({
@@ -108,6 +100,27 @@ export const GetProductById = async (value: IGetProductById): Promise<IProduct> 
                     Description: '',
                     CategoryTitle: ''
                 })
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    })
+}
+export const DeleteProduct = async (value: IDeleteProduct): Promise<ICommandResponse> => {
+    return new Promise((resolve, reject) => {
+        axiosUtility({
+            method: 'delete',
+            url: '/api/products/delete-product',
+            data: {
+                Id: value.Id
+            }
+        })
+            .then((res) => {
+                if (res.data.Success) {
+                    resolve(res.data);
+                } else {
+                    resolve({Id: 0, Success: false, Message: 'create product failed'})
+                }
             })
             .catch((err) => {
                 reject(err);
