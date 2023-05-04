@@ -1,5 +1,6 @@
 ﻿export default interface ICreateProductResponse{
     Success:boolean,
     Message :string,
-    Id : number
+    Id : number,
+    Errors?: string[],
 }

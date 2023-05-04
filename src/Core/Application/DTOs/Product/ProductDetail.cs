@@ -6,4 +6,5 @@ public class ProductDetail : ProductDto
 {
     public int Order { get; set; }
     public string CreatedDate { get; set; }
+    public string CategoryTitle { get; set; }
 }

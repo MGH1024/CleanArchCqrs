@@ -20,9 +20,12 @@ export const CreateProduct = async (value: IAddProduct): Promise<ICreateProductR
         })
             .then((res) => {
                 debugger;
-                if (res.data.Success)
+                if (res.data.Success) {
                     resolve(res.data);
-                resolve({Id: 0, Success: false, Message: 'create product failed'})
+                } else {
+                    resolve({Id: 0, Success: false, Message: 'create product failed'})
+                }
+
             })
             .catch((err) => {
                 reject(err);
