@@ -17,7 +17,6 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {AppContext} from "../../contexts/appContext";
 import Navbar from "../../components/navbar";
 import Sidenav from "../../components/sidenav";
-import ICreateProductResponse from "../../types/product/createProductResponse";
 
 const theme = createTheme();
 export default function AddProduct() {
@@ -84,11 +83,10 @@ export default function AddProduct() {
             setQuantityError(true);
         if (!categoryId)
             setCategoryIdError(true);
-
-        debugger;
+        
         if (title && code && quantity && categoryId) {
 
-            const result: ICreateProductResponse = await CreateProduct({
+            const result = await CreateProduct({
                 code,
                 title,
                 quantity,

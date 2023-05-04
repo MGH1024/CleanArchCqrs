@@ -2,11 +2,11 @@
 import axiosUtility from "../utilities/axiosUtility";
 import IGetProductById from "../types/product/getProductById";
 import IProduct from "../types/product/product";
-import ICreateProductResponse from "../types/product/createProductResponse";
+import ICommandResponse from "../types/responses/commandResponse";
+import IUpdateProduct from "../types/product/updateProduct";
 
-export const CreateProduct = async (value: IAddProduct): Promise<ICreateProductResponse> => {
+export const CreateProduct = async (value: IAddProduct): Promise<ICommandResponse> => {
     return new Promise((resolve, reject) => {
-        debugger;
         axiosUtility({
             method: 'post',
             url: '/api/products/create-product',
@@ -19,7 +19,6 @@ export const CreateProduct = async (value: IAddProduct): Promise<ICreateProductR
             }
         })
             .then((res) => {
-                debugger;
                 if (res.data.Success) {
                     resolve(res.data);
                 } else {
@@ -32,6 +31,40 @@ export const CreateProduct = async (value: IAddProduct): Promise<ICreateProductR
             });
     })
 }
+
+
+export const UpdateProduct = async (value: IUpdateProduct): Promise<ICommandResponse> => {
+
+    return new Promise((resolve, reject) => {
+
+        axiosUtility({
+            method: 'put',
+            url: '/api/products/update-product',
+            data: {
+                id: value.id,
+                code: value.code,
+                title: value.title,
+                quantity: value.quantity,
+                categoryId: value.categoryId,
+                description: value.description,
+            }
+        })
+            .then((res) => {
+                //resolve(res);
+        
+                if (res.data.Success) {
+                    resolve(res.data);
+                } else {
+                    resolve({Id: 0, Success: false, Message: 'create product failed'})
+                }
+
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    })
+}
+
 
 
 export const GetProducts = async (): Promise<IProduct[]> => {

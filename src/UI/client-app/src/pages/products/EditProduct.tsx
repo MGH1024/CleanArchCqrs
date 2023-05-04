@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import Box from '@mui/material/Box';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import {useNavigate, useParams} from "react-router-dom";
@@ -11,37 +11,38 @@ import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import CssBaseline from '@mui/material/CssBaseline';
-import {CreateProduct, GetProductById} from "../../services/productService";
+import {GetProductById, UpdateProduct} from "../../services/productService";
 import {GetCategories} from "../../services/categoryServices";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import IProduct from "../../types/product/product";
 import Navbar from "../../components/navbar";
 import Sidenav from "../../components/sidenav";
+import {AppContext} from "../../contexts/appContext";
 
 const theme = createTheme();
 export default function EditProduct() {
     const {id} = useParams<{ id?: string }>();
-
+    const {showToast, setShowToast} = useContext(AppContext);
     useEffect(() => {
         fetchCategories();
         fetchProduct(id);
 
     }, [])
 
-    const fetchCategories = async () => {
+    const fetchCategories = async (): Promise<void> => {
         let categories = await GetCategories();
         setCategories(categories);
     }
 
-    const fetchProduct = async (id: string | undefined) => {
-        debugger;
+    const fetchProduct = async (id: string | undefined): Promise<void> => {
+
         let productObj = await GetProductById({
             id: id
         });
-        
         setTitle(productObj.Title);
         setQuantity(productObj.Quantity);
         setCode(productObj.Code);
+        setCategoryId(productObj.CategoryId);
+        setDescription(productObj.Description);
     }
 
 
@@ -49,7 +50,7 @@ export default function EditProduct() {
     const [code, setCode] = useState(0);
     const [title, setTitle] = useState("");
     const [quantity, setQuantity] = useState<number>(0);
-    const [description, setDescription] = useState("");
+    const [description, setDescription] = useState<string | undefined>("");
     const [categoryId, setCategoryId] = useState<number>(1);
 
     const [codeError, setCodeError] = useState<boolean>(false);
@@ -57,7 +58,6 @@ export default function EditProduct() {
     const [quantityError, setQuantityError] = useState<boolean>(false);
     const [categories, setCategories] = useState<ICategory[]>([]);
     const [categoryIdError, setCategoryIdError] = useState<boolean>(false);
-    const [product, setProduct] = useState<IProduct>();
 
     const handleCategoryChange = (event: any) => {
         let value = parseInt(event.target.value);
@@ -65,24 +65,28 @@ export default function EditProduct() {
         if (value)
             setCategoryIdError(false);
     };
-    const handleTitleChange = (event: any) => {
+    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = event.target.value;
         setTitle(value);
         if (value)
             setTitleError(false);
     }
-    const handleQuantityChange = (event: any) => {
+    const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = parseInt(event.currentTarget.value);
         setQuantity(value);
         if (value)
             setQuantityError(false);
     }
-    const handleCodeChange = (event: any) => {
+    const handleCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         let value = parseInt(event.currentTarget.value);
         setCode(value);
         if (value)
             setCodeError(false);
     }
+    
+    const handleDescriptionChange = (event:React.ChangeEvent<HTMLInputElement>) =>{
+        setDescription(event.target.value)  
+    } 
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -98,22 +102,16 @@ export default function EditProduct() {
 
 
         if (title && code && quantity && categoryId) {
-
-            console.log({
+            let result = await UpdateProduct({
+                id,
                 code,
                 title,
                 quantity,
                 categoryId,
                 description,
             });
-            let result: any = await CreateProduct({
-                code,
-                title,
-                quantity,
-                categoryId,
-                description,
-            });
-            if (result.data.Success === true) {
+            if (result.Success) {
+                setShowToast({message: 'product updated', show: true, severity: 'success'})
                 navigate('/products');
             }
         }
@@ -217,7 +215,7 @@ export default function EditProduct() {
                                         autoComplete="description"
                                         autoFocus
                                         value={description}
-                                        onChange={e => setDescription(e.target.value)}
+                                        onChange={handleDescriptionChange}
                                     />
 
                                     <Button
@@ -235,6 +233,5 @@ export default function EditProduct() {
                 </Box>
             </Box>
         </>
-      
     );
 }

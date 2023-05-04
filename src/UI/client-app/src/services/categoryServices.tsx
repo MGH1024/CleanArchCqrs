@@ -23,7 +23,7 @@ export const GetCategoryById = async (value: IGetCategoryById) => {
 }
 
 
-export const GetCategories = async ():Promise<ICategory[]> => {
+export const GetCategories = async (): Promise<ICategory[]> => {
     const url = '/api/categories';
     return new Promise((resolve, reject) => {
         axiosUtility({

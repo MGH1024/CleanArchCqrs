@@ -28,6 +28,7 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
         product.Title = request.UpdateProduct.Title;
         product.Quantity = request.UpdateProduct.Quantity;
         product.Description = request.UpdateProduct.Description;
+        product.CategoryId = request.UpdateProduct.CategoryId;
 
         _unitOfWork.ProductRepository
             .UpdateProduct(product);
