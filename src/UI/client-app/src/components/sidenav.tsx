@@ -73,8 +73,8 @@ const Sidenav: React.FC<{}> = () => {
     const theme = useTheme();
     //const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
-    
-    const open=useAppStore((state:any)=>state.doOpen);
+
+    const open = useAppStore((state: any) => state.doOpen);
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -111,28 +111,7 @@ const Sidenav: React.FC<{}> = () => {
                             <ListItemText primary="Home" sx={{opacity: open ? 1 : 0}}/>
                         </ListItemButton>
                     </ListItem>
-                    <ListItem disablePadding sx={{display: 'block'}} onClick={() => {
-                        navigate("/about")
-                    }}>
-                        <ListItemButton
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? 'initial' : 'center',
-                                px: 2.5,
-                            }}
-                        >
-                            <ListItemIcon
-                                sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : 'auto',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <InfoIcon/>
-                            </ListItemIcon>
-                            <ListItemText primary="About" sx={{opacity: open ? 1 : 0}}/>
-                        </ListItemButton>
-                    </ListItem>
+
                     <ListItem disablePadding sx={{display: 'block'}} onClick={() => {
                         navigate("/settings")
                     }}>
@@ -197,6 +176,28 @@ const Sidenav: React.FC<{}> = () => {
                                 <ProductionQuantityLimitsSharpIcon/>
                             </ListItemIcon>
                             <ListItemText primary="Products" sx={{opacity: open ? 1 : 0}}/>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding sx={{display: 'block'}} onClick={() => {
+                        navigate("/about")
+                    }}>
+                        <ListItemButton
+                            sx={{
+                                minHeight: 48,
+                                justifyContent: open ? 'initial' : 'center',
+                                px: 2.5,
+                            }}
+                        >
+                            <ListItemIcon
+                                sx={{
+                                    minWidth: 0,
+                                    mr: open ? 3 : 'auto',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <InfoIcon/>
+                            </ListItemIcon>
+                            <ListItemText primary="AboutMe" sx={{opacity: open ? 1 : 0}}/>
                         </ListItemButton>
                     </ListItem>
                 </List>
