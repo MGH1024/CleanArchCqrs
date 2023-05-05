@@ -4,10 +4,12 @@ using Persistence;
 using Application;
 using Api.Middleware;
 using Infrastructures;
+using System.Reflection;
+using Mgh.Swagger.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Newtonsoft.Json.Serialization;
 
 var serilogConfig = new ConfigurationBuilder()
     .AddJsonFile("logSettings.json", optional: true, reloadOnChange: true)
@@ -25,6 +27,43 @@ try
     Log.Information("web starting up ...");
     
     builder.Services.AddSwaggerGen();
+    
+    
+    //swagger
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFilename);
+    builder.Services.AddSwagger(cfg =>
+    {
+        cfg.XmlComments = xmlPath;
+        cfg.OpenApiInfo = new OpenApiInfo
+        {
+            Title = "Clean Architecture by CQRS pattern",
+            Version = "v1",
+            Description = "API"
+        };
+
+        var openApiSecurityScheme = new OpenApiSecurityScheme
+        {
+            Description =
+                "just copy token in value TextBox",
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+        };
+
+        cfg.OpenApiSecurityScheme = openApiSecurityScheme;
+        cfg.OpenApiReference = new OpenApiReference
+        {
+            Type = ReferenceType.SecurityScheme,
+            Id = "Bearer"
+        };
+        cfg.OpenApiSecurityRequirement = new OpenApiSecurityRequirement
+        {
+            { openApiSecurityScheme, new[] { "Bearer" } }
+        };
+    });
+
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.ConfigureApplicationServices();
