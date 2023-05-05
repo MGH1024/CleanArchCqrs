@@ -2,7 +2,6 @@ import Home from "./pages/home";
 import About from "./pages/about";
 import SignUp from './pages/auth/signUp';
 import SignIn from "./pages/auth/signIn";
-import Settings from "./pages/settings";
 import Analytics from "./pages/analytics";
 import Protected from "./utilities/protected";
 import {Routes, Route} from 'react-router-dom';
@@ -39,14 +38,6 @@ function App() {
                         element={
                             <Protected>
                                 <Analytics/>
-                            </Protected>
-                        }
-                    />
-                    <Route
-                        path="/settings"
-                        element={
-                            <Protected>
-                                <Settings/>
                             </Protected>
                         }
                     />

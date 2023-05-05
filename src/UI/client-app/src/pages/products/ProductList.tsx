@@ -80,7 +80,7 @@ export default function ProductList() {
             field: 'CreatedDate',
             headerName: 'CreatedDate',
             sortable: false,
-            minWidth: 200,
+            minWidth: 250,
             align: 'center',
             headerAlign: 'center'
         },
@@ -98,7 +98,7 @@ export default function ProductList() {
             headerName: 'Quantity',
             headerAlign: 'center',
             type: 'number',
-            minWidth: 40,
+            minWidth: 60,
             editable: true,
             align: 'center'
         },
