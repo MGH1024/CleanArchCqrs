@@ -123,16 +123,16 @@ export default function EditProduct() {
             <Box height={30}/>
             <Box sx={{display: "flex"}}>
                 <Sidenav/>
-                <Box component="main" sx={{flexGrow: 1, p: 3}}>
+                <Box component="main" >
                     <ThemeProvider theme={theme}>
-                        <Container component="main" maxWidth="xs">
+                        <Container component="main" maxWidth="md">
                             <CssBaseline/>
                             <Box
                                 sx={{
                                     marginTop: 8,
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    alignItems: 'center',
+                                    alignItems: 'left',
                                 }}
                             >
                                 <Typography component="h1" variant="h5">

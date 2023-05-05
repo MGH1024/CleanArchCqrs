@@ -47,25 +47,25 @@ export default function ProductList() {
             minWidth: 10,
             type: 'number',
             align: 'center',
-            headerAlign: 'left'
+            headerAlign: 'center'
         },
         {
             field: 'Title',
             headerName: 'Title',
-            headerAlign: 'left',
+            headerAlign: 'center',
             type: 'string',
-            minWidth: 100,
+            minWidth: 150,
             editable: true,
             align: 'center'
         },
         {
             field: 'CategoryTitle',
             headerName: 'CategoryTitle',
-            minWidth: 140,
+            minWidth: 150,
             editable: true,
             type: 'string',
             align: 'center',
-            headerAlign: 'left'
+            headerAlign: 'center'
         },
         {
             field: 'Code',
@@ -74,7 +74,7 @@ export default function ProductList() {
             editable: true,
             type: 'number',
             align: 'center',
-            headerAlign: 'left'
+            headerAlign: 'center'
         },
         {
             field: 'CreatedDate',
@@ -82,30 +82,21 @@ export default function ProductList() {
             sortable: false,
             minWidth: 200,
             align: 'center',
-            headerAlign: 'left'
+            headerAlign: 'center'
         },
         {
             field: 'Description',
             headerName: 'Description',
-            headerAlign: 'left',
+            headerAlign: 'center',
             type: 'string',
-            minWidth: 200,
-            editable: true,
-            align: 'center'
-        },
-        {
-            field: 'Order',
-            headerName: 'Order',
-            headerAlign: 'left',
-            type: 'number',
-            minWidth: 40,
+            minWidth: 250,
             editable: true,
             align: 'center'
         },
         {
             field: 'Quantity',
             headerName: 'Quantity',
-            headerAlign: 'left',
+            headerAlign: 'center',
             type: 'number',
             minWidth: 40,
             editable: true,
@@ -116,7 +107,7 @@ export default function ProductList() {
             headerName: "Actions",
             description: "Actions column.",
             sortable: false,
-            minWidth: 200,
+            minWidth: 250,
             renderCell: (params) => {
                 return (
                     <div>
@@ -166,11 +157,12 @@ export default function ProductList() {
     return (
         <>
             <Box height={12}/>
-            <Button onClick={() => {
+            <Button variant="contained" onClick={() => {
                 navigate('/products/addProduct');
-            }}>Add Product</Button>
+            }}>Create New Product</Button>
+            <Box height={20}/>
             <Paper sx={{width: '100%', overflow: 'hidden'}}>
-                <Box sx={{height: 600, width: '100%'}}>
+                <Box sx={{height: 400, width: '100%'}}>
                     <DataGrid
                         rows={products}
                         columns={columns}
