@@ -22,3 +22,5 @@ password : Abcd@1234 <br/>
 3) you can login with admin user in database section
 
 
+# Docker build
+run this command : docker build . -t api -f .\src\API\Api\Dockerfile
