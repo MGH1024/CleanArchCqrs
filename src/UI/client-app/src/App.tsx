@@ -16,14 +16,24 @@ function App() {
         <>
             <AppContext>
                 <Routes>
-                    <Route path="/signIn" element={<SignIn/>}/>
-                    <Route path="/signUp" element={<SignUp/>}/>
-                    <Route path="/" element={<Home/>}/>
 
-                    <Route path="/products" element={<Products/>}/>
-                    <Route path="/products/addProduct" element={<AddProduct/>}/>
-                    <Route path="/products/:id" element={<EditProduct/>}/>
-                    
+
+                    <Route path="/products" element={
+                        <Protected>
+                            <Products/>
+                        </Protected>
+                    }/>
+                    <Route path="/products/addProduct" element={
+                        <Protected>
+                            <AddProduct/>
+                        </Protected>
+                    }/>
+                    <Route path="/products/:id" element={
+                        <Protected>
+                            <EditProduct/>
+                        </Protected>
+                    }/>
+
                     <Route
                         path="/analytics"
                         element={
@@ -48,29 +58,14 @@ function App() {
                             </Protected>
                         }
                     />
-                    {/*<Route*/}
-                    {/*    path="/products"*/}
-                    {/*    element=*/}
-                    {/*        {*/}
-                    {/*            <Protected>*/}
-                    {/*                <Products/>*/}
-                    {/*            </Protected>*/}
-                    {/*        }*/}
-                    {/*/>*/}
-                    
-                    {/*<Route*/}
-                    {/*    path="/products/addProduct"*/}
-                    {/*    element=*/}
-                    {/*        {*/}
-                    {/*            <Protected>*/}
-                    {/*                <AddProduct/>*/}
-                    {/*            </Protected>*/}
-                    {/*        }*/}
-                    {/*/>*/}
+                    <Route path="/signIn" element={<SignIn/>}/>
+                    <Route path="/signUp" element={<SignUp/>}/>
+                    <Route path="/" element={<Home/>}/>
                     <Route path="*" element={<p>There's nothing here: 404!</p>}/>
                 </Routes>
             </AppContext>
         </>
     )
 }
+
 export default App;

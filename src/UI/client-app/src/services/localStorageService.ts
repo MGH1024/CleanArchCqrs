@@ -1,4 +1,4 @@
-import IUserToken from "../types/userToken";
+import IUserToken from "../types/auth/userToken";
 
 export function Set(key: string, value: IUserToken) : void {
     try {

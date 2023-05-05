@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import {useNavigate} from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
-import ICategory from "../../types/categoryList";
+import ICategory from "../../types/category/categoryList";
 import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';

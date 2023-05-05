@@ -1,4 +1,4 @@
-import ISignIn from "../types/signIn";
+import ISignIn from "../types/auth/signIn";
 import {Set, Remove} from './localStorageService';
 import axiosUtility from "../utilities/axiosUtility";
 import IAuthResponse from "../types/auth/authRespose";

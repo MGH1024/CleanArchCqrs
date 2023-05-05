@@ -1,7 +1,6 @@
 ﻿import axiosUtility from "../utilities/axiosUtility";
-import IGetCategoryById from "../types/getCategoryById";
-import ICategoryList from "../types/categoryList";
-import ICategory from "../types/categoryList";
+import IGetCategoryById from "../types/category/getCategoryById";
+import ICategory from "../types/category/categoryList";
 
 export const GetCategoryById = async (value: IGetCategoryById) => {
     const url = '/api/categories/get-category-by-id';
