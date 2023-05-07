@@ -1,9 +1,9 @@
-﻿using Domain.Identity;
-using Identity.Configurations.Base;
+﻿using Identity.Configurations.Base;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Security;
+using Domain.Entities.Identity;
 
 namespace Identity.Configurations.Entities;
 

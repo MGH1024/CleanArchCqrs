@@ -1,5 +1,5 @@
 ﻿using Application.Contracts.Infrastructure.Identity;
-using Domain.Identity;
+using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

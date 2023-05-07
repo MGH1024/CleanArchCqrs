@@ -1,7 +1,7 @@
 ﻿using System.Data;
-using Application.Contracts.Persistence;
 using Application.Models;
-using Domain.Identity;
+using Domain.Entities.Identity;
+using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Repositories
@@ -15,7 +15,7 @@ namespace Identity.Repositories
             _appIdentityDbContext = appIdentityDbContext;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsers(GetParameter getParameter)
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
             return await _appIdentityDbContext.Users.ToListAsync();
         }

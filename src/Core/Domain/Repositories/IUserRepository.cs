@@ -1,11 +1,10 @@
-﻿using Application.Models;
-using Domain.Identity;
+﻿using Domain.Entities.Identity;
 
-namespace Application.Contracts.Persistence
+namespace Domain.Repositories
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetAllUsers(GetParameter getParameter);
+        Task<IEnumerable<User>> GetAllUsers();
         Task<User> GetByIdAsync(int userId);
         Task InsertUserRefreshToken(UserRefreshToken userRefreshToken);
         UserRefreshToken GetUserRefreshTokenByUserAndOldToken(User user, string token, string refreshToken);

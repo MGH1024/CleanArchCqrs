@@ -1,8 +1,8 @@
 ﻿using Identity;
 using Identity.Repositories;
 using Microsoft.AspNetCore.Http;
-using Application.Contracts.Persistence;
 using Application.Contracts.Infrastructure;
+using Domain.Repositories;
 
 namespace Persistence.Repositories
 {

@@ -1,5 +1,5 @@
-﻿using Application.Contracts.Persistence;
-using Domain.Shop;
+﻿using Domain.Entities.Shop;
+using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repositories;

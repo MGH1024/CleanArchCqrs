@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.User;
 using Domain;
-using Domain.Identity;
+using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.Contracts.Infrastructure.Identity;

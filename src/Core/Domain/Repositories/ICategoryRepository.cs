@@ -1,6 +1,6 @@
-﻿using Domain.Shop;
+﻿using Domain.Entities.Shop;
 
-namespace Application.Contracts.Persistence;
+namespace Domain.Repositories;
 
 public interface ICategoryRepository
 {

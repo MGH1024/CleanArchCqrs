@@ -1,4 +1,4 @@
-﻿using Domain.Shop;
+﻿using Domain.Entities.Shop;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityConfigurations.Base;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

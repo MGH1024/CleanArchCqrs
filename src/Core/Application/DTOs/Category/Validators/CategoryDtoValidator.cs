@@ -1,6 +1,6 @@
-﻿using Application.Contracts.Persistence;
-using FluentValidation;
+﻿using FluentValidation;
 using Application.DTOs.Category.Base;
+using Domain.Repositories;
 
 namespace Application.DTOs.Category.Validators
 {

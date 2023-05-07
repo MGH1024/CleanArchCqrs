@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using System.Text;
 using Domain.Enums;
-using Domain.Identity;
 using Application.DTOs.User;
 using Application.Models.Identity;
 using Microsoft.Extensions.Options;
@@ -11,8 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Application.Contracts.Infrastructure;
 using Application.Contracts.Infrastructure.Identity;
-using Application.Contracts.Persistence;
 using Application.Exceptions;
+using Domain.Entities.Identity;
+using Domain.Repositories;
 
 namespace Identity.Services;
 

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Domain.Shop;
 using Application.DTOs.Category;
 using Application.DTOs.Product;
 using Application.DTOs.Product.Base;
 using Application.DTOs.User;
 using Application.Features.Products.Commands.CreateProduct;
-using Domain.Identity;
+using Domain.Entities.Identity;
+using Domain.Entities.Shop;
 
 namespace Application.Profiles;
 

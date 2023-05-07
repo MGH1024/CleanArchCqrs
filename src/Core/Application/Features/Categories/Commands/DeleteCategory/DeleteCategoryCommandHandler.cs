@@ -1,8 +1,8 @@
 ﻿using Application.Responses;
 using Application.Contracts.Messaging;
-using Application.Contracts.Persistence;
 using Application.DTOs.Category.Validators;
 using Application.Exceptions;
+using Domain.Repositories;
 
 namespace Application.Features.Categories.Commands.DeleteCategory;
 

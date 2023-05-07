@@ -1,7 +1,7 @@
 ﻿using Application.Responses;
 using Application.Contracts.Messaging;
-using Application.Contracts.Persistence;
 using Application.Exceptions;
+using Domain.Repositories;
 
 namespace Application.Features.Categories.Commands.UpdateCategory;
 

@@ -1,14 +1,14 @@
 ﻿using Application.DTOs.User;
 using Application.Models;
 using Application.Models.Identity;
-using Domain.Identity;
+using Domain.Entities.Identity;
 
 namespace Application.Contracts.Infrastructure.Identity;
 
 public interface IIdentityService
 {
-    Task<IEnumerable<User>> GetUsers(GetParameter getParameter);
-    Task<IEnumerable<User>> GetUsersByShapingData(GetParameter getParameter);
+    Task<IEnumerable<User>> GetUsers();
+    Task<IEnumerable<User>> GetUsersByShapingData();
     Task<User> GetUser(GetUserById getUserById);
     Task<User> GetUser(int userId);
     Task<bool> IsInRole(int userId, int roleId);

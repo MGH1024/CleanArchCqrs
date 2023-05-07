@@ -1,7 +1,7 @@
 ﻿using Application.DTOs.User;
 using Application.Models.Identity;
+using Domain.Entities.Identity;
 using Domain.Enums;
-using Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.Contracts.Infrastructure.Identity;

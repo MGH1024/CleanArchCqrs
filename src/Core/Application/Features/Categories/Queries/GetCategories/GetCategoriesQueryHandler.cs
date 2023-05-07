@@ -1,8 +1,8 @@
 ﻿using Application.Contracts.Messaging;
-using Application.Contracts.Persistence;
 using Application.DTOs.Category;
 using Application.Responses;
 using AutoMapper;
+using Domain.Repositories;
 
 namespace Application.Features.Categories.Queries.GetCategories;
 

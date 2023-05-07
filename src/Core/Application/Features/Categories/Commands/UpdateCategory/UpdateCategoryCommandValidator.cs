@@ -1,4 +1,4 @@
-﻿using Application.Contracts.Persistence;
+﻿using Domain.Repositories;
 using FluentValidation;
 
 namespace Application.Features.Categories.Commands.UpdateCategory;

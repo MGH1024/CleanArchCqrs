@@ -1,5 +1,5 @@
 ﻿using Application.Contracts.Infrastructure.Identity;
-using Domain.Identity;
+using Domain.Entities.Identity;
 
 namespace Identity.Services;
 

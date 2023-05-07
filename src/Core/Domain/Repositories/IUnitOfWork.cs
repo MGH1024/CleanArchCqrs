@@ -1,4 +1,4 @@
-﻿namespace Application.Contracts.Persistence
+﻿namespace Domain.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {

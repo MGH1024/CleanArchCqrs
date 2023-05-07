@@ -5,8 +5,8 @@ using UnitTest.Mocks;
 using Application.Profiles;
 using Application.Responses;
 using Application.DTOs.Category;
-using Application.Contracts.Persistence;
 using Application.Features.Categories.Commands.CreateCategory;
+using Domain.Repositories;
 
 namespace UnitTest.Categories.Commands
 {

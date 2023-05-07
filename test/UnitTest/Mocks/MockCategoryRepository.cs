@@ -1,11 +1,11 @@
-﻿using Application.Contracts.Persistence;
-using Domain.Shop;
-using Moq;
+﻿using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Entities.Shop;
+using Domain.Repositories;
 
 namespace UnitTest.Mocks
 {

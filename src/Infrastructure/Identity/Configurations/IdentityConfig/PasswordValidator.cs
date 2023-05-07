@@ -1,5 +1,5 @@
 ﻿using Domain;
-using Domain.Identity;
+using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Identity.Configurations.IdentityConfig;

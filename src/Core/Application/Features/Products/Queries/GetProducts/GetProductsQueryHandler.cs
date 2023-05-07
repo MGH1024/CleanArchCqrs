@@ -2,7 +2,7 @@
 using Application.Responses;
 using Application.DTOs.Product;
 using Application.Contracts.Messaging;
-using Application.Contracts.Persistence;
+using Domain.Repositories;
 
 namespace Application.Features.Products.Queries.GetProducts;
 

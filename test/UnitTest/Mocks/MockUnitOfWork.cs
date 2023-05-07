@@ -1,5 +1,5 @@
 ﻿using Moq;
-using Application.Contracts.Persistence;
+using Domain.Repositories;
 
 namespace UnitTest.Mocks
 {

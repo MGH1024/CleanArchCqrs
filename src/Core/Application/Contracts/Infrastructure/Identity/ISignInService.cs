@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Application.DTOs.User;
 using Application.Models.Identity;
-using Domain.Identity;
+using Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.Contracts.Infrastructure.Identity;

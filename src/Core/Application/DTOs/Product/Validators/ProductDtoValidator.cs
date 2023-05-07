@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Application.DTOs.Product.Base;
-using Application.Contracts.Persistence;
+using Domain.Repositories;
 
 namespace Application.DTOs.Product.Validators
 {

@@ -1,10 +1,10 @@
 ﻿using System.Text;
 using Application.Contracts.Infrastructure.Identity;
-using Application.Contracts.Persistence;
 using Application.Models;
 using Application.Models.Identity;
 using Domain;
-using Domain.Identity;
+using Domain.Entities.Identity;
+using Domain.Repositories;
 using Identity.Configurations.IdentityConfig;
 using Identity.Repositories;
 using Identity.Services;

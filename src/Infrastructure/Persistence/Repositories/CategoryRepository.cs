@@ -1,6 +1,6 @@
-﻿using Domain.Shop;
-using Microsoft.EntityFrameworkCore;
-using Application.Contracts.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using Domain.Entities.Shop;
+using Domain.Repositories;
 
 namespace Persistence.Repositories
 {

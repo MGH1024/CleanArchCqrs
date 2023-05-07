@@ -1,9 +1,9 @@
-﻿using Domain.Identity;
-using Application.Models;
+﻿using Application.Models;
 using Application.DTOs.User;
 using Microsoft.AspNetCore.Identity;
-using Application.Contracts.Persistence;
 using Application.Contracts.Infrastructure.Identity;
+using Domain.Entities.Identity;
+using Domain.Repositories;
 
 namespace Identity.Services;
 
@@ -25,15 +25,15 @@ public class IdentityService : IIdentityService
         _userRep = userRep ?? throw new ArgumentNullException(nameof(userRep));
     }
 
-    public async Task<IEnumerable<User>> GetUsers(GetParameter getParameter)
+    public async Task<IEnumerable<User>> GetUsers()
     {
 
-        return await _userRep.GetAllUsers(getParameter);
+        return await _userRep.GetAllUsers();
     }
 
-    public async Task<IEnumerable<User>> GetUsersByShapingData(GetParameter getParameter)
+    public async Task<IEnumerable<User>> GetUsersByShapingData()
     {
-        return await _userRep.GetAllUsers(getParameter);
+        return await _userRep.GetAllUsers();
     }
 
     public async Task<User> GetUser(GetUserById getUserById)

@@ -2,7 +2,7 @@
 using Application.Responses;
 using Application.DTOs.Category;
 using Application.Contracts.Messaging;
-using Application.Contracts.Persistence;
+using Domain.Repositories;
 
 namespace Application.Features.Categories.Queries.GetCategory;
 

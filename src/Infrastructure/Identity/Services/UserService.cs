@@ -1,8 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Application.Contracts.Infrastructure.Identity;
-using Application.Contracts.Persistence;
 using Application.DTOs.User;
-using Domain.Identity;
+using Domain.Entities.Identity;
+using Domain.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

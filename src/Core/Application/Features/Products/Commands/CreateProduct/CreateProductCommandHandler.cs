@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Domain.Shop;
 using Application.Responses;
 using Application.Contracts.Messaging;
-using Application.Contracts.Persistence;
+using Domain.Entities.Shop;
+using Domain.Repositories;
 
 namespace Application.Features.Products.Commands.CreateProduct;
 
