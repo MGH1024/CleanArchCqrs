@@ -1,12 +1,11 @@
 ﻿using Domain.Entities.Shop;
 using Microsoft.EntityFrameworkCore;
-using Application.Contracts.Infrastructure;
 
 namespace Persistence;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options, IDateTime dateTime)
+    public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
     }

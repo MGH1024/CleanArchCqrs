@@ -2,6 +2,7 @@
 using Application.Responses;
 using Application.DTOs.Category;
 using Application.Contracts.Messaging;
+using Application.Exceptions;
 using Domain.Repositories;
 
 namespace Application.Features.Categories.Queries.GetCategory;
@@ -17,15 +18,13 @@ public class GetCategoryQueryHandler : IQueryHandler<GetCategoryQuery, BaseQuery
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
-    public async Task<BaseQueryResponse<CategoryDetail>> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
+    public async Task<BaseQueryResponse<CategoryDetail>> Handle(GetCategoryQuery request,
+        CancellationToken cancellationToken)
     {
         var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.Id);
-        if(category is null)
-            return new BaseQueryResponse<CategoryDetail>
-            {
-                Success = false,
-                Message = "category not found"
-            };
+        if (category is null)
+            throw new BadRequestException("category not found");
+        
         return new BaseQueryResponse<CategoryDetail>
         {
             Success = true,
