@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Application.DTOs.Auth;
 using Application.DTOs.User;
 using Application.Models.Identity;
 using Domain.Entities.Identity;

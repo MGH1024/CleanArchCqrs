@@ -1,7 +1,9 @@
+using Application.DTOs.Categories;
 using MediatR;
 using Application.Models;
 using Microsoft.AspNetCore.Mvc;
 using Application.DTOs.Category;
+using Application.Features.Categories.Commands.CreateCategories;
 using Application.Features.Categories.Queries.GetCategory;
 using Application.Features.Categories.Queries.GetCategories;
 using Application.Features.Categories.Commands.UpdateCategory;
@@ -23,7 +25,7 @@ namespace Api.Controllers
 
 
         [HttpGet("")]
-        public async Task<IActionResult> GetCategories([FromQuery] GetParameter resourceParameter)
+        public async Task<IActionResult> GetCategories()
         {
             return Ok(await Sender.Send(new GetCategoriesQuery { }));
         }

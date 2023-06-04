@@ -10,7 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Application.Contracts.Infrastructure;
 using Application.Contracts.Infrastructure.Identity;
+using Application.DTOs.Auth;
 using Application.Exceptions;
+using Application.Models.Responses;
 using Domain.Entities.Identity;
 using Domain.Repositories;
 
@@ -84,7 +86,7 @@ public class AuthService : IAuthService
     }
 
     [Obsolete("Obsolete")]
-    public async Task<AuthResponse> Login(AuthRequest authRequest, string ipAddress, string returnUrl)
+    public async Task<ApiResponse> Login(AuthRequest authRequest, string ipAddress, string returnUrl)
     {
         var user = await _userService.GetByUsername(authRequest.UserName);
 
@@ -105,11 +107,9 @@ public class AuthService : IAuthService
                 if (!await _userService.IsPhoneNumberConfirmed(user))
                     errors.Add("Tell not confirmed");
 
-                return new AuthResponse
+                return new ApiResponse
                 {
-                    Success = false,
-                    Errors = errors,
-                    ReturnUrl = returnUrl,
+                    Messages = errors
                 };
             }
 
@@ -138,16 +138,15 @@ public class AuthService : IAuthService
                     UserId = user.Id
                 });
 
-                return new AuthResponse
+                var authResponse = new AuthResponse
                 {
-                    Success = true,
-                    Errors = errors,
                     ReturnUrl = returnUrl,
                     Token = tokenAsString,
                     RefreshToken = refreshToken,
                     TokenValidDate = tokenValidDate,
-                    SuccessMessage = "successfully login!",
                 };
+                return new ApiResponse(data: authResponse,
+                    messages: new List<string> { "successfully login!" });
             }
 
             if (signinResult.RequiresTwoFactor)
@@ -157,25 +156,21 @@ public class AuthService : IAuthService
 
             if (signinResult.IsLockedOut)
             {
-                errors.Add("your account is lock");
-                return new AuthResponse
+                return new ApiResponse
                 {
-                    Success=false,
-                    Errors = errors,
+                    Messages = new List<string> { "your account is lock" },
                 };
             }
         }
 
-        errors.Add("user not found");
-        return new AuthResponse
+        return new ApiResponse
         {
-            Errors=errors,
-            Success=false,
+            Messages = new List<string> { "user not found" },
         };
     }
 
     [Obsolete("Obsolete")]
-    public async Task<AuthResponse> Refresh(RefreshToken refreshToken, string ipAddress)
+    public async Task<ApiResponse> Refresh(RefreshToken refreshToken, string ipAddress)
     {
         if (refreshToken is null)
             throw new BadRequestException("");
@@ -185,7 +180,8 @@ public class AuthService : IAuthService
             throw new BadRequestException("");
 
 
-        var userRefreshToken = _userRepository.GetUserRefreshTokenByUserAndOldToken(user, refreshToken.Token, refreshToken.RefToken);
+        var userRefreshToken =
+            _userRepository.GetUserRefreshTokenByUserAndOldToken(user, refreshToken.Token, refreshToken.RefToken);
         if (userRefreshToken is null)
             throw new BadRequestException("");
 
@@ -217,25 +213,24 @@ public class AuthService : IAuthService
                 Token = newToken,
                 UserId = user.Id
             });
-
-            return new AuthResponse()
+            return new ApiResponse(new AuthResponse()
             {
                 Token = newToken,
                 TokenValidDate = newTokenValidDate,
                 RefreshToken = newRefreshToken
-            };
+            });
         }
         else
         {
-            return new AuthResponse()
+            return new ApiResponse(new AuthResponse()
             {
                 Token = newToken,
                 TokenValidDate = newTokenValidDate,
                 RefreshToken = refreshToken.RefToken,
-            };
-
+            });
         }
     }
+
     private async Task<IdentityResult> CreateUserWithoutPassword(User user)
     {
         return await _userManager.CreateAsync(user);
@@ -253,6 +248,7 @@ public class AuthService : IAuthService
         {
             strResult.Add(item.Description);
         }
+
         return strResult;
     }
 

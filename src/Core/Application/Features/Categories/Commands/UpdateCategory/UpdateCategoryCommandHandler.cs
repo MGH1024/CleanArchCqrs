@@ -1,11 +1,11 @@
-﻿using Application.Responses;
-using Application.Contracts.Messaging;
+﻿using Application.Contracts.Messaging;
 using Application.Exceptions;
+using Application.Models.Responses;
 using Domain.Repositories;
 
 namespace Application.Features.Categories.Commands.UpdateCategory;
 
-public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryCommand, BaseCommandResponse>
+public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryCommand, ApiResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -15,7 +15,7 @@ public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryComman
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
-    public async Task<BaseCommandResponse> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = await _unitOfWork
             .CategoryRepository
@@ -33,11 +33,9 @@ public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryComman
 
         await _unitOfWork.Save();
 
-        return new BaseCommandResponse
+        return new ApiResponse()
         {
-            Success = true,
-            Message = "update success",
-            Id = category.Id
+            Messages = new List<string> {"update success"}
         };
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Application.Contracts.Infrastructure.Identity;
 using Application.Models;
+using Application.Models.Database;
 using Application.Models.Identity;
 using Domain;
 using Domain.Entities.Identity;

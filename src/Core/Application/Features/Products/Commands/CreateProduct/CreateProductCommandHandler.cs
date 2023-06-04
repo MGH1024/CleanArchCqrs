@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using Application.Responses;
 using Application.Contracts.Messaging;
+using Application.Models.Responses;
 using Domain.Entities.Shop;
 using Domain.Repositories;
 
 namespace Application.Features.Products.Commands.CreateProduct;
 
-public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, BaseCommandResponse>
+public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, ApiResponse>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -17,16 +17,11 @@ public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand,
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
-    public async Task<BaseCommandResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var product = _mapper.Map<Product>(request.CreateProduct);
-        product = await _unitOfWork.ProductRepository.CreateProductAsync(product);
+        await _unitOfWork.ProductRepository.CreateProductAsync(product);
         await _unitOfWork.Save();
-        return new BaseCommandResponse
-        {
-            Id = product.Id,
-            Message = "create success",
-            Success = true,
-        };
+        return new ApiResponse(new List<string> { "create success" });
     }
 }

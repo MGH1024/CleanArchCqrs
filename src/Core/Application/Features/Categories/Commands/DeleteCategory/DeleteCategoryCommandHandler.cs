@@ -1,12 +1,12 @@
-﻿using Application.Responses;
-using Application.Contracts.Messaging;
+﻿using Application.Contracts.Messaging;
 using Application.DTOs.Category.Validators;
 using Application.Exceptions;
+using Application.Models.Responses;
 using Domain.Repositories;
 
 namespace Application.Features.Categories.Commands.DeleteCategory;
 
-public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryCommand, BaseCommandResponse>
+public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryCommand, ApiResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -15,7 +15,7 @@ public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryComman
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
-    public async Task<BaseCommandResponse> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.DeleteCategory.Id);
 
@@ -24,10 +24,6 @@ public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryComman
 
         _unitOfWork.CategoryRepository.DeleteCategory(category);
         await _unitOfWork.Save();
-        return new BaseCommandResponse
-        {
-            Success = true,
-            Message = "delete success"
-        };
+        return new ApiResponse(new List<string> { "delete success" });
     }
 }

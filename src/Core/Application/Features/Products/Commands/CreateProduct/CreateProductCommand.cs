@@ -1,9 +1,9 @@
-﻿using Application.Responses;
-using Application.Contracts.Messaging;
+﻿using Application.Contracts.Messaging;
+using Application.Models.Responses;
 
 namespace Application.Features.Products.Commands.CreateProduct;
 
-public class CreateProductCommand : ICommand<BaseCommandResponse>
+public class CreateProductCommand : ICommand<ApiResponse>
 {
     public DTOs.Product.CreateProduct CreateProduct { get; set; }
 }

@@ -1,12 +1,12 @@
 ﻿using Application.Contracts.Messaging;
 using Application.DTOs.Category;
-using Application.Responses;
+using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
 
 namespace Application.Features.Categories.Queries.GetCategories;
 
-public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, BaseQueryResponse<List<CategoryDetail>>>
+public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, ApiResponse>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
@@ -17,15 +17,14 @@ public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, BaseQ
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
-    public async Task<BaseQueryResponse<List<CategoryDetail>>> Handle(GetCategoriesQuery request,
+    public async Task<ApiResponse> Handle(GetCategoriesQuery request,
         CancellationToken cancellationToken)
     {
         var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
-        return new BaseQueryResponse<List<CategoryDetail>>
+        return new ApiResponse
         {
-            Success = true,
             Data = _mapper.Map<List<CategoryDetail>>(categories),
-            Message = "success"
+            Messages = new List<string>{"success"}
         };
     }
 }

@@ -1,11 +1,11 @@
-﻿using Application.Responses;
-using Application.Contracts.Messaging;
+﻿using Application.Contracts.Messaging;
 using Application.Exceptions;
+using Application.Models.Responses;
 using Domain.Repositories;
 
 namespace Application.Features.Products.Commands.UpdateProduct;
 
-public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand, BaseCommandResponse>
+public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand, ApiResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -15,7 +15,7 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
-    public async Task<BaseCommandResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         var product = await _unitOfWork
             .ProductRepository
@@ -35,11 +35,9 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
 
         await _unitOfWork.Save();
 
-        return new BaseCommandResponse
+        return new ApiResponse()
         {
-            Success = true,
-            Message = "update success",
-            Id = product.Id
+            Messages = new List<string> { "update success" }
         };
     }
 }

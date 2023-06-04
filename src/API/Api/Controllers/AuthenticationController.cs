@@ -1,4 +1,5 @@
-﻿using Application.DTOs.User;
+﻿using Application.DTOs.Auth;
+using Application.DTOs.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.Models.Identity;

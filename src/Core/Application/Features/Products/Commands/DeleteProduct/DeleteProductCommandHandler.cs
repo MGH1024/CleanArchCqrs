@@ -1,12 +1,12 @@
-﻿using Application.Responses;
-using Application.Contracts.Messaging;
+﻿using Application.Contracts.Messaging;
 using Application.DTOs.Product.Validators;
 using Application.Exceptions;
+using Application.Models.Responses;
 using Domain.Repositories;
 
 namespace Application.Features.Products.Commands.DeleteProduct;
 
-public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand, BaseCommandResponse>
+public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand, ApiResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -15,7 +15,7 @@ public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand,
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
-    public async Task<BaseCommandResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
         var product = await _unitOfWork.ProductRepository.GetByIdAsync(request.DeleteProduct.Id);
 
@@ -24,10 +24,9 @@ public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand,
 
         _unitOfWork.ProductRepository.DeleteProduct(product);
         await _unitOfWork.Save();
-        return new BaseCommandResponse
+        return new ApiResponse
         {
-            Success = true,
-            Message = "delete success"
+            Messages = new List<string>{"delete success"}
         };
     }
 }

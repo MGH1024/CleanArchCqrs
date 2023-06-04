@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.Models.Database;
 using Domain.Repositories;
 using Persistence.Repositories;
 using Microsoft.AspNetCore.Http;

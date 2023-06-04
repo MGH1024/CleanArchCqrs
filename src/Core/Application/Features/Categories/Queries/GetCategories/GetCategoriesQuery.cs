@@ -1,10 +1,10 @@
 ﻿using Application.Contracts.Messaging;
 using Application.DTOs.Category;
-using Application.Responses;
+using Application.Models.Responses;
 
 namespace Application.Features.Categories.Queries.GetCategories;
 
-public class GetCategoriesQuery :IQuery<BaseQueryResponse<List<CategoryDetail>>>
+public class GetCategoriesQuery :IQuery<ApiResponse>
 {
     
 }

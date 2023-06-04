@@ -23,7 +23,7 @@ namespace Api.Controllers
 
 
         [HttpGet("")]
-        public async Task<IActionResult> GetProducts([FromQuery] GetParameter resourceParameter)
+        public async Task<IActionResult> GetProducts()
         {
             return Ok(await Sender.Send(new GetProductsQuery { }));
         }
