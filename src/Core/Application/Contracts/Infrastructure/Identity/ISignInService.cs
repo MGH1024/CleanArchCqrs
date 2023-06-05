@@ -10,6 +10,6 @@ namespace Application.Contracts.Infrastructure.Identity;
 public interface ISignInService
 {
     Task SignOut();
-    Task<SignInResult> SignIn(User user, AuthRequest login);
+    Task<SignInResult> SignIn(User user, AuthRequestDto login);
     Task<IEnumerable<Claim>> GetClaimByUser(User user);
 }

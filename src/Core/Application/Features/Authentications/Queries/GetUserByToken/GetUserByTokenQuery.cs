@@ -5,5 +5,5 @@ namespace Application.Features.Authentications.Queries.GetUserByToken;
 
 public class GetUserByTokenQuery : IQuery<ApiResponse>
 {
-    public DTOs.User.GetUserByToken GetUserByToken { get; set; }
+    public DTOs.User.GetUserByTokenDto GetUserByTokenDto { get; set; }
 }

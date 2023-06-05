@@ -17,7 +17,7 @@ public class GetUserByTokenQueryHandler : IQueryHandler<GetUserByTokenQuery, Api
     public async Task<ApiResponse> Handle(GetUserByTokenQuery request,
         CancellationToken cancellationToken)
     {
-        var user = await _userService.GetUserByToken(request.GetUserByToken);
+        var user = await _userService.GetUserByToken(request.GetUserByTokenDto);
         if (user is null)
             throw new BadRequestException("user not found");
         return new ApiResponse()

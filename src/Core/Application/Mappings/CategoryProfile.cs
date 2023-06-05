@@ -1,20 +1,16 @@
-﻿using Application.DTOs.Categories;
-using Application.DTOs.Category;
-using Application.DTOs.Product;
-using Application.DTOs.User;
+﻿using Application.DTOs.Category;
 using AutoMapper;
-using Domain.Entities.Identity;
 using Domain.Entities.Shop;
 
-namespace Application.Mapping;
+namespace Application.Mappings;
 
 public class CategoryProfile : Profile
 {
     public CategoryProfile()
     {
-        CreateMap<Category, CreateCategory>().ReverseMap();
-        CreateMap<Category, UpdateCategory>().ReverseMap();
-        CreateMap<Category, DeleteCategory>().ReverseMap();
-        CreateMap<Category, CategoryDetail>().ReverseMap();
+        CreateMap<Category, CreateCategoryDto>().ReverseMap();
+        CreateMap<Category, UpdateCategoryDto>().ReverseMap();
+        CreateMap<Category, DeleteCategoryDto>().ReverseMap();
+        CreateMap<Category, CategoryDetailDto>().ReverseMap();
     }
 }

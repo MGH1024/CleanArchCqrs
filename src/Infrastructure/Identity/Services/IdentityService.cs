@@ -36,9 +36,9 @@ public class IdentityService : IIdentityService
         return await _userRep.GetAllUsers();
     }
 
-    public async Task<User> GetUser(GetUserById getUserById)
+    public async Task<User> GetUser(GetUserByIdDto getUserByIdDto)
     {
-        return await _userRep.GetByIdAsync(getUserById.UserId);
+        return await _userRep.GetByIdAsync(getUserByIdDto.UserId);
     }
 
     public async Task<User> GetUser(int userId)
@@ -46,23 +46,23 @@ public class IdentityService : IIdentityService
         return await _userService.GetById(userId);
     }
     
-    public async Task<List<string>> UpdateUser(UpdateUser updateUser)
+    public async Task<List<string>> UpdateUser(UpdateUserDto updateUserDto)
     {
         var strResult = new List<string>();
-        var user = await _userService.GetUserById(updateUser.Id);
+        var user = await _userService.GetUserById(updateUserDto.Id);
         if (user != null)
         {
             //user
-            UpdateUserProperty(user, updateUser);
+            UpdateUserProperty(user, updateUserDto);
             var userUpdateResult = await _userService.UpdateUser(user);
 
             //role
             var removeRoleResult = await _roleService.RemoveRolesByUser(user);
-            var assignRoleToUser = await _roleService.AssignRolesToUser(user, updateUser.RoleIdList);
+            var assignRoleToUser = await _roleService.AssignRolesToUser(user, updateUserDto.RoleIdList);
 
             //claim
             var removeClaimsResult = await _claimService.RemoveClaimsByUser(user);
-            var assignClaimsToUser = await _claimService.AssignClaimsToUser(user, updateUser);
+            var assignClaimsToUser = await _claimService.AssignClaimsToUser(user, updateUserDto);
 
             if (userUpdateResult.Succeeded && removeRoleResult.Succeeded && assignRoleToUser.Succeeded
                 && removeClaimsResult.Succeeded && assignClaimsToUser.Succeeded)
@@ -113,15 +113,15 @@ public class IdentityService : IIdentityService
         return await _userService.GetByUsername(username) != null;
     }
 
-    private void UpdateUserProperty(User user, UpdateUser updateUser)
+    private void UpdateUserProperty(User user, UpdateUserDto updateUserDto)
     {
-        user.Firstname = updateUser.Firstname;
-        user.Lastname = updateUser.Lastname;
-        user.Email = updateUser.Email;
-        user.UserName = updateUser.Username;
-        user.CellNumber = updateUser.CellNumber;
-        user.Image = updateUser.Image;
-        user.PhoneNumber = updateUser.PhoneNumber;
+        user.Firstname = updateUserDto.Firstname;
+        user.Lastname = updateUserDto.Lastname;
+        user.Email = updateUserDto.Email;
+        user.UserName = updateUserDto.Username;
+        user.CellNumber = updateUserDto.CellNumber;
+        user.Image = updateUserDto.Image;
+        user.PhoneNumber = updateUserDto.PhoneNumber;
     }
 
     private List<string> GetIdentityError(IEnumerable<IdentityError> errors)

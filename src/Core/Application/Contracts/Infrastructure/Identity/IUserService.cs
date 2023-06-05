@@ -17,6 +17,6 @@ public interface IUserService
     Task<IdentityResult> DeleteUser(User user);
     Task<User> GetByEmail(string email);
     Task CreateUserRefreshToken(UserRefreshToken userRefreshToken);
-    Task<User> GetUserByToken(GetUserByToken getUserByToken);
+    Task<User> GetUserByToken(GetUserByTokenDto getUserByTokenDto);
     Task DeActiveRefreshToken(string refreshToken);
 }

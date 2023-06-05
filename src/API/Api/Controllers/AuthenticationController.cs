@@ -18,17 +18,17 @@ public class AuthenticationController : AppController
     }
 
     [HttpPost("signin")]
-    public async Task<IActionResult> Login([FromBody] AuthRequest authRequest)
+    public async Task<IActionResult> Login([FromBody] AuthRequestDto authRequestDto)
     {
-        var command = new AuthCommand { AuthRequest = authRequest,IpAddress=IpAddress };
+        var command = new AuthCommand { AuthRequestDto = authRequestDto,IpAddress=IpAddress };
         return Ok(await Sender.Send(command));
     }
     
     [HttpGet]
     [Route("get-user-by-token")]
-    public async Task<IActionResult> GetUserNameByToken([FromQuery] GetUserByToken getUserByToken)
+    public async Task<IActionResult> GetUserNameByToken([FromQuery] GetUserByTokenDto getUserByTokenDto)
     {
-        var query = new GetUserByTokenQuery { GetUserByToken = getUserByToken };
+        var query = new GetUserByTokenQuery { GetUserByTokenDto = getUserByTokenDto };
         return Ok(await Sender.Send(query));
     }
 }

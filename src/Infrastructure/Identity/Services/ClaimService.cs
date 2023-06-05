@@ -38,13 +38,13 @@ public class ClaimService : IClaimService
         return await _userManager.RemoveClaimsAsync(user, oldClaims);
     }
 
-    public async Task<IdentityResult> AssignClaimsToUser(User user, UpdateUser updateUser)
+    public async Task<IdentityResult> AssignClaimsToUser(User user, UpdateUserDto updateUserDto)
     {
         var newClaims = new List<Claim>
                                 {
-                                    new Claim("email",updateUser.Email),
-                                    new Claim("givenName",updateUser.Firstname),
-                                    new Claim("surName",updateUser.Lastname)
+                                    new Claim("email",updateUserDto.Email),
+                                    new Claim("givenName",updateUserDto.Firstname),
+                                    new Claim("surName",updateUserDto.Lastname)
                                 };
         return await _userManager.AddClaimsAsync(user, newClaims);
     }

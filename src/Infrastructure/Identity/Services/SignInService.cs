@@ -22,7 +22,7 @@ public class SignInService : ISignInService
         await _signInManager.SignOutAsync();
     }
 
-    public async Task<SignInResult> SignIn(User user, AuthRequest login)
+    public async Task<SignInResult> SignIn(User user, AuthRequestDto login)
     {
         return await _signInManager.PasswordSignInAsync
             (user.UserName,

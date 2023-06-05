@@ -46,9 +46,9 @@ public class AuthService : IAuthService
         _signInService = signInService ?? throw new ArgumentNullException(nameof(signInService));
     }
 
-    public async Task<List<string>> CreateUserByRoleWithoutPassword(CreateUser createUserDto, Roles roles)
+    public async Task<List<string>> CreateUserByRoleWithoutPassword(CreateUserDto createUserDtoDto, Roles roles)
     {
-        var user = _mapper.Map<User>(createUserDto);
+        var user = _mapper.Map<User>(createUserDtoDto);
         var strResult = new List<string>();
         var userResult = await CreateUserWithoutPassword(user);
         var roleResult = await _roleService.AddRoleToUser(user, (int)roles);
@@ -86,9 +86,9 @@ public class AuthService : IAuthService
     }
 
     [Obsolete("Obsolete")]
-    public async Task<ApiResponse> Login(AuthRequest authRequest, string ipAddress, string returnUrl)
+    public async Task<ApiResponse> Login(AuthRequestDto authRequestDto, string ipAddress, string returnUrl)
     {
-        var user = await _userService.GetByUsername(authRequest.UserName);
+        var user = await _userService.GetByUsername(authRequestDto.UserName);
 
         //2do if user signed in redirect to returnUrl
         var errors = new List<string>();
@@ -96,7 +96,7 @@ public class AuthService : IAuthService
         if (user != null)
         {
             await _signInService.SignOut();
-            var signinResult = await _signInService.SignIn(user, authRequest);
+            var signinResult = await _signInService.SignIn(user, authRequestDto);
 
             if (signinResult.IsNotAllowed)
             {
@@ -175,7 +175,7 @@ public class AuthService : IAuthService
         if (refreshToken is null)
             throw new BadRequestException("");
 
-        var user = await _userService.GetUserByToken(new GetUserByToken { Token = refreshToken.Token });
+        var user = await _userService.GetUserByToken(new GetUserByTokenDto { Token = refreshToken.Token });
         if (user is null)
             throw new BadRequestException("");
 

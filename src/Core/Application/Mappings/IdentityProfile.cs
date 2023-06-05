@@ -1,13 +1,13 @@
-﻿using AutoMapper;
-using Application.DTOs.User;
+﻿using Application.DTOs.User;
+using AutoMapper;
 using Domain.Entities.Identity;
 
-namespace Application.Mapping;
+namespace Application.Mappings;
 
 public class IdentityProfile : Profile
 {
     public IdentityProfile()
     {
-        CreateMap<CreateUser, User>();
+        CreateMap<CreateUserDto, User>();
     }
 }

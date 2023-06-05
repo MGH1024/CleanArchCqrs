@@ -89,9 +89,9 @@ public class UserService : IUserService
         await _userRep.InsertUserRefreshToken(userRefreshToken);
     }
 
-    public Task<User> GetUserByToken(GetUserByToken getUserByToken)
+    public Task<User> GetUserByToken(GetUserByTokenDto getUserByTokenDto)
     {
-        var username = GetUserNameClaimByToken(getUserByToken.Token);
+        var username = GetUserNameClaimByToken(getUserByTokenDto.Token);
         return GetByUsername(username);
     }
 

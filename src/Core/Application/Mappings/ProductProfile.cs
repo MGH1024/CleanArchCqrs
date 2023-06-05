@@ -1,14 +1,14 @@
-﻿using AutoMapper;
+﻿using Application.DTOs.Product;
+using AutoMapper;
 using Domain.Entities.Shop;
-using Application.DTOs.Product;
 
-namespace Application.Mapping;
+namespace Application.Mappings;
 
 public class ProductProfile : Profile
 {
     public ProductProfile()
     {
-        CreateMap<Product, CreateProduct>().ReverseMap();
-        CreateMap<Product, ProductDetail>();
+        CreateMap<Product, CreateProductDto>().ReverseMap();
+        CreateMap<Product, ProductDetailDto>();
     }
 }

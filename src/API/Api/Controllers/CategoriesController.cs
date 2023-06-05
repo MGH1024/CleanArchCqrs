@@ -1,14 +1,11 @@
-using Application.DTOs.Categories;
 using MediatR;
-using Application.Models;
 using Microsoft.AspNetCore.Mvc;
 using Application.DTOs.Category;
-using Application.Features.Categories.Commands.CreateCategories;
-using Application.Features.Categories.Queries.GetCategory;
-using Application.Features.Categories.Queries.GetCategories;
-using Application.Features.Categories.Commands.UpdateCategory;
-using Application.Features.Categories.Commands.CreateCategory;
-using Application.Features.Categories.Commands.DeleteCategory;
+using Application.Features.Category.Commands.CreateCategory;
+using Application.Features.Category.Commands.DeleteCategory;
+using Application.Features.Category.Commands.UpdateCategory;
+using Application.Features.Category.Queries.GetCategories;
+using Application.Features.Category.Queries.GetCategory;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 
@@ -27,17 +24,17 @@ namespace Api.Controllers
         [HttpGet("")]
         public async Task<IActionResult> GetCategories()
         {
-            return Ok(await Sender.Send(new GetCategoriesQuery { }));
+            return Ok(await Sender.Send(new GetCategoriesQuery()));
         }
 
         [HttpGet("get-category-by-id")]
-        public async Task<IActionResult> GetCategory([FromQuery] GetCategoryById getCategoryById)
+        public async Task<IActionResult> GetCategory([FromQuery] GetCategoryByIdDto getCategoryByIdDto)
         {
-            return Ok(await Sender.Send(new GetCategoryQuery { Id = getCategoryById.Id }));
+            return Ok(await Sender.Send(new GetCategoryQuery { Id = getCategoryByIdDto.Id }));
         }
 
         [HttpPost("create-category")]
-        public async Task<IActionResult> CreateCategory([FromBody] CreateCategory createCategory)
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto createCategory)
         {
             var command = new CreateCategoryCommand { CreateCategory = createCategory };
             return Ok(await Sender.Send(command));
@@ -45,17 +42,17 @@ namespace Api.Controllers
 
         // PUT: api/Categories/5
         [HttpPut("update-category")]
-        public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategory updateCategory)
+        public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryDto updateCategoryDto)
         {
-            var command = new UpdateCategoryCommand { UpdateCategory = updateCategory };
+            var command = new UpdateCategoryCommand { UpdateCategoryDto = updateCategoryDto };
             return Ok(await Sender.Send(command));
         }
 
         // DELETE: api/Categories/5
         [HttpDelete("delete-category")]
-        public async Task<IActionResult> DeleteCategory(DeleteCategory deleteCategory)
+        public async Task<IActionResult> DeleteCategory(DeleteCategoryDto deleteCategoryDto)
         {
-            var command = new DeleteCategoryCommand { DeleteCategory = deleteCategory };
+            var command = new DeleteCategoryCommand { DeleteCategoryDto = deleteCategoryDto };
             return Ok(await Sender.Send(command));
         }
     }

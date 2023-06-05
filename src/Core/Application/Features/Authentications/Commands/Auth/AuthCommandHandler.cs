@@ -17,6 +17,6 @@ public class AuthCommandHandler : ICommandHandler<AuthCommand,ApiResponse>
     public async Task<ApiResponse> Handle(AuthCommand request, CancellationToken cancellationToken)
     {
         return await _authService
-            .Login(request.AuthRequest,request.IpAddress,request.ReturnUrl);
+            .Login(request.AuthRequestDto,request.IpAddress,request.ReturnUrl);
     }
 }

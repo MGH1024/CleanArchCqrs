@@ -2,7 +2,7 @@
 using FluentValidation;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Application.Features.Categories.Commands.CreateCategories;
+using Application.Features.Category.Commands.CreateCategory;
 
 namespace Application;
 
