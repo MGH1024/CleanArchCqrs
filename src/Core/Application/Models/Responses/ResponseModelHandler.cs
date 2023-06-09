@@ -1,45 +1,56 @@
 ﻿using System.Net;
-using Application.Exceptions;
-using Application.Exceptions.Base;
-using Application.Exceptions.Validation;
+using MGH.Exceptions;
+using MGH.Exceptions.Base;
+using InvalidOperationException = MGH.Exceptions.InvalidOperationException;
 
 namespace Application.Models.Responses
 {
     public static class ResponseModelHandler
     {
-        public static ResponseModel GetResponseModel(Exception exception)
+        public static ResponseModel GetResponseModel(GeneralException exception)
         {
             ApiResponse response;
-            HttpStatusCode code;
+            var code = exception.StatusCode;
 
-            if (exception is AppException)
+            switch (exception)
             {
-                var ex = exception as AppException;
-                if (exception is CustomValidationException)
-                {
-                    code = HttpStatusCode.BadRequest;
-                    response = new ApiResponse(ex.Messages, ex.Errors);
-                }
-                else if (exception is NotFoundException)
-                {
-                    code = HttpStatusCode.NotFound;
-                    response = new ApiResponse(ex);
-                }
-                else
-                {
-                    code = HttpStatusCode.UnprocessableEntity;
-                    response = new ApiResponse(ex);
-                }
-            }
-            else if (exception is UnauthorizedAccessException)
-            {
-                response = new ApiResponse();
-                code = HttpStatusCode.Unauthorized;
-            }
-            else
-            {
-                response = new ApiResponse(exception);
-                code = HttpStatusCode.InternalServerError;
+                case AuthorizationException:
+                    response = new ApiResponse(exception);
+                    break;
+
+                case BadRequestException:
+                    response = new ApiResponse(exception);
+                    break;
+
+                case CustomValidationException:
+                    response = new ApiResponse(new List<string> { exception.Message },
+                        exception.ValidationErrors);
+                    break;
+
+                case DuplicateException:
+                    response = new ApiResponse(exception);
+                    break;
+
+                case DuplicateRequestException:
+                    response = new ApiResponse(exception);
+                    break;
+
+                case EntityHasReferenceException:
+                    response = new ApiResponse(exception);
+                    break;
+
+                case EntityNotFoundException:
+                    response = new ApiResponse(exception);
+                    break;
+
+                case InvalidOperationException:
+                    response = new ApiResponse(exception);
+                    break;
+
+                default:
+                    code = HttpStatusCode.InternalServerError;
+                    response = new ApiResponse(exception);
+                    break;
             }
 
             return new ResponseModel
@@ -48,11 +59,5 @@ namespace Application.Models.Responses
                 Response = response
             };
         }
-    }
-
-    public class ResponseModel
-    {
-        public ApiResponse Response { get; set; }
-        public HttpStatusCode Code { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Application.Contracts.Infrastructure.Validation;
-using Application.Exceptions.Validation;
+using MGH.Exceptions;
 
 namespace Infrastructures.Validation
 {

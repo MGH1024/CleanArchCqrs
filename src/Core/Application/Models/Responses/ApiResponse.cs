@@ -1,6 +1,7 @@
-﻿using System.Diagnostics.Contracts;
-using Application.Exceptions.Base;
+﻿using MGH.Exceptions;
 using Application.Models.Validation;
+using MGH.Exceptions.Base;
+using MGH.Exceptions.Models;
 
 namespace Application.Models.Responses;
 
@@ -21,19 +22,13 @@ public class ApiResponse
     {
     }
 
-    public ApiResponse(Exception ex)
-        : this(null, new List<string> { ex.Message }, null)
-    {
-
-    }
-
     public ApiResponse(IEnumerable<string> messages)
         : this(null, messages: messages , null)
     {
 
     }
     
-    public ApiResponse(AppException ex)
+    public ApiResponse(GeneralException ex)
         : this(null, new List<string> { ex.Message }, null)
     {
 

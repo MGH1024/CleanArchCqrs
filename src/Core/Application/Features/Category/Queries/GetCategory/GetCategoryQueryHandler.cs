@@ -1,9 +1,9 @@
 ﻿using Application.Contracts.Messaging;
 using Application.DTOs.Category;
-using Application.Exceptions;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
+using MGH.Exceptions;
 
 namespace Application.Features.Category.Queries.GetCategory;
 

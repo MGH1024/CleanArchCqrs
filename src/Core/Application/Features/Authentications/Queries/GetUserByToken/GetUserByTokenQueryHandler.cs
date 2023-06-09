@@ -1,7 +1,7 @@
 ﻿using Application.Contracts.Infrastructure.Identity;
 using Application.Contracts.Messaging;
-using Application.Exceptions;
 using Application.Models.Responses;
+using MGH.Exceptions;
 
 namespace Application.Features.Authentications.Queries.GetUserByToken;
 

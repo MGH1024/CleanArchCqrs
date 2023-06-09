@@ -1,15 +1,15 @@
 using Serilog;
 using Identity;
+using MGH.Swagger;
 using Persistence;
 using Application;
+using MGH.Exceptions;
 using Infrastructures;
+using MGH.Exceptions.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
-using System.Text.Json.Serialization;
-using Application.Exceptions.Validation;
-using Application.Models.Validation;
 using Infrastructures.Middlewares;
-using MGH.Swagger;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc.Formatters;
 
 var serilogConfig = new ConfigurationBuilder()
@@ -64,13 +64,12 @@ try
                     .SelectMany(key => modelState[key]
                         .Errors
                         .Select(err => new ValidationError(key.Replace("$.", ""), err.ErrorMessage)));
-
                 throw new CustomValidationException(errors);
+               
             };
         });
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.ConfigureApplicationServices();
-    //builder.Services.AddTransient<ApiResponseMiddleware>();
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddMemoryCache();
 

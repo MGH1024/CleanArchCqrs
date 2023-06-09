@@ -1,7 +1,9 @@
-﻿using System.Net.Mime;
-using Application.Models.Responses;
-using Infrastructures.Extensions;
+﻿using MGH.Exceptions;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
+using Infrastructures.Extensions;
+using Application.Models.Responses;
+using MGH.Exceptions.Base;
 
 namespace Infrastructures.Middlewares;
 
@@ -26,7 +28,7 @@ public class ApiResponseMiddleware
             {
                 await _next.Invoke(context);
             }
-            catch (Exception ex)
+            catch (GeneralException ex)
             {
                 await HandleException(context, ex);
                 bodyStream.Seek(0, SeekOrigin.Begin);
@@ -35,11 +37,21 @@ public class ApiResponseMiddleware
         }
     }
 
-    private static Task HandleException(HttpContext context, Exception exception)
+    private static Task HandleException(HttpContext context, GeneralException exception)
     {
         var responseModel = ResponseModelHandler.GetResponseModel(exception);
         context.Response.StatusCode = (int)responseModel.Code;
         context.Response.ContentType = MediaTypeNames.Application.Json;
-        return context.Response.WriteAsync(JsonExtensions.ToJsonString(responseModel.Response));
+        if (exception is CustomValidationException)
+        {
+            
+            return context
+                .Response
+                .WriteAsync(JsonExtensions.ToJsonString(responseModel.Response));
+        }
+        else
+        {
+            return context.Response.WriteAsync(JsonExtensions.ToJsonString(responseModel.Response));
+        }
     }
 }

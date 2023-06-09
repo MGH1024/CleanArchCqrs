@@ -1,9 +1,9 @@
 ﻿using Application.Contracts.Messaging;
 using Application.DTOs.Product;
-using Application.Exceptions;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
+using MGH.Exceptions;
 
 namespace Application.Features.Product.Queries.GetProduct;
 
@@ -23,6 +23,7 @@ public class GetProductQueryHandler : IQueryHandler<GetProductQuery, ApiResponse
         var product = await _unitOfWork.ProductRepository.GetByIdAsync(request.Id);
         if (product is null)
             throw new BadRequestException("product not found");
+
         return new ApiResponse
         {
            

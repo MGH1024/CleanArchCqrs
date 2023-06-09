@@ -1,4 +1,6 @@
-﻿namespace Application.Models.Validation;
+﻿using MGH.Exceptions.Models;
+
+namespace Application.Models.Validation;
 
 public class ValidationResult
 {

@@ -1,6 +1,7 @@
 ﻿using Application.Contracts.Infrastructure.Validation;
 using FluentValidation;
 using Application.Models.Validation;
+using MGH.Exceptions.Models;
 
 namespace Infrastructures.Validation
 {

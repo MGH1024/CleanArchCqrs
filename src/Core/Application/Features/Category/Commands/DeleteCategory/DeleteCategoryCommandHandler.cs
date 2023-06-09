@@ -1,7 +1,7 @@
 ﻿using Application.Contracts.Messaging;
-using Application.Exceptions;
 using Application.Models.Responses;
 using Domain.Repositories;
+using MGH.Exceptions;
 
 namespace Application.Features.Category.Commands.DeleteCategory;
 

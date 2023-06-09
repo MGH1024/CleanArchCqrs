@@ -11,10 +11,10 @@ using System.IdentityModel.Tokens.Jwt;
 using Application.Contracts.Infrastructure;
 using Application.Contracts.Infrastructure.Identity;
 using Application.DTOs.Auth;
-using Application.Exceptions;
 using Application.Models.Responses;
 using Domain.Entities.Identity;
 using Domain.Repositories;
+using MGH.Exceptions;
 
 namespace Identity.Services;
 

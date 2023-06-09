@@ -14,13 +14,19 @@
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+        <PackageReference Include="MGH.Exceptions" Version="1.0.8" />
         <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Extensions\" />
+      <Folder Include="Exceptions\" />
       <Folder Include="Features\Product\Queries" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Exceptions\Common\BadRequestException.cs" />
+      <Compile Remove="Models\Validation\ValidationError.cs" />
     </ItemGroup>
 
 </Project>
