@@ -2,6 +2,9 @@
 
 namespace Application.DTOs.Category;
 
-public class CreateCategoryDto : CategoryDto
+public class CreateCategoryDto 
 {
+    public int Code { get; set; }
+    public string Title  { get; set; }
+    public string Description { get; set; }
 }
