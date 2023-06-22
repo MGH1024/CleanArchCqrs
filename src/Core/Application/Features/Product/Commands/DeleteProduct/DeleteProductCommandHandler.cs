@@ -22,7 +22,7 @@ public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand,
             throw new BadRequestException("product not found");
 
         _unitOfWork.ProductRepository.DeleteProduct(product);
-        await _unitOfWork.Save();
+        await _unitOfWork.Save(cancellationToken);
         return new ApiResponse
         {
             Messages = new List<string>{"delete success"}

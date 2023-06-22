@@ -20,7 +20,7 @@ public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand,
     {
         var product = _mapper.Map<Domain.Entities.Shop.Product>(request.CreateProductDto);
         await _unitOfWork.ProductRepository.CreateProductAsync(product);
-        await _unitOfWork.Save();
+        await _unitOfWork.Save(cancellationToken);
         return new ApiResponse(new List<string> { "create success" });
     }
 }

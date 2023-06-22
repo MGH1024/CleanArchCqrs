@@ -4,6 +4,6 @@
     {
         ICategoryRepository CategoryRepository { get; }
         IProductRepository ProductRepository { get; }
-        Task Save();
+        Task Save(CancellationToken cancellationToken);
     }
 }

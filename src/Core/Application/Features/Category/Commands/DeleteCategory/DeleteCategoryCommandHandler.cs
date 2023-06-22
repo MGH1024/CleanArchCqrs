@@ -22,7 +22,7 @@ public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryComman
             throw new BadRequestException("category not found");
 
         _unitOfWork.CategoryRepository.DeleteCategory(category);
-        await _unitOfWork.Save();
+        await _unitOfWork.Save(cancellationToken);
         return new ApiResponse(new List<string> { "delete success" });
     }
 }

@@ -48,7 +48,7 @@ namespace Persistence.Repositories
         }
 
 
-        public async Task Save()
+        public async Task Save(CancellationToken cancellationToken)
         {
             var username = "";
             if (_httpContextAccessor.HttpContext != null)

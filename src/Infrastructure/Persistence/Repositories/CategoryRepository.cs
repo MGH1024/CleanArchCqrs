@@ -48,9 +48,9 @@ namespace Persistence.Repositories
                 .FirstOrDefaultAsync(a => a.Id == categoryId);
         }
 
-        public async Task<Category> CreateCategoryAsync(Category category)
+        public async Task<Category> CreateCategoryAsync(Category category,CancellationToken cancellationToken)
         {
-            await _appDbContext.Categories.AddAsync(category);
+            await _appDbContext.Categories.AddAsync(category,cancellationToken);
             return category;
         }
 

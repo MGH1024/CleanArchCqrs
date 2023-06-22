@@ -31,7 +31,7 @@ public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryComman
         _unitOfWork.CategoryRepository
             .UpdateCategory(category);
 
-        await _unitOfWork.Save();
+        await _unitOfWork.Save(cancellationToken);
 
         return new ApiResponse()
         {

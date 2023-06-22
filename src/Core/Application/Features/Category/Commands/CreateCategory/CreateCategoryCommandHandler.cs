@@ -22,11 +22,19 @@ public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryComman
 
     public async Task<ApiResponse> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
-        await _validationService.Validate<CreateCategoryDtoValidator>(request.CreateCategory);
-        
-        var category = _mapper.Map<Domain.Entities.Shop.Category>(request.CreateCategory);
-        await _unitOfWork.CategoryRepository.CreateCategoryAsync(category);
-        await _unitOfWork.Save();
+        await _validationService
+            .Validate<CreateCategoryDtoValidator>(request.CreateCategory);
+
+        var category = _mapper
+            .Map<Domain.Entities.Shop.Category>(request.CreateCategory);
+
+        await _unitOfWork
+            .CategoryRepository
+            .CreateCategoryAsync(category, cancellationToken);
+
+        await _unitOfWork
+            .Save(cancellationToken);
+
         return new ApiResponse(new List<string> { "created" });
     }
 }

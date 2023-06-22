@@ -33,7 +33,7 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
         _unitOfWork.ProductRepository
             .UpdateProduct(product);
 
-        await _unitOfWork.Save();
+        await _unitOfWork.Save(cancellationToken);
 
         return new ApiResponse()
         {

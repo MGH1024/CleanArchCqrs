@@ -9,7 +9,7 @@ public interface ICategoryRepository
     Task<IEnumerable<Category>> GetAllUpdatedAsync();
     Task<IEnumerable<Category>> GetAllDeletedAsync();
     Task<Category> GetByIdAsync(int categoryId);
-    Task<Category> CreateCategoryAsync(Category category);
+    Task<Category> CreateCategoryAsync(Category category, CancellationToken cancellationToken);
     void UpdateCategory(Category category);
     void DeleteCategory(Category category);
     Task<Category> GetCategoryByTitle(string title);
