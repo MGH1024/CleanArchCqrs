@@ -5,14 +5,14 @@ using TestProject.Categories.Fixtures;
 using Application.DTOs.Category.Validators;
 using Application.Features.Category.Commands.CreateCategory;
 
-namespace TestProject.Categories.Tests;
+namespace TestProject.Categories.Tests.Validators;
 
-public class ValidatorTests : IClassFixture<CreateCategoryCommandHandlerFixture>
+public class CreateCategoryDtoValidatorTests : IClassFixture<CreateCategoryCommandHandlerFixture>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly CreateCategoryCommandHandler _categoryCommandHandler;
 
-    public ValidatorTests(CreateCategoryCommandHandlerFixture categoryCommandHandlerFixture)
+    public CreateCategoryDtoValidatorTests(CreateCategoryCommandHandlerFixture categoryCommandHandlerFixture)
     {
         _unitOfWork = categoryCommandHandlerFixture.UnitOfWork;
         _categoryCommandHandler = categoryCommandHandlerFixture.CreateCategoryCommandHandler;
@@ -32,5 +32,22 @@ public class ValidatorTests : IClassFixture<CreateCategoryCommandHandlerFixture>
         var result = validator.TestValidate(dto);
 
         result.ShouldHaveValidationErrorFor(x => x.Title);
+    }
+    
+    
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    public void GivenInvalidCode_WhenValidate_ThenWillInvalid(int code)
+    {
+        var dto = new CreateCategoryDtoBuilder()
+            .WithCode(code)
+            .WithDescription("desc")
+            .WithTitle("title")
+            .Build();
+        var validator = new CreateCategoryDtoValidator();
+        var result = validator.TestValidate(dto);
+
+        result.ShouldHaveValidationErrorFor(x => x.Code);
     }
 }

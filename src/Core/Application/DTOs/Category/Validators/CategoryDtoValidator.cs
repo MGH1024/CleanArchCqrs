@@ -7,6 +7,9 @@ namespace Application.DTOs.Category.Validators
     {
         public CategoryDtoValidator()
         {
+            RuleFor(x => x.Id)
+                .GreaterThan(0).WithMessage("must greater than zero");
+            
             RuleFor(a => a.Title)
                 .NotEmpty().WithMessage("not empty")
                 .MaximumLength(64).WithMessage("length error");
