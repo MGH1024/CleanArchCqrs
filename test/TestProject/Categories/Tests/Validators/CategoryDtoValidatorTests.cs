@@ -1,23 +1,12 @@
-﻿using Domain.Repositories;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using TestProject.Categories.Builders;
 using TestProject.Categories.Fixtures;
 using Application.DTOs.Category.Validators;
-using Application.Features.Category.Commands.CreateCategory;
 
 namespace TestProject.Categories.Tests.Validators;
 
 public class CategoryDtoValidatorTests : IClassFixture<CreateCategoryCommandHandlerFixture>
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly CreateCategoryCommandHandler _categoryCommandHandler;
-
-    public CategoryDtoValidatorTests(CreateCategoryCommandHandlerFixture categoryCommandHandlerFixture)
-    {
-        _unitOfWork = categoryCommandHandlerFixture.UnitOfWork;
-        _categoryCommandHandler = categoryCommandHandlerFixture.CreateCategoryCommandHandler;
-    }
-
     [Theory]
     [InlineData("")]
     [InlineData(null)]

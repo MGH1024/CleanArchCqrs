@@ -74,7 +74,7 @@ namespace Persistence.Repositories
 
         public async Task<bool> IsCategoryRegistered(string title)
         {
-            return !await _appDbContext
+            return await _appDbContext
                 .Categories
                 .AnyAsync(a => a.Title == title);
         }

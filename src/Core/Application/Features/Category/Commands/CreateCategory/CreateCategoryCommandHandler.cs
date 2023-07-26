@@ -4,6 +4,7 @@ using Application.DTOs.Category.Validators;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
+using MGH.Exceptions;
 
 namespace Application.Features.Category.Commands.CreateCategory;
 
@@ -24,6 +25,13 @@ public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryComman
     {
         await _validationService
             .Validate<CreateCategoryDtoValidator>(request.CreateCategory);
+
+        var isDuplicateTitle = await _unitOfWork
+            .CategoryRepository
+            .IsCategoryRegistered(request.CreateCategory.Title);
+
+        if (isDuplicateTitle)
+            throw new DuplicateException("Title", typeof(Domain.Entities.Shop.Category));
 
         var category = _mapper
             .Map<Domain.Entities.Shop.Category>(request.CreateCategory);

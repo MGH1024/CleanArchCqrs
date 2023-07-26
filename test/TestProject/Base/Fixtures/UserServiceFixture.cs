@@ -1,7 +1,7 @@
 ﻿using NSubstitute;
 using Application.Contracts.Infrastructure.Identity;
 
-namespace TestProject.Base;
+namespace TestProject.Base.Fixtures;
 
 public class UserServiceFixture
 {

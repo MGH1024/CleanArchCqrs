@@ -1,27 +1,29 @@
-﻿using AutoMapper;
+﻿using Application.Contracts.Infrastructure.Validation;
+using AutoMapper;
 using NSubstitute;
 using TestProject.Base;
 using Domain.Repositories;
-using Application.Contracts.Infrastructure.Validation;
 using Application.Features.Category.Commands.CreateCategory;
+using Moq;
+using TestProject.Base.Fixtures;
+using TestProject.Base.Mocks;
 
 namespace TestProject.Categories.Fixtures;
 
 public class CreateCategoryCommandHandlerFixture
 {
-    private readonly IMapper _mapper;
-    private readonly IValidationService _validationService;
-
-    public readonly IUnitOfWork UnitOfWork;
+    public readonly IMapper Mapper;
+    //public readonly IUnitOfWork UnitOfWork;
+    public readonly IValidationService ValidationService;
     public CreateCategoryCommandHandler CreateCategoryCommandHandler;
+    public Mock<IUnitOfWork> UnitOfWorkMock;
 
     public CreateCategoryCommandHandlerFixture()
     {
-        _mapper = Substitute.For<IMapper>();
-        UnitOfWork = Substitute.For<IUnitOfWork>();
-        _validationService = new ValidationServiceFixture()._validationService;
-        CreateCategoryCommandHandler = new CreateCategoryCommandHandler(_mapper, UnitOfWork, _validationService);
+        Mapper = Substitute.For<IMapper>();
+        //UnitOfWork = Substitute.For<IUnitOfWork>();
+        ValidationService = new ValidationServiceFixture().ValidationService;
+        UnitOfWorkMock = MockUnitOfWork.GetUnitOfWork();
+        CreateCategoryCommandHandler = new CreateCategoryCommandHandler(Mapper, UnitOfWorkMock.Object, ValidationService);
     }
-    
-    
 }
