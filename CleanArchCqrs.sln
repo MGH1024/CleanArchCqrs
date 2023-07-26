@@ -31,7 +31,11 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "client-app", "src\UI\client
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "test\TestProject\TestProject.csproj", "{EEA812BA-B20D-48FB-A3B0-C556148E5851}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{F639D7A3-ABCA-4CC2-B466-558F6FF05EDA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4C103ACE-8973-49D0-8EF0-F44789B02948}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{4DB1EDCE-66B9-460A-B7FF-AAE6B20E7343}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{E2FDDA5A-5464-4B80-BF16-5C017FC7AE58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +77,10 @@ Global
 		{EEA812BA-B20D-48FB-A3B0-C556148E5851}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEA812BA-B20D-48FB-A3B0-C556148E5851}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEA812BA-B20D-48FB-A3B0-C556148E5851}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2FDDA5A-5464-4B80-BF16-5C017FC7AE58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2FDDA5A-5464-4B80-BF16-5C017FC7AE58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2FDDA5A-5464-4B80-BF16-5C017FC7AE58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2FDDA5A-5464-4B80-BF16-5C017FC7AE58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
