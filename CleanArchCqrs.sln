@@ -31,8 +31,6 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "client-app", "src\UI\client
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject", "test\TestProject\TestProject.csproj", "{EEA812BA-B20D-48FB-A3B0-C556148E5851}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{4C103ACE-8973-49D0-8EF0-F44789B02948}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
