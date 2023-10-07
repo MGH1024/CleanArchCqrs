@@ -12,7 +12,7 @@ public static class CategoryRepositoryMock
         {
             new Category
             {
-                Id = 1,
+                //Id = 1,
                 Code = 1,
                 Order = 1,
                 Title = "title1",
@@ -20,7 +20,7 @@ public static class CategoryRepositoryMock
             },
             new Category
             {
-                Id = 2,
+                //Id = 2,
                 Code = 2,
                 Order = 2,
                 Title = "title2",

@@ -1,14 +1,11 @@
-﻿using Domain.Entities.Base;
+﻿using MGH.Domain;
 
 namespace Domain.Entities.Shop;
 
-public class Product : AuditableEntity, IPageable, ICodeAble, IDropdownAble
+public class Product : Entity<int>,IDropdownAble,ICodeAble,IPageable
 {
-    public int Id { get; set; }
     public string Title { get; set; }
-
     public string Description { get; set; }
-    
     public  int Quantity { get; set; }
 
     
@@ -31,7 +28,7 @@ public class Product : AuditableEntity, IPageable, ICodeAble, IDropdownAble
     {
         get
         {
-            var strResult = Title + "-" + Code;
+            var strResult = $"{Title} - {Code}";
             return strResult;
         }
     }
@@ -40,7 +37,7 @@ public class Product : AuditableEntity, IPageable, ICodeAble, IDropdownAble
     {
         get
         {
-            var strResult = Title + "-" + Code + "_" + IsActive.ToString();
+            var strResult = $"{Title} - {Code}  by: {CreatedBy} + at: + {CreatedAt}";
             return strResult;
         }
     }

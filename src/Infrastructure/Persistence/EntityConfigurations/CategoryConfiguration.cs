@@ -35,12 +35,6 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.Ignore(a => a.CurrentPage);
         builder.Ignore(a => a.ListItemText);
         builder.Ignore(a => a.ListItemTextForAdmins);
-
-        //default value  section
-        builder.Property(t => t.IsActive).HasDefaultValue(true);
-        builder.Property(t => t.IsDeleted).HasDefaultValue(false);
-        builder.Property(t => t.IsUpdated).HasDefaultValue(false);
-        
         
         //navigations
     }

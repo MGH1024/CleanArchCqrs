@@ -38,12 +38,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Ignore(a => a.ListItemText);
         builder.Ignore(a => a.ListItemTextForAdmins);
 
-        //default value  section
-        builder.Property(t => t.IsActive).HasDefaultValue(true);
-        builder.Property(t => t.IsDeleted).HasDefaultValue(false);
-        builder.Property(t => t.IsUpdated).HasDefaultValue(false);
-        
-        
         //navigations
         builder.HasOne<Category>(a => a.Category)
             .WithMany(a => a.Products)

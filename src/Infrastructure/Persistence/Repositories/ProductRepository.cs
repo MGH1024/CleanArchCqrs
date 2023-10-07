@@ -21,33 +21,6 @@ public class ProductRepository : IProductRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<Product>> GetAllActiveAsync()
-    {
-        return await _appDbContext
-            .Products
-            .Include(a => a.Category)
-            .Where(a => a.IsActive == true)
-            .ToListAsync();
-    }
-
-    public async Task<IEnumerable<Product>> GetAllUpdatedAsync()
-    {
-        return await _appDbContext
-            .Products
-            .Include(a => a.Category)
-            .Where(a => a.IsUpdated == true)
-            .ToListAsync();
-    }
-
-    public async Task<IEnumerable<Product>> GetAllDeletedAsync()
-    {
-        return await _appDbContext
-            .Products
-            .Include(a => a.Category)
-            .Where(a => a.IsDeleted == true)
-            .ToListAsync();
-    }
-
     public async Task<Product> GetByIdAsync(int productId)
     {
         return await _appDbContext

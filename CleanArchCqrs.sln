@@ -27,7 +27,7 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "client-app", "src\Presentat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject", "test\TestProject\TestProject.csproj", "{EEA812BA-B20D-48FB-A3B0-C556148E5851}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistence", "Persistence", "{F79F4A19-8FE5-44EC-A549-714936ADCAFA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{F79F4A19-8FE5-44EC-A549-714936ADCAFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -18,29 +18,6 @@ namespace Persistence.Repositories
             return await _appDbContext.Categories.ToListAsync();
         }
 
-        public async Task<IEnumerable<Category>> GetAllActiveAsync()
-        {
-            return await _appDbContext
-                .Categories.Where(a => a.IsActive == true)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Category>> GetAllUpdatedAsync()
-        {
-            return await _appDbContext
-                .Categories
-                .Where(a => a.IsUpdated == true)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Category>> GetAllDeletedAsync()
-        {
-            return await _appDbContext
-                .Categories
-                .Where(a => a.IsDeleted == true)
-                .ToListAsync();
-        }
-
         public async Task<Category> GetByIdAsync(int categoryId)
         {
             return await _appDbContext

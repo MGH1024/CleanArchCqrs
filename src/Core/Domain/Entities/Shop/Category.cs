@@ -1,10 +1,9 @@
-﻿using Domain.Entities.Base;
+﻿using MGH.Domain;
 
 namespace Domain.Entities.Shop;
 
-public class Category : AuditableEntity, IPageable, ICodeAble, IDropdownAble
+public class Category : Entity<int>, IDropdownAble,ICodeAble,IPageable,IOrderAble
 {
-    public int Id { get; set; }
     public string Title { get; set; }
 
     public string Description { get; set; }
@@ -15,7 +14,7 @@ public class Category : AuditableEntity, IPageable, ICodeAble, IDropdownAble
 
 
     //pageable
-    public int Row { get; set; }
+    public int Row { get;  }
 
     public int TotalCount { get; set; }
 
@@ -29,7 +28,7 @@ public class Category : AuditableEntity, IPageable, ICodeAble, IDropdownAble
     {
         get
         {
-            var strResult = Title + "-" + Code;
+            var strResult = $"{Title} - {Code}";
             return strResult;
         }
     }
@@ -38,12 +37,15 @@ public class Category : AuditableEntity, IPageable, ICodeAble, IDropdownAble
     {
         get
         {
-            var strResult = Title + "-" + Code + "_" + IsActive.ToString();
+            var strResult = $"{Title} - {Code}  by: {CreatedBy} + at: + {CreatedAt}";
             return strResult;
         }
     }
 
-
+    //orderable
+    public int Order { get; set; }
+    
+    
     //navigations
     public virtual ICollection<Product> Products { get; set; }
 }
