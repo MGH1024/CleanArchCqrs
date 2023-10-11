@@ -16,13 +16,13 @@ public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryComman
 
     public async Task<ApiResponse> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
-        var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.DeleteCategoryDto.Id);
+        var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.DeleteCategoryDto.Id, cancellationToken);
 
         if (category is null)
             throw new BadRequestException("category not found");
 
         _unitOfWork.CategoryRepository.DeleteCategory(category);
-        await _unitOfWork.Save(cancellationToken);
+        await _unitOfWork.SaveAsync(cancellationToken);
         return new ApiResponse(new List<string> { "delete success" });
     }
 }

@@ -20,7 +20,7 @@ public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, ApiRe
     public async Task<ApiResponse> Handle(GetCategoriesQuery request,
         CancellationToken cancellationToken)
     {
-        var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
+        var categories = await _unitOfWork.CategoryRepository.GetAllAsync(cancellationToken);
         return new ApiResponse
         {
             Data = _mapper.Map<List<CategoryDetailDto>>(categories),

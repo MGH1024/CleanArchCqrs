@@ -30,6 +30,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IUnitOfWork,UnitOfWork>();
         services.AddScoped<ICategoryRepository,CategoryRepository>();
         services.AddScoped<IProductRepository,ProductRepository>();
+        services.AddScoped<IUserRepository,UserRepository>();
         services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         return services;

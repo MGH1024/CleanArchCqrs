@@ -16,13 +16,13 @@ public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand,
 
     public async Task<ApiResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        var product = await _unitOfWork.ProductRepository.GetByIdAsync(request.DeleteProductDto.Id);
+        var product = await _unitOfWork.ProductRepository.GetByIdAsync(request.DeleteProductDto.Id, cancellationToken);
 
         if (product is null)
             throw new BadRequestException("product not found");
 
-        _unitOfWork.ProductRepository.DeleteProduct(product);
-        await _unitOfWork.Save(cancellationToken);
+        _unitOfWork.ProductRepository.DeleteProduct(product, cancellationToken);
+        await _unitOfWork.SaveAsync(cancellationToken);
         return new ApiResponse
         {
             Messages = new List<string>{"delete success"}

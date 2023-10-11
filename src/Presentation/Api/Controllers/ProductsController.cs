@@ -6,14 +6,12 @@ using Application.Features.Product.Commands.DeleteProduct;
 using Application.Features.Product.Commands.UpdateProduct;
 using Application.Features.Product.Queries.GetProduct;
 using Application.Features.Product.Queries.GetProducts;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ProductsController : AppController
     {
         public ProductsController(ISender sender) : base(sender)

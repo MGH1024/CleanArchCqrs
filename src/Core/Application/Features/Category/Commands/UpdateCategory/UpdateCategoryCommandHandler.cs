@@ -19,7 +19,7 @@ public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryComman
     {
         var category = await _unitOfWork
             .CategoryRepository
-            .GetByIdAsync(request.UpdateCategoryDto.Id);
+            .GetByIdAsync(request.UpdateCategoryDto.Id, cancellationToken);
 
         if (category is null)
             throw new BadRequestException("category not found");
@@ -31,7 +31,7 @@ public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryComman
         _unitOfWork.CategoryRepository
             .UpdateCategory(category);
 
-        await _unitOfWork.Save(cancellationToken);
+        await _unitOfWork.SaveAsync(cancellationToken);
 
         return new ApiResponse()
         {

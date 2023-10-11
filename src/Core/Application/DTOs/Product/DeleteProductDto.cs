@@ -1,7 +1,6 @@
-﻿using Application.DTOs.Base;
+﻿namespace Application.DTOs.Product;
 
-namespace Application.DTOs.Product;
-
-public class DeleteProductDto : BaseDto
+public class DeleteProductDto
 {
+    public int Id { get; set; }
 }

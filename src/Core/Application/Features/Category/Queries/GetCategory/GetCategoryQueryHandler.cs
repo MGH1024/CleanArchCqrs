@@ -21,7 +21,7 @@ public class GetCategoryQueryHandler : IQueryHandler<GetCategoryQuery, ApiRespon
     public async Task<ApiResponse> Handle(GetCategoryQuery request,
         CancellationToken cancellationToken)
     {
-        var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.Id);
+        var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.Id, cancellationToken);
         if (category is null)
             throw new BadRequestException("category not found");
         

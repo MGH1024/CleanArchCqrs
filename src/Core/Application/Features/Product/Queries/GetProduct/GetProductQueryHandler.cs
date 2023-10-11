@@ -20,7 +20,7 @@ public class GetProductQueryHandler : IQueryHandler<GetProductQuery, ApiResponse
 
     public async Task<ApiResponse> Handle(GetProductQuery request, CancellationToken cancellationToken)
     {
-        var product = await _unitOfWork.ProductRepository.GetByIdAsync(request.Id);
+        var product = await _unitOfWork.ProductRepository.GetByIdAsync(request.Id, cancellationToken);
         if (product is null)
             throw new BadRequestException("product not found");
 

@@ -1,8 +1,9 @@
-﻿using Application.DTOs.Base;
+﻿
 
 namespace Application.DTOs.Category;
 
-public class GetCategoryByIdDto : BaseDto
+public class GetCategoryByIdDto 
 {
+    public int Id { get; set; }
 }
 

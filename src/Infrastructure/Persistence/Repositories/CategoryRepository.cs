@@ -10,24 +10,24 @@ namespace Persistence.Repositories
 
         public CategoryRepository(AppDbContext appDbContext)
         {
-            _appDbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
+            _appDbContext = appDbContext;
         }
 
-        public async Task<IEnumerable<Category>> GetAllAsync()
+        public async Task<IEnumerable<Category>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _appDbContext.Categories.ToListAsync();
+            return await _appDbContext.Categories.ToListAsync(cancellationToken);
         }
 
-        public async Task<Category> GetByIdAsync(int categoryId)
+        public async Task<Category> GetByIdAsync(int categoryId, CancellationToken cancellationToken)
         {
             return await _appDbContext
                 .Categories
-                .FirstOrDefaultAsync(a => a.Id == categoryId);
+                .FirstOrDefaultAsync(a => a.Id == categoryId, cancellationToken);
         }
 
-        public async Task<Category> CreateCategoryAsync(Category category,CancellationToken cancellationToken)
+        public async Task<Category> CreateCategoryAsync(Category category, CancellationToken cancellationToken)
         {
-            await _appDbContext.Categories.AddAsync(category,cancellationToken);
+            await _appDbContext.Categories.AddAsync(category, cancellationToken);
             return category;
         }
 
@@ -41,19 +41,19 @@ namespace Persistence.Repositories
             _appDbContext.Categories.Remove(category);
         }
 
-        public async Task<Category> GetCategoryByTitle(string title)
+        public async Task<Category> GetCategoryByTitleAsync(string title,CancellationToken cancellationToken)
         {
             return await _appDbContext
                 .Categories
                 .Where(a => a.Title == title)
-                .FirstAsync();
+                .FirstAsync(cancellationToken);
         }
 
-        public async Task<bool> IsCategoryRegistered(string title)
+        public async Task<bool> IsCategoryRegisteredAsync(string title, CancellationToken cancellationToken)
         {
             return await _appDbContext
                 .Categories
-                .AnyAsync(a => a.Title == title);
+                .AnyAsync(a => a.Title == title,cancellationToken);
         }
     }
 }

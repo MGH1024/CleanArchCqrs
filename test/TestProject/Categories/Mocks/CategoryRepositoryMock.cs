@@ -30,7 +30,7 @@ public static class CategoryRepositoryMock
 
         var mockRepo = new Mock<ICategoryRepository>();
 
-        mockRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(categories);
+        mockRepo.Setup(r => r.GetAllAsync(new CancellationToken())).ReturnsAsync(categories);
 
         mockRepo.Setup(r => r.CreateCategoryAsync(It.IsAny<Category>(),It.IsAny<CancellationToken>()))
             .Returns(Task<Category> (Category category) =>

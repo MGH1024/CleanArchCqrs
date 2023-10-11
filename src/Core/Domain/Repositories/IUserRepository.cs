@@ -1,13 +1,11 @@
-﻿using Domain.Entities.Identity;
+﻿using Domain.Entities.Security;
 
 namespace Domain.Repositories
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetAllUsers();
-        Task<User> GetByIdAsync(int userId);
-        Task InsertUserRefreshToken(UserRefreshToken userRefreshToken);
-        UserRefreshToken GetUserRefreshTokenByUserAndOldToken(User user, string token, string refreshToken);
-        Task InvalidateRefreshToken(string refreshToken);
+        Task<List<OperationClaim>> GetClaimsAsync(User user,CancellationToken cancellationToken);
+        Task AddAsync(User user,CancellationToken cancellationToken);
+        Task<User> GetByMailAsync(string email,CancellationToken cancellationToken);
     }
 }

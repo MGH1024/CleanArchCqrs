@@ -20,7 +20,7 @@ public class GetProductsQueryHandler : IQueryHandler<GetProductsQuery, ApiRespon
     public async Task<ApiResponse> Handle(GetProductsQuery request,
         CancellationToken cancellationToken)
     {
-        var products = await _unitOfWork.ProductRepository.GetAllAsync();
+        var products = await _unitOfWork.ProductRepository.GetAllAsync(cancellationToken);
         return new ApiResponse
         {
             

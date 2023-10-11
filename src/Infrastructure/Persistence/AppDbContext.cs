@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Shop;
+﻿using Domain.Entities.Security;
+using Domain.Entities.Shop;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence;
@@ -62,4 +63,9 @@ public class AppDbContext : DbContext
 
     public DbSet<Category> Categories { get; set; }
     public DbSet<Product> Products { get; set; }
+    
+    
+    public DbSet<User> User { get; set; }
+    public DbSet<OperationClaim> OperationClaim { get; set; }
+    public DbSet<UserOperationClaim> UserOperationClaim { get; set; }
 }

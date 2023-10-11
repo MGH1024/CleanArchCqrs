@@ -1,6 +1,4 @@
-﻿using Identity;
-using Identity.Repositories;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Application.Contracts.Infrastructure;
 using Domain.Repositories;
 
@@ -9,7 +7,6 @@ namespace Persistence.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
-        private readonly AppIdentityDbContext _identityContext;
         private readonly IDateTime _dateTime;
         private ICategoryRepository _categoryRepository;
         private IProductRepository _productRepository;
@@ -17,18 +14,17 @@ namespace Persistence.Repositories
         private readonly IHttpContextAccessor _httpContextAccessor;
 
 
-        public UnitOfWork(AppDbContext context, AppIdentityDbContext identityContext,
+        public UnitOfWork(AppDbContext context,
             IHttpContextAccessor httpContextAccessor,
             ICategoryRepository categoryRepository, IUserRepository userRepository, IDateTime dateTime,
             IProductRepository productRepository)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _identityContext = identityContext ?? throw new ArgumentNullException(nameof(identityContext));
-            _dateTime = dateTime ?? throw new ArgumentNullException(nameof(dateTime));
-            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
-            _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
-            _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _context = context;
+            _dateTime = dateTime;
+            _httpContextAccessor = httpContextAccessor;
+            _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
+            _userRepository = userRepository;
         }
 
         public ICategoryRepository CategoryRepository =>
@@ -37,10 +33,6 @@ namespace Persistence.Repositories
         public IProductRepository ProductRepository =>
             _productRepository ??= new ProductRepository(_context);
 
-
-        public IUserRepository UserRepository =>
-            _userRepository ??= new UserRepository(_identityContext);
-
         public void Dispose()
         {
             _context.Dispose();
@@ -48,7 +40,7 @@ namespace Persistence.Repositories
         }
 
 
-        public async Task Save(CancellationToken cancellationToken)
+        public async Task SaveAsync(CancellationToken cancellationToken)
         {
             var username = "";
             if (_httpContextAccessor.HttpContext != null)
@@ -61,7 +53,7 @@ namespace Persistence.Repositories
                 username = name == null ? "admin" : name.Value;
             }
 
-            await _context.SaveChangesAsync(username, _dateTime.IranNow);
+            await _context.SaveChangesAsync(username, _dateTime.IranNow, cancellationToken);
         }
     }
 }

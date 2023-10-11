@@ -19,8 +19,8 @@ public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand,
     public async Task<ApiResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var product = _mapper.Map<Domain.Entities.Shop.Product>(request.CreateProductDto);
-        await _unitOfWork.ProductRepository.CreateProductAsync(product);
-        await _unitOfWork.Save(cancellationToken);
+        await _unitOfWork.ProductRepository.CreateProductAsync(product, cancellationToken);
+        await _unitOfWork.SaveAsync(cancellationToken);
         return new ApiResponse(new List<string> { "create success" });
     }
 }

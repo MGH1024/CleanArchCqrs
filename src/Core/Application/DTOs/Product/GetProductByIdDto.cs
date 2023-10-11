@@ -1,8 +1,6 @@
-﻿using Application.DTOs.Base;
+﻿namespace Application.DTOs.Product;
 
-namespace Application.DTOs.Product;
-
-public class GetProductByIdDto : BaseDto
+public class GetProductByIdDto 
 {
+    public int Id { get; set; }
 }
-

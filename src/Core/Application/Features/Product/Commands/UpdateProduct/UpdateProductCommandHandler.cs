@@ -19,7 +19,7 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
     {
         var product = await _unitOfWork
             .ProductRepository
-            .GetByIdAsync(request.UpdateProductDto.Id);
+            .GetByIdAsync(request.UpdateProductDto.Id, cancellationToken);
 
         if (product is null)
             throw new BadRequestException("product not found");
@@ -31,9 +31,9 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
         product.CategoryId = request.UpdateProductDto.CategoryId;
 
         _unitOfWork.ProductRepository
-            .UpdateProduct(product);
+            .UpdateProduct(product, cancellationToken);
 
-        await _unitOfWork.Save(cancellationToken);
+        await _unitOfWork.SaveAsync(cancellationToken);
 
         return new ApiResponse()
         {

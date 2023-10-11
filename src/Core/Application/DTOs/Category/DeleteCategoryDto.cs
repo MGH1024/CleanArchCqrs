@@ -1,7 +1,6 @@
-﻿using Application.DTOs.Base;
+﻿namespace Application.DTOs.Category;
 
-namespace Application.DTOs.Category;
-
-public class DeleteCategoryDto : BaseDto
+public class DeleteCategoryDto 
 {
+    public int Id { get; set; }
 }

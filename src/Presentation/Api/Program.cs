@@ -87,9 +87,7 @@ try
             options.JsonSerializerOptions.PropertyNamingPolicy = null;
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         });
-
-
-    builder.Services.ConfigureIdentityService(builder.Configuration);
+    
     builder.Services.ConfigurePersistenceService(builder.Configuration);
     builder.Services.ConfigureInfrastructuresServices(builder.Configuration);
 

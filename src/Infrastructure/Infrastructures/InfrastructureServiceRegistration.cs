@@ -1,8 +1,11 @@
 ﻿using Application.Contracts.Infrastructure;
+using Application.Contracts.Infrastructure.Identity;
 using Application.Contracts.Infrastructure.Validation;
 using Application.Models;
 using Application.Models.Email;
+using Infrastructures.Identity;
 using Infrastructures.Mail;
+using Infrastructures.Security;
 using Infrastructures.TimeProvider;
 using Infrastructures.Validation;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +23,10 @@ public static class InfrastructureServiceRegistration
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IValidationService, ValidationService>();
         services.AddTransient<IValidationTool, FluentValidationTool>();
+        
+        services.AddTransient<IAuthService, AuthService>();
+        services.AddTransient<ITokenService, TokenService>();
+        services.AddTransient<IUserService, UserService>();
         return services;
     }
 }

@@ -17,7 +17,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
             .MaximumLength(64).WithMessage("length error")
             .MustAsync(
                 async (title, token) =>
-                    await _productRepository.IsProductRegistered(title))
+                    await _productRepository.IsProductRegisteredAsync(title, new CancellationToken()))
             .WithMessage("title is repetitive");
 
         RuleFor(x => x.CreateProductDto.Code)

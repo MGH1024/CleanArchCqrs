@@ -1,10 +1,7 @@
-﻿using Application.DTOs.Auth;
-using Application.DTOs.User;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Application.Models.Identity;
-using Application.Features.Authentications.Commands.Auth;
-using Application.Features.Authentications.Queries.GetUserByToken;
+using Application.Features.Authentications.Commands.Login;
+using Application.Features.Authentications.Commands.RegisterUser;
 
 namespace Api.Controllers;
 
@@ -18,17 +15,25 @@ public class AuthenticationController : AppController
     }
 
     [HttpPost("signin")]
-    public async Task<IActionResult> Login([FromBody] AuthRequestDto authRequestDto)
+    public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
     {
-        var command = new AuthCommand { AuthRequestDto = authRequestDto,IpAddress=IpAddress };
+        var command = new LoginCommand { UserLoginDto = userLoginDto };
         return Ok(await Sender.Send(command));
     }
     
-    [HttpGet]
-    [Route("get-user-by-token")]
-    public async Task<IActionResult> GetUserNameByToken([FromQuery] GetUserByTokenDto getUserByTokenDto)
+    [HttpPost("register")]
+    public async Task<ActionResult> Register(RegisterUserDto registerUserDto)
     {
-        var query = new GetUserByTokenQuery { GetUserByTokenDto = getUserByTokenDto };
-        return Ok(await Sender.Send(query));
+        var command = new RegisterCommand{RegisterUserDto =registerUserDto };
+
+        return Ok(await Sender.Send(command));
     }
+    
+    // [HttpGet]
+    // [Route("get-user-by-token")]
+    // public async Task<IActionResult> GetUserNameByToken([FromQuery] GetUserByTokenDto getUserByTokenDto)
+    // {
+    //     var query = new GetUserByTokenQuery { GetUserByTokenDto = getUserByTokenDto };
+    //     return Ok(await Sender.Send(query));
+    // }
 }

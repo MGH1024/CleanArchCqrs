@@ -28,7 +28,7 @@ public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryComman
 
         var isDuplicateTitle = await _unitOfWork
             .CategoryRepository
-            .IsCategoryRegistered(request.CreateCategory.Title);
+            .IsCategoryRegisteredAsync(request.CreateCategory.Title, cancellationToken);
 
         if (isDuplicateTitle)
             throw new DuplicateException("Title", typeof(Domain.Entities.Shop.Category));
@@ -41,7 +41,7 @@ public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryComman
             .CreateCategoryAsync(category, cancellationToken);
 
         await _unitOfWork
-            .Save(cancellationToken);
+            .SaveAsync(cancellationToken);
 
         return new ApiResponse(new List<string> { "created" });
     }

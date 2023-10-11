@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using Application.Contracts.Infrastructure;
-using Application.Models;
 using Application.Models.Email;
 using Microsoft.Extensions.Options;
 using SendGrid;
@@ -10,21 +9,21 @@ namespace Infrastructures.Mail;
 
 public class EmailSender : IEmailSender
 {
-    private EmailSettings _emailSettings { get; }
+    private EmailSettings EmailSettings { get; }
 
     public EmailSender(IOptions<EmailSettings> emailSettings)
     {
-        _emailSettings = emailSettings.Value;
+        EmailSettings = emailSettings.Value;
     }
     
     public async Task<bool> SendEmail(Email email)
     {
-        var client = new SendGridClient(_emailSettings.ApiKey);
+        var client = new SendGridClient(EmailSettings.ApiKey);
         var to = new EmailAddress(email.To);
         var from = new EmailAddress
         {
-            Email = _emailSettings.FromAddress,
-            Name = _emailSettings.FromName,
+            Email = EmailSettings.FromAddress,
+            Name = EmailSettings.FromName,
         };
 
         var message = MailHelper
