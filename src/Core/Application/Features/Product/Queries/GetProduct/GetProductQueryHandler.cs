@@ -1,5 +1,5 @@
 ﻿using Application.Contracts.Messaging;
-using Application.DTOs.Product;
+using Application.Features.Product.Queries.GetProducts;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;

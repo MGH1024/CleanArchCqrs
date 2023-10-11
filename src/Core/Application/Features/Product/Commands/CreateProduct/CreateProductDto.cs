@@ -1,6 +1,6 @@
-﻿namespace Application.DTOs.Product;
+﻿namespace Application.Features.Product.Commands.CreateProduct;
 
-public class UpdateProductDto
+public record CreateProductDto
 {
     public int Id { get; set; }
     public int Code { get; set; }

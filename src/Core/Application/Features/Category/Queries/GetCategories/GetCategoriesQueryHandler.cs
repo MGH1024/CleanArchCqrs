@@ -1,5 +1,4 @@
 ﻿using Application.Contracts.Messaging;
-using Application.DTOs.Category;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;

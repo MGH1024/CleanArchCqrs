@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
 
-namespace Application.DTOs.Category.Validators;
+namespace Application.Features.Category.Commands.DeleteCategory;
 
 public class DeleteCategoryDtoValidator : AbstractValidator<DeleteCategoryDto>
 {
     public DeleteCategoryDtoValidator()
     {
         RuleFor(x => x.Id)
-            .GreaterThan(0).WithMessage("must greater than zero");
+            .GreaterThan(0);
     }
 }
 

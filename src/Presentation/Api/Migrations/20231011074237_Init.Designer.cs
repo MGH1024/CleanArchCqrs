@@ -12,8 +12,8 @@ using Persistence;
 namespace Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231011055032_init")]
-    partial class init
+    [Migration("20231011074237_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

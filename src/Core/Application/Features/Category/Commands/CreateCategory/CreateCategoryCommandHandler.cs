@@ -1,6 +1,5 @@
 ﻿using Application.Contracts.Infrastructure.Validation;
 using Application.Contracts.Messaging;
-using Application.DTOs.Category.Validators;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;

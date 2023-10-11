@@ -1,5 +1,5 @@
 ﻿using Application.Contracts.Messaging;
-using Application.DTOs.Category;
+using Application.Features.Category.Queries.GetCategories;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
@@ -18,8 +18,7 @@ public class GetCategoryQueryHandler : IQueryHandler<GetCategoryQuery, ApiRespon
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
-    public async Task<ApiResponse> Handle(GetCategoryQuery request,
-        CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
     {
         var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.Id, cancellationToken);
         if (category is null)

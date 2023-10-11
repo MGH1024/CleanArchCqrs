@@ -1,8 +1,7 @@
-﻿namespace Application.DTOs.Category;
+﻿namespace Application.Features.Category.Commands.CreateCategory;
 
-public class UpdateCategoryDto
+public record CreateCategoryDto
 {
-    public int Order { get; set; }
     public int Id { get; set; }
     public int Code { get; set; }
     public string Title { get; set; }

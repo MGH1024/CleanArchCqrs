@@ -5,5 +5,5 @@ namespace Application.Features.Product.Commands.UpdateProduct;
 
 public class UpdateProductCommand : ICommand<ApiResponse>
 {
-    public DTOs.Product.UpdateProductDto  UpdateProductDto { get; set; }
+    public UpdateProductDto  UpdateProductDto { get; set; }
 }

@@ -1,7 +1,7 @@
 ﻿using FluentValidation.TestHelper;
 using TestProject.Categories.Builders;
 using TestProject.Categories.Fixtures;
-using Application.DTOs.Category.Validators;
+using Application.Features.Category.Commands.CreateCategory;
 
 namespace TestProject.Categories.Tests.Validators;
 

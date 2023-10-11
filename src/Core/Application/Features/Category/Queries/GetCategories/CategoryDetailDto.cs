@@ -1,6 +1,6 @@
-﻿namespace Application.DTOs.Category;
+﻿namespace Application.Features.Category.Queries.GetCategories;
 
-public class CategoryDetailDto
+public record CategoryDetailDto
 {
     public int Id { get; set; }
     public int Code { get; set; }

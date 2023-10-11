@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Product;
+﻿using Application.Features.Product.Commands.CreateProduct;
+using Application.Features.Product.Queries.GetProducts;
 using AutoMapper;
 using Domain.Entities.Shop;
 

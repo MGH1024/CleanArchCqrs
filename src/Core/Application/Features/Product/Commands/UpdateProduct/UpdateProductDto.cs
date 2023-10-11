@@ -1,10 +1,7 @@
-﻿namespace Application.DTOs.Product;
+﻿namespace Application.Features.Product.Commands.UpdateProduct;
 
-public class ProductDetailDto
+public record UpdateProductDto
 {
-    public int Order { get; set; }
-    public string CreatedDate { get; set; }
-    public string CategoryTitle { get; set; }
     public int Id { get; set; }
     public int Code { get; set; }
     public string Title { get; set; }

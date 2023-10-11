@@ -1,14 +1,14 @@
 ﻿using FluentValidation;
 
-namespace Application.DTOs.Category.Validators;
+namespace Application.Features.Category.Queries.GetCategory;
 
 public class GetCategoryByIdDtoValidator : AbstractValidator<GetCategoryByIdDto>
 {
     public GetCategoryByIdDtoValidator()
     {
         RuleFor(x => x.Id)
-            .NotEmpty().WithMessage("Not null")
-            .GreaterThan(0).WithMessage("must greater than 1");
+            .NotEmpty()
+            .GreaterThan(0);
     }
 }
 

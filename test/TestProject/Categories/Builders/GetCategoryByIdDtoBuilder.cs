@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Category;
+﻿using Application.Features.Category.Queries.GetCategory;
 
 namespace TestProject.Categories.Builders;
 

@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Category.Validators;
+﻿using Application.Features.Category.Queries.GetCategory;
 using FluentValidation.TestHelper;
 using TestProject.Categories.Builders;
 

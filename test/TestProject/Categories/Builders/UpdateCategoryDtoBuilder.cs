@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Category;
+﻿using Application.Features.Category.Commands.UpdateCategory;
 
 namespace TestProject.Categories.Builders;
 
