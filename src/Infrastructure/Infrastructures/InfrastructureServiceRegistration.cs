@@ -1,12 +1,11 @@
 ﻿using Application.Contracts.Infrastructure;
-using Application.Contracts.Infrastructure.Identity;
+using Application.Contracts.Infrastructure.Security;
 using Application.Contracts.Infrastructure.Validation;
 using Application.Models;
 using Application.Models.Email;
 using Infrastructures.Identity;
-using Infrastructures.Mail;
+using Infrastructures.Public;
 using Infrastructures.Security;
-using Infrastructures.TimeProvider;
 using Infrastructures.Validation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

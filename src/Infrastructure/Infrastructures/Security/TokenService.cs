@@ -1,15 +1,14 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Application.Contracts.Infrastructure.Identity;
+using Application.Contracts.Infrastructure.Security;
 using Application.Features.Authentications.Commands.RegisterUser;
-using Application.Models.Identity;
-using CustomAuth.Helpers;
+using Application.Models.Security;
 using Domain.Entities.Security;
-using Infrastructures.Extensions.IdentityHelpers;
+using Infrastructures.Extensions.SecurityHelpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Infrastructures.Identity;
+namespace Infrastructures.Security;
 
 public class TokenService : ITokenService
     {

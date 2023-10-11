@@ -16,8 +16,8 @@ public static class PersistenceServiceRegistration
         IConfiguration configuration)
     {
         var sqlConfig = configuration
-            .GetSection(nameof(DbConnection))
-            .Get<DbConnection>()
+            .GetSection(nameof(DatabaseConnection))
+            .Get<DatabaseConnection>()
             .SqlConnection;
         
         services.AddHealthChecks()

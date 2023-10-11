@@ -1,4 +1,4 @@
-﻿using Application.Contracts.Infrastructure.Identity;
+﻿using Application.Contracts.Infrastructure.Security;
 using Application.Contracts.Messaging;
 using Application.Features.Authentications.Commands.Login;
 using Application.Models.Responses;

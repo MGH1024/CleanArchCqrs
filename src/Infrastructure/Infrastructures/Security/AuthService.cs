@@ -1,8 +1,8 @@
-﻿using Application.Contracts.Infrastructure.Identity;
+﻿using Application.Contracts.Infrastructure.Security;
 using Application.Features.Authentications.Commands.Login;
 using Application.Features.Authentications.Commands.RegisterUser;
 using Domain.Entities.Security;
-using Identity.Helpers;
+using Infrastructures.Extensions.SecurityHelpers;
 
 namespace Infrastructures.Security;
 

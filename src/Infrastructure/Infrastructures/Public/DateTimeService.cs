@@ -1,6 +1,6 @@
 ﻿using Application.Contracts.Infrastructure;
 
-namespace Infrastructures.TimeProvider;
+namespace Infrastructures.Public;
 
 public class DateTimeService : IDateTime
 {

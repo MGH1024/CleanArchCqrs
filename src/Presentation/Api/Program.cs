@@ -1,5 +1,4 @@
 using Serilog;
-using Identity;
 using MGH.Swagger;
 using Persistence;
 using Application;
@@ -61,7 +60,7 @@ try
                 var modelState = ctx.ModelState;
                 var errors = modelState
                     .Keys
-                    .SelectMany(key => modelState[key]
+                    .SelectMany(key => modelState[key]?
                         .Errors
                         .Select(err => new ValidationError(key.Replace("$.", ""), err.ErrorMessage)));
                 throw new CustomValidationException(errors);
@@ -94,7 +93,7 @@ try
     builder.Services.AddCors(options =>
     {
         options.AddPolicy("CorsPolicy",
-            builder => builder.AllowAnyOrigin()
+            config => config.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
     });

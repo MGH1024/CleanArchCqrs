@@ -1,5 +1,5 @@
-﻿using NSubstitute;
-using Application.Contracts.Infrastructure.Identity;
+﻿using Application.Contracts.Infrastructure.Security;
+using NSubstitute;
 
 namespace TestProject.Base.Fixtures;
 

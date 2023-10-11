@@ -1,6 +1,4 @@
-﻿using MGH.Exceptions;
-using Application.Models.Validation;
-using MGH.Exceptions.Base;
+﻿using MGH.Exceptions.Base;
 using MGH.Exceptions.Models;
 
 namespace Application.Models.Responses;
