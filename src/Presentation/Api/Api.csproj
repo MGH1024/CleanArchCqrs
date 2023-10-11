@@ -32,4 +32,8 @@
       <ProjectReference Include="..\..\Infrastructure\Infrastructures\Infrastructures.csproj" />
       <ProjectReference Include="..\..\Infrastructure\Persistence\Persistence.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Extensions\" />
+    </ItemGroup>
 </Project>
