@@ -6,5 +6,6 @@ public interface IUserService
 {
     Task<List<OperationClaim>> GetClaims(User user, CancellationToken cancellationToken);
     Task Add(User user, CancellationToken cancellationToken);
-    Task<User> GetByMail(string email, CancellationToken cancellationToken);
+    Task<bool> IsUserExistMail(string email, CancellationToken cancellationToken);
+    Task<User> GetUserByMail(string email, CancellationToken cancellationToken);
 }

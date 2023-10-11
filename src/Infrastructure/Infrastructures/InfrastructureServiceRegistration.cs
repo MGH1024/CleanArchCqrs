@@ -1,9 +1,9 @@
-﻿using Application.Contracts.Infrastructure;
+﻿using System.Reflection;
+using Application.Contracts.Infrastructure;
 using Application.Contracts.Infrastructure.Security;
 using Application.Contracts.Infrastructure.Validation;
 using Application.Models;
 using Application.Models.Email;
-using Infrastructures.Identity;
 using Infrastructures.Public;
 using Infrastructures.Security;
 using Infrastructures.Validation;
@@ -26,6 +26,8 @@ public static class InfrastructureServiceRegistration
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<ITokenService, TokenService>();
         services.AddTransient<IUserService, UserService>();
+        
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
         return services;
     }
 }

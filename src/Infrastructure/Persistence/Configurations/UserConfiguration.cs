@@ -1,33 +1,28 @@
-﻿using Domain.Entities.Shop;
+﻿using Domain.Entities.Security;
 using Microsoft.EntityFrameworkCore;
-using Persistence.EntityConfigurations.Base;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Persistence.Configurations.Base;
 
-namespace Persistence.EntityConfigurations;
+namespace Persistence.Configurations;
 
-public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+public class UserConfiguration : IEntityTypeConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<Category> builder)
+    public void Configure(EntityTypeBuilder<User> builder)
     {
         //table
-        builder.ToTable(DatabaseTableName.Category, DatabaseSchema.GeneralSchema);
+        builder.ToTable(DatabaseTableName.User, DatabaseSchema.SecuritySchema);
         
         
-        //fix fields section
+        //fields
         builder.Property(t => t.Id)
             .IsRequired()
             .ValueGeneratedOnAdd();
-
-
-        builder.Property(t => t.Title)
-            .HasMaxLength(maxLength: 128)
-            .IsRequired();
-
-        builder.Property(t => t.Description)
-           .HasMaxLength(maxLength: 256);
-
-
-
+        
+        
+        //constraint
+        builder.HasIndex(a => a.Email)
+            .IsUnique();
+        
         //public
         builder.Ignore(a => a.Row);
         builder.Ignore(a => a.PageSize);

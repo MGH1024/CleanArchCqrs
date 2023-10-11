@@ -1,9 +1,9 @@
 ﻿using Domain.Entities.Shop;
 using Microsoft.EntityFrameworkCore;
-using Persistence.EntityConfigurations.Base;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Persistence.Configurations.Base;
 
-namespace Persistence.EntityConfigurations;
+namespace Persistence.Configurations;
 
 public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
@@ -22,7 +22,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired();
 
         builder.Property(t => t.Title)
-            .HasMaxLength(maxLength: 512)
+            .HasMaxLength(maxLength: 128)
             .IsRequired();
 
         builder.Property(t => t.Description)

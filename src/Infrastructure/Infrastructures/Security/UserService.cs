@@ -2,7 +2,7 @@
 using Domain.Entities.Security;
 using Domain.Repositories;
 
-namespace Infrastructures.Identity;
+namespace Infrastructures.Security;
 
 public class UserService : IUserService
 {
@@ -23,7 +23,12 @@ public class UserService : IUserService
         await _userRepository.AddAsync(user, cancellationToken);
     }
 
-    public async Task<User> GetByMail(string email, CancellationToken cancellationToken)
+    public async Task<bool> IsUserExistMail(string email, CancellationToken cancellationToken)
+    {
+        return await _userRepository.GetByMailAsync(email, cancellationToken) is not null;
+    }
+    
+    public async Task<User> GetUserByMail(string email, CancellationToken cancellationToken)
     {
         return await _userRepository.GetByMailAsync(email, cancellationToken);
     }

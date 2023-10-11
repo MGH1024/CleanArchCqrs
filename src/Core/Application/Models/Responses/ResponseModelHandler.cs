@@ -31,10 +31,6 @@ namespace Application.Models.Responses
                     response = new ApiResponse(exception);
                     break;
 
-                case DuplicateRequestException:
-                    response = new ApiResponse(exception);
-                    break;
-
                 case EntityHasReferenceException:
                     response = new ApiResponse(exception);
                     break;

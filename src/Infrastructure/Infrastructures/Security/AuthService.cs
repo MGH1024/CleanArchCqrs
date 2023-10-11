@@ -1,6 +1,7 @@
 ﻿using Application.Contracts.Infrastructure.Security;
 using Application.Features.Authentications.Commands.Login;
 using Application.Features.Authentications.Commands.RegisterUser;
+using AutoMapper;
 using Domain.Entities.Security;
 using Domain.Repositories;
 using Infrastructures.Extensions.SecurityHelpers;
@@ -12,54 +13,38 @@ public class AuthService : IAuthService
     private readonly IUserService _userService;
     private readonly ITokenService _tokenHelper;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public AuthService(IUserService userService, ITokenService tokenHelper, IUnitOfWork unitOfWork)
+    public AuthService(IUserService userService, ITokenService tokenHelper, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _userService = userService;
         _tokenHelper = tokenHelper;
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
-    public async Task<User> RegisterAsync(RegisterUserDto registerUserDto, string password,
-        CancellationToken cancellationToken)
+    public async Task<User> RegisterAsync(RegisterUserDto registerUserDto, CancellationToken cancellationToken)
     {
-        byte[] passwordHash, passwordSalt;
-        HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
-        var user = new User
-        {
-            Email = registerUserDto.Email,
-            FirstName = registerUserDto.FirstName,
-            LastName = registerUserDto.LostName,
-            PasswordHash = passwordHash,
-            PasswordSalt = passwordSalt,
-            Status = true,
-        };
+        var user = _mapper.Map<User>(registerUserDto);
+        HashingHelper.AssignPasswordToUser(registerUserDto, user);
         await _userService.Add(user, cancellationToken);
         await _unitOfWork.SaveAsync(cancellationToken);
         return user;
     }
 
-    public async Task<User> LoginAsync(UserLoginDto loginDto, CancellationToken cancellationToken)
+    public async Task<bool> LoginAsync(UserLoginDto loginDto, CancellationToken cancellationToken)
     {
-        var userCheck = await _userService.GetByMail(loginDto.Email, cancellationToken);
-
-        if (userCheck == null)
-        {
-            return null;
-        }
-
-        if (!HashingHelper.VerifyPasswordHash(loginDto.Password, userCheck.PasswordHash, userCheck.PasswordSalt))
-        {
-            return null;
-        }
-
-        return userCheck;
+        var user = await _userService.GetUserByMail(loginDto.Email, cancellationToken);
+        if (user is null)
+            return false;
+        
+        var userVerify = VerifyPasswordHash(loginDto, user);
+        return userVerify;
     }
 
     public async Task<bool> UserExistsAsync(string email, CancellationToken cancellationToken)
     {
-        return await _userService.GetByMail(email, cancellationToken) == null;
+        return await _userService.IsUserExistMail(email, cancellationToken);
     }
 
     public async Task<AccessTokenDto> CreateAccessTokenAsync(User user, CancellationToken cancellationToken)
@@ -67,5 +52,10 @@ public class AuthService : IAuthService
         var claims = await _userService.GetClaims(user, cancellationToken);
         var accessToken = _tokenHelper.CreateToken(user, claims);
         return accessToken;
+    }
+
+    private static bool VerifyPasswordHash(UserLoginDto loginDto, User user)
+    {
+        return HashingHelper.VerifyPasswordHash(loginDto.Password, user.PasswordHash, user.PasswordSalt);
     }
 }

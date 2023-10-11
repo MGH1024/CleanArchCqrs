@@ -1,6 +1,7 @@
 ﻿using Application.Contracts.Infrastructure.Security;
 using Application.Contracts.Messaging;
 using Application.Models.Responses;
+using Domain.Entities.Security;
 using MGH.Exceptions;
 
 namespace Application.Features.Authentications.Queries.GetUserByEmail;
@@ -17,9 +18,10 @@ public class GetUserByEmailQueryHandler : IQueryHandler<GetUserByEmailQuery, Api
     public async Task<ApiResponse> Handle(GetUserByEmailQuery request,
         CancellationToken cancellationToken)
     {
-        var user = await _userService.GetByMail(request.GetUserByEmailDto.Email, cancellationToken);
+        var user = await _userService.GetUserByMail(request.GetUserByEmailDto.Email, cancellationToken);
         if (user is null)
-            throw new BadRequestException("user not found");
+            throw new EntityNotFoundException(typeof(User));
+        
         return new ApiResponse()
         {
             Data = user,

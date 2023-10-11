@@ -15,8 +15,7 @@ public class LoginCommandHandler : ICommandHandler<LoginCommand, ApiResponse>
 
     public async Task<ApiResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await _authService
-            .LoginAsync(request.UserLoginDto, cancellationToken);
+        var user = await _authService.LoginAsync(request.UserLoginDto, cancellationToken);
 
         return new ApiResponse
         {
