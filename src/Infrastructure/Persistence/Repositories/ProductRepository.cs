@@ -1,6 +1,7 @@
 ﻿using Domain.Entities.Shop;
 using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Persistence.DbContexts;
 
 namespace Persistence.Repositories;
 

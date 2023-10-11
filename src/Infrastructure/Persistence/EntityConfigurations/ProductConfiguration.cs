@@ -28,20 +28,44 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(t => t.Description)
            .HasMaxLength(maxLength: 256);
 
-
-
-        //not mapped section
+        //navigations
+        builder.HasOne(a => a.Category)
+            .WithMany(a => a.Products)
+            .HasForeignKey(a => a.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        //public
         builder.Ignore(a => a.Row);
         builder.Ignore(a => a.PageSize);
         builder.Ignore(a => a.TotalCount);
         builder.Ignore(a => a.CurrentPage);
+        
         builder.Ignore(a => a.ListItemText);
         builder.Ignore(a => a.ListItemTextForAdmins);
+        
+        builder.Property(t => t.CreatedBy)
+            .IsRequired()
+            .HasMaxLength(maxLength: 64);
+        
+        builder.Property(t => t.CreatedAt)
+            .IsRequired();
+        
+        builder.Property(t => t.UpdatedBy)
+            .HasMaxLength(maxLength: 64);
+        
+        builder.Property(t => t.UpdatedAt)
+            .IsRequired(false);
+        
+        builder.Property(t => t.DeletedBy)
+            .HasMaxLength(maxLength: 64);
+        
+        builder.Property(t => t.DeletedAt)
+            .IsRequired(false);
 
-        //navigations
-        builder.HasOne<Category>(a => a.Category)
-            .WithMany(a => a.Products)
-            .HasForeignKey(a => a.CategoryId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(a => a.CreatedBy)
+            .HasDefaultValue("user");
+        
+        builder.Property(a => a.CreatedAt)
+            .HasDefaultValueSql("GetDate()");
     }
 }

@@ -27,7 +27,7 @@ try
     Log.Information("web starting up ...");
 
     builder.Services.AddSwaggerGen();
-    
+
     builder.Services.AddSwaggerGen(op =>
     {
         op.AddXmlComments();
@@ -64,7 +64,6 @@ try
                         .Errors
                         .Select(err => new ValidationError(key.Replace("$.", ""), err.ErrorMessage)));
                 throw new CustomValidationException(errors);
-               
             };
         });
     builder.Services.AddEndpointsApiExplorer();
@@ -86,10 +85,10 @@ try
             options.JsonSerializerOptions.PropertyNamingPolicy = null;
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         });
-    
+
+
     builder.Services.ConfigurePersistenceService(builder.Configuration);
     builder.Services.ConfigureInfrastructuresServices(builder.Configuration);
-
     builder.Services.AddCors(options =>
     {
         options.AddPolicy("CorsPolicy",

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Application.Contracts.Infrastructure;
 using Domain.Repositories;
+using Persistence.DbContexts;
 
 namespace Persistence.Repositories
 {
@@ -53,7 +54,7 @@ namespace Persistence.Repositories
                 username = name == null ? "admin" : name.Value;
             }
 
-            await _context.SaveChangesAsync(username, _dateTime.IranNow, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

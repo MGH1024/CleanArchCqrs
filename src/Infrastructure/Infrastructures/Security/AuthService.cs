@@ -2,6 +2,7 @@
 using Application.Features.Authentications.Commands.Login;
 using Application.Features.Authentications.Commands.RegisterUser;
 using Domain.Entities.Security;
+using Domain.Repositories;
 using Infrastructures.Extensions.SecurityHelpers;
 
 namespace Infrastructures.Security;
@@ -10,11 +11,13 @@ public class AuthService : IAuthService
 {
     private readonly IUserService _userService;
     private readonly ITokenService _tokenHelper;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public AuthService(IUserService userService, ITokenService tokenHelper)
+    public AuthService(IUserService userService, ITokenService tokenHelper, IUnitOfWork unitOfWork)
     {
         _userService = userService;
         _tokenHelper = tokenHelper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<User> RegisterAsync(RegisterUserDto registerUserDto, string password,
@@ -33,7 +36,7 @@ public class AuthService : IAuthService
             Status = true,
         };
         await _userService.Add(user, cancellationToken);
-
+        await _unitOfWork.SaveAsync(cancellationToken);
         return user;
     }
 
