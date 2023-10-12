@@ -10,6 +10,7 @@ namespace Persistence.DbContexts;
 public class AppDbContext : DbContext
 {
     private readonly IDateTime _dateTime;
+
     public AppDbContext(DbContextOptions<AppDbContext> options, IDateTime dateTime)
         : base(options)
     {
@@ -21,7 +22,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
-    
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Properties<string>().HaveMaxLength(128);
@@ -32,13 +33,14 @@ public class AppDbContext : DbContext
     {
         optionsBuilder.AddInterceptors(new AddAuditFieldsInterceptor(_dateTime));
     }
-    
 
+    //shop
     public DbSet<Category> Categories { get; set; }
     public DbSet<Product> Products { get; set; }
-    
-    
-    public DbSet<User> User { get; set; }
-    public DbSet<Role> OperationClaim { get; set; }
-    public DbSet<UserRole> UserOperationClaim { get; set; }
+
+
+    //core
+    public DbSet<User> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
 }

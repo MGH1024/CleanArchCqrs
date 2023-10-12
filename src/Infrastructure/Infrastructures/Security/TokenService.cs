@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Application.Contracts.Infrastructure.Security;
-using Application.Features.Authentications.Commands.RegisterUser;
+using Application.Features.Security.Commands.RegisterUser;
 using Application.Models.Security;
 using Domain.Entities.Security;
 using Infrastructures.Extensions.SecurityHelpers;

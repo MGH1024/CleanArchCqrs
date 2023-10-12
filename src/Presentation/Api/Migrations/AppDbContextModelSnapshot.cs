@@ -22,32 +22,6 @@ namespace Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Domain.Entities.Security.Permission", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("Title")
-                        .IsUnique();
-
-                    b.ToTable("Permissions", "core");
-                });
-
             modelBuilder.Entity("Domain.Entities.Security.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -66,7 +40,19 @@ namespace Api.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("Roles", "core");
+                    b.ToTable("Roles", "sec");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Title = "ProductManagement"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Title = "CategoryManagement"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Security.User", b =>
@@ -127,7 +113,19 @@ namespace Api.Migrations
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
-                    b.ToTable("Users", "core");
+                    b.ToTable("Users", "sec");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2023, 10, 13, 0, 35, 29, 327, DateTimeKind.Local).AddTicks(7953),
+                            Email = "admin@gmail.com",
+                            FirstName = "admin",
+                            LastName = "",
+                            PasswordHash = new byte[] { 223, 201, 42, 248, 92, 232, 160, 71, 209, 115, 83, 148, 222, 52, 9, 163, 70, 193, 243, 106, 214, 55, 164, 40, 40, 121, 205, 25, 110, 250, 78, 64, 127, 131, 153, 227, 95, 178, 85, 175, 194, 64, 222, 210, 46, 69, 35, 164, 123, 35, 175, 22, 14, 173, 65, 22, 243, 229, 117, 51, 122, 252, 226, 71 },
+                            PasswordSalt = new byte[] { 177, 21, 60, 60, 41, 210, 166, 52, 49, 240, 82, 146, 195, 183, 0, 175, 49, 59, 100, 227, 21, 93, 197, 181, 66, 166, 143, 149, 187, 182, 77, 249, 142, 53, 243, 48, 243, 118, 247, 245, 76, 93, 79, 226, 246, 170, 5, 8, 180, 19, 200, 30, 236, 115, 53, 214, 247, 228, 236, 131, 32, 153, 102, 14, 218, 194, 40, 227, 245, 198, 29, 110, 121, 3, 61, 129, 169, 108, 159, 46, 184, 35, 173, 36, 117, 203, 42, 166, 66, 100, 224, 106, 45, 73, 88, 74, 77, 119, 7, 127, 3, 233, 135, 162, 155, 5, 37, 157, 19, 159, 163, 20, 38, 246, 196, 143, 77, 222, 194, 83, 62, 85, 62, 252, 221, 57, 175, 119 }
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Security.UserRole", b =>
@@ -150,7 +148,21 @@ namespace Api.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRoles", "core");
+                    b.ToTable("UserRoles", "sec");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RoleId = 1,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RoleId = 2,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Shop.Category", b =>
@@ -204,7 +216,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", "dbo");
+                    b.ToTable("Categories", "shop");
                 });
 
             modelBuilder.Entity("Domain.Entities.Shop.Product", b =>
@@ -263,18 +275,7 @@ namespace Api.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Security.Permission", b =>
-                {
-                    b.HasOne("Domain.Entities.Security.Role", "Role")
-                        .WithMany("Permissions")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Role");
+                    b.ToTable("Products", "shop");
                 });
 
             modelBuilder.Entity("Domain.Entities.Security.UserRole", b =>
@@ -309,8 +310,6 @@ namespace Api.Migrations
 
             modelBuilder.Entity("Domain.Entities.Security.Role", b =>
                 {
-                    b.Navigation("Permissions");
-
                     b.Navigation("UserRoles");
                 });
 

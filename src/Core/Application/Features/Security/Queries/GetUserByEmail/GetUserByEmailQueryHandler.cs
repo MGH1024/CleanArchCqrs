@@ -4,7 +4,7 @@ using Application.Models.Responses;
 using Domain.Entities.Security;
 using MGH.Exceptions;
 
-namespace Application.Features.Authentications.Queries.GetUserByEmail;
+namespace Application.Features.Security.Queries.GetUserByEmail;
 
 public class GetUserByEmailQueryHandler : IQueryHandler<GetUserByEmailQuery, ApiResponse>
 {

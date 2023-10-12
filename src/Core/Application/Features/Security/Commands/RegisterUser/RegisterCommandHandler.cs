@@ -3,7 +3,7 @@ using Application.Contracts.Messaging;
 using Application.Models.Responses;
 using MGH.Exceptions;
 
-namespace Application.Features.Authentications.Commands.RegisterUser;
+namespace Application.Features.Security.Commands.RegisterUser;
 
 public class RegisterCommandHandler : ICommandHandler<RegisterCommand, ApiResponse>
 {

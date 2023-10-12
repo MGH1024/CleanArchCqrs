@@ -26,6 +26,11 @@ try
     builder.Services.ConfigureInfrastructuresServices(builder.Configuration);
     builder.AddCors();
     builder.AddToken();
+    builder.AddAuthorization();
+
+   
+    
+    
     builder.Host.UseSerilog();
 
     

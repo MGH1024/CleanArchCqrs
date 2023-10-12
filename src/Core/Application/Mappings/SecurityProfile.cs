@@ -1,5 +1,4 @@
-﻿using Application.Features.Authentications.Commands.Login;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Entities.Security;
 
 namespace Application.Mappings;

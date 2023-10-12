@@ -1,6 +1,6 @@
 ﻿using Application.Contracts.Infrastructure.Security;
-using Application.Features.Authentications.Commands.Login;
-using Application.Features.Authentications.Commands.RegisterUser;
+using Application.Features.Security.Commands.Login;
+using Application.Features.Security.Commands.RegisterUser;
 using AutoMapper;
 using Domain.Entities.Security;
 using Domain.Repositories;

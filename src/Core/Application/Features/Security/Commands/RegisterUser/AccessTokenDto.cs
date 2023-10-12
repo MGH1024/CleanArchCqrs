@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Authentications.Commands.RegisterUser;
+﻿namespace Application.Features.Security.Commands.RegisterUser;
 
 public record AccessTokenDto
 {

@@ -7,6 +7,5 @@ public class Role
     
     
     //navigations
-    public virtual ICollection<Permission> Permissions { get; set; }
     public virtual ICollection<UserRole> UserRoles { get; set; }
 }

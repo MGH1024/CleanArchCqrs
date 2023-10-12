@@ -22,5 +22,21 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
         //constraint
         builder.HasIndex(a => a.Title)
             .IsUnique();
+
+
+        //seed
+        builder.HasData
+        (
+            new Role()
+            {
+                Id = 1,
+                Title = "ProductManagement"
+            },
+            new Role()
+            {
+                Id = 2,
+                Title = "CategoryManagement"
+            }
+        );
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Authentications.Queries.GetUserByEmail;
+﻿namespace Application.Features.Security.Queries.GetUserByEmail;
 
 public record GetUserByEmailDto
 {

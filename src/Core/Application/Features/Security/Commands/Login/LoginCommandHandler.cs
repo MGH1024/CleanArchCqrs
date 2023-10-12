@@ -1,10 +1,9 @@
-﻿using System.Linq.Expressions;
-using Application.Contracts.Infrastructure.Security;
+﻿using Application.Contracts.Infrastructure.Security;
 using Application.Contracts.Messaging;
 using Application.Models.Responses;
 using AutoMapper;
 
-namespace Application.Features.Authentications.Commands.Login;
+namespace Application.Features.Security.Commands.Login;
 
 public class LoginCommandHandler : ICommandHandler<LoginCommand, ApiResponse>
 {

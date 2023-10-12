@@ -16,8 +16,8 @@ public class UserRepository : IUserRepository
 
     public async Task<List<Role>> GetClaimsAsync(User user, CancellationToken cancellationToken)
     {
-        var result =  from opClaim in _appDbContext.OperationClaim
-            join userOperationClaim in _appDbContext.UserOperationClaim
+        var result =  from opClaim in _appDbContext.Roles
+            join userOperationClaim in _appDbContext.UserRoles
                 on opClaim.Id equals userOperationClaim.RoleId
             where userOperationClaim.UserId == user.Id
             select new Role { Id = opClaim.Id, Title = opClaim.Title };
@@ -26,11 +26,11 @@ public class UserRepository : IUserRepository
 
     public async Task AddAsync(User user, CancellationToken cancellationToken)
     {
-        await _appDbContext.User.AddAsync(user, cancellationToken);
+        await _appDbContext.Users.AddAsync(user, cancellationToken);
     }
 
     public async Task<User> GetByMailAsync(string email, CancellationToken cancellationToken)
     {
-        return await _appDbContext.User.FirstOrDefaultAsync(a => a.Email == email,  cancellationToken);
+        return await _appDbContext.Users.FirstOrDefaultAsync(a => a.Email == email,  cancellationToken);
     }
 }

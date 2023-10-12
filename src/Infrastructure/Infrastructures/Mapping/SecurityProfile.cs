@@ -1,4 +1,4 @@
-﻿using Application.Features.Authentications.Commands.RegisterUser;
+﻿using Application.Features.Security.Commands.RegisterUser;
 using AutoMapper;
 using Domain.Entities.Security;
 

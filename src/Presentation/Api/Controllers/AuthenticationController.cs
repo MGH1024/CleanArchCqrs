@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Application.Features.Authentications.Commands.Login;
-using Application.Features.Authentications.Commands.RegisterUser;
+using Application.Features.Security.Commands.Login;
+using Application.Features.Security.Commands.RegisterUser;
 
 namespace Api.Controllers;
 

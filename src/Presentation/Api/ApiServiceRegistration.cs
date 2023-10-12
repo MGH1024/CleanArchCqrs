@@ -120,6 +120,16 @@ public static class ApiServiceRegistration
             });
     }
 
+    public static void AddAuthorization(this WebApplicationBuilder builder)
+    {
+        var admin = builder.Configuration.GetSection("Policies").Get<Policies>().Admin;
+        builder.Services.AddAuthorization(op =>
+        {
+            op.AddPolicy("Admin", policy =>
+                policy.RequireRole(admin));
+        });
+    }
+
 
     public static void RegisterApp (this WebApplication app )
     {

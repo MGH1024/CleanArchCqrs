@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Authentications.Commands.Login;
+﻿namespace Application.Features.Security.Commands.Login;
 
 public record LoginResponseDto
 {

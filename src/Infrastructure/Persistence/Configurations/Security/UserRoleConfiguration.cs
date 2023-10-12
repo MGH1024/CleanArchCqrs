@@ -30,5 +30,23 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
             .HasForeignKey(a => a.RoleId)
             .OnDelete(DeleteBehavior.Restrict);
         
+        
+        //seed
+        builder.HasData
+        (
+            new UserRole()
+            {
+                Id = 1,
+                UserId = 1,
+                RoleId = 1,
+            },
+            new UserRole()
+            {
+                Id = 2,
+                UserId = 1,
+                RoleId = 2,
+            }
+        );
+        
     }
 }

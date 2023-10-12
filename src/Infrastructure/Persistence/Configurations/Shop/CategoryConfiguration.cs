@@ -10,7 +10,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     public void Configure(EntityTypeBuilder<Category> builder)
     {
         //table
-        builder.ToTable(DatabaseTableName.Category, DatabaseSchema.GeneralSchema);
+        builder.ToTable(DatabaseTableName.Category, DatabaseSchema.ShopSchema);
         
         
         //fix fields section

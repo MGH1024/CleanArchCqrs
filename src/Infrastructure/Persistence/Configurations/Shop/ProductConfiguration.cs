@@ -10,7 +10,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     public void Configure(EntityTypeBuilder<Product> builder)
     {
         //table setting section
-        builder.ToTable(DatabaseTableName.Product, DatabaseSchema.GeneralSchema);
+        builder.ToTable(DatabaseTableName.Product, DatabaseSchema.ShopSchema);
         
         
         //fix fields section

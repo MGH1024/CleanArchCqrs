@@ -5,6 +5,7 @@ using Application.Features.Product.Commands.DeleteProduct;
 using Application.Features.Product.Commands.UpdateProduct;
 using Application.Features.Product.Queries.GetProduct;
 using Application.Features.Product.Queries.GetProducts;
+using Domain.Entities.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 
@@ -12,13 +13,14 @@ namespace Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Roles = "ProductManagement")]
+    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Policy = "Admin")]
     public class ProductsController : AppController
     {
         public ProductsController(ISender sender) : base(sender)
         {
         }
         
+        //[Authorize(Roles="MGH")]
         [HttpGet("")]
         public async Task<IActionResult> GetProducts()
         {
@@ -30,7 +32,7 @@ namespace Api.Controllers
         {
             return Ok(await Sender.Send(new GetProductQuery { Id = getProductByIdDto.Id }));
         }
-
+        
         [HttpPost("create-product")]
         public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto createProductDto)
         {
