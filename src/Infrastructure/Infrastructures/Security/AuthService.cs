@@ -32,14 +32,14 @@ public class AuthService : IAuthService
         return user;
     }
 
-    public async Task<bool> LoginAsync(UserLoginDto loginDto, CancellationToken cancellationToken)
+    public async Task<User> LoginAsync(UserLoginDto loginDto, CancellationToken cancellationToken)
     {
         var user = await _userService.GetUserByMail(loginDto.Email, cancellationToken);
         if (user is null)
-            return false;
+            return null;
         
         var userVerify = VerifyPasswordHash(loginDto, user);
-        return userVerify;
+        return userVerify ? user : null;
     }
 
     public async Task<bool> UserExistsAsync(string email, CancellationToken cancellationToken)

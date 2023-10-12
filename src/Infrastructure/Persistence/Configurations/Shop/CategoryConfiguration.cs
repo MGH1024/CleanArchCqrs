@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Configurations.Base;
 
-namespace Persistence.Configurations;
+namespace Persistence.Configurations.Shop;
 
-public class ProductConfiguration : IEntityTypeConfiguration<Product>
+public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
-    public void Configure(EntityTypeBuilder<Product> builder)
+    public void Configure(EntityTypeBuilder<Category> builder)
     {
-        //table setting section
-        builder.ToTable(DatabaseTableName.Product, DatabaseSchema.GeneralSchema);
+        //table
+        builder.ToTable(DatabaseTableName.Category, DatabaseSchema.GeneralSchema);
         
         
         //fix fields section
@@ -18,8 +18,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired()
             .ValueGeneratedOnAdd();
 
-        builder.Property(t => t.Quantity)
-            .IsRequired();
 
         builder.Property(t => t.Title)
             .HasMaxLength(maxLength: 128)
@@ -28,12 +26,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(t => t.Description)
            .HasMaxLength(maxLength: 256);
 
-        //navigations
-        builder.HasOne(a => a.Category)
-            .WithMany(a => a.Products)
-            .HasForeignKey(a => a.CategoryId)
-            .OnDelete(DeleteBehavior.Restrict);
-        
+
+
         //public
         builder.Ignore(a => a.Row);
         builder.Ignore(a => a.PageSize);

@@ -2,10 +2,14 @@ using Api;
 using Serilog;
 using Persistence;
 using Application;
+using Application.Models.Security;
 using Infrastructures;
+using Infrastructures.Extensions.SecurityHelpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var configurationBuilder = new ConfigurationBuilder();
-RegisterServices.CreateLoggerByConfig(configurationBuilder.GetLogConfig());
+ApiServiceRegistration.CreateLoggerByConfig(configurationBuilder.GetLogConfig());
 
 try
 {
@@ -21,11 +25,14 @@ try
     builder.Services.ConfigurePersistenceService(builder.Configuration);
     builder.Services.ConfigureInfrastructuresServices(builder.Configuration);
     builder.AddCors();
+    builder.AddToken();
     builder.Host.UseSerilog();
+
     
+
     var app = builder.Build();
     app.RegisterApp();
-    
+    app.Run();
 }
 catch (Exception ex)
 {

@@ -19,7 +19,7 @@ public class TokenService : ITokenService
             _tokenOption = configuration.GetSection("TokenOption").Get<TokenOption>();
             
         }
-        public AccessTokenDto CreateToken(User user, List<OperationClaim> operationClaims)
+        public AccessTokenDto CreateToken(User user, List<Role> operationClaims)
         {
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOption.AccessTokenExpiration);
             var key = SecurityKeyHelper.CreateSecurityKey(_tokenOption.SecurityKey);
@@ -35,7 +35,7 @@ public class TokenService : ITokenService
             };
         }
 
-        private JwtSecurityToken CreateJwtSecurityToken(User user,SigningCredentials signingCredentials,List<OperationClaim> operationClaims)
+        private JwtSecurityToken CreateJwtSecurityToken(User user,SigningCredentials signingCredentials,List<Role> operationClaims)
         {
             var jwt = new JwtSecurityToken(
                 issuer : _tokenOption.Issuer,
@@ -47,13 +47,13 @@ public class TokenService : ITokenService
                 ) ;
             return jwt;
         }
-        private static IEnumerable<Claim> SetClaim(User user,List<OperationClaim> operationClaims)
+        private static IEnumerable<Claim> SetClaim(User user,List<Role> operationClaims)
         {
             var claims = new List<Claim>();
             claims.AddEmail(user.Email);
             claims.AddNameIdentifier(user.Id.ToString());
             claims.AddName($"{user.FirstName}.{user.LastName}");
-            claims.AddRoles(operationClaims.Select(c=>c.Name).ToArray());
+            claims.AddRoles(operationClaims.Select(c=>c.Title).ToArray());
 
             return claims;
         }

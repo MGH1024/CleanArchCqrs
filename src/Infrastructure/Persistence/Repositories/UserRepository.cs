@@ -14,13 +14,13 @@ public class UserRepository : IUserRepository
         _appDbContext = appDbContext;
     }
 
-    public async Task<List<OperationClaim>> GetClaimsAsync(User user, CancellationToken cancellationToken)
+    public async Task<List<Role>> GetClaimsAsync(User user, CancellationToken cancellationToken)
     {
         var result =  from opClaim in _appDbContext.OperationClaim
             join userOperationClaim in _appDbContext.UserOperationClaim
-                on opClaim.Id equals userOperationClaim.OperationClaimId
+                on opClaim.Id equals userOperationClaim.RoleId
             where userOperationClaim.UserId == user.Id
-            select new OperationClaim { Id = opClaim.Id, Name = opClaim.Name };
+            select new Role { Id = opClaim.Id, Title = opClaim.Title };
         return await result.ToListAsync( cancellationToken);
     }
 

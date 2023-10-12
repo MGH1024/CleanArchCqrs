@@ -39,6 +39,6 @@ public class AppDbContext : DbContext
     
     
     public DbSet<User> User { get; set; }
-    public DbSet<OperationClaim> OperationClaim { get; set; }
-    public DbSet<UserOperationClaim> UserOperationClaim { get; set; }
+    public DbSet<Role> OperationClaim { get; set; }
+    public DbSet<UserRole> UserOperationClaim { get; set; }
 }

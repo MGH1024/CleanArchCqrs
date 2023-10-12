@@ -17,4 +17,8 @@ public class User :Entity<int>,IPageable,IDropdownAble
     public int PageSize { get; }
     public string ListItemText { get; }
     public string ListItemTextForAdmins { get; }
+    
+    
+    //navigations
+    public virtual ICollection<UserRole> UserRoles { get; set; }
 }

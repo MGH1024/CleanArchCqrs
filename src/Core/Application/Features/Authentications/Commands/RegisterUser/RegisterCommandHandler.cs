@@ -1,6 +1,5 @@
 ﻿using Application.Contracts.Infrastructure.Security;
 using Application.Contracts.Messaging;
-using Application.Features.Authentications.Commands.Login;
 using Application.Models.Responses;
 using MGH.Exceptions;
 

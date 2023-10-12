@@ -5,5 +5,5 @@ namespace Application.Contracts.Infrastructure.Security;
 
 public interface ITokenService
 {
-    AccessTokenDto CreateToken(User user,List<OperationClaim> operationClaims);
+    AccessTokenDto CreateToken(User user,List<Role> operationClaims);
 }

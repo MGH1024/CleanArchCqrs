@@ -5,19 +5,20 @@ using Application.Features.Product.Commands.DeleteProduct;
 using Application.Features.Product.Commands.UpdateProduct;
 using Application.Features.Product.Queries.GetProduct;
 using Application.Features.Product.Queries.GetProducts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes =JwtBearerDefaults.AuthenticationScheme, Roles = "ProductManagement")]
     public class ProductsController : AppController
     {
         public ProductsController(ISender sender) : base(sender)
         {
         }
-
-
+        
         [HttpGet("")]
         public async Task<IActionResult> GetProducts()
         {

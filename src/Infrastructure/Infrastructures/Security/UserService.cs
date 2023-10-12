@@ -13,7 +13,7 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<List<OperationClaim>> GetClaims(User user, CancellationToken cancellationToken)
+    public async Task<List<Role>> GetClaims(User user, CancellationToken cancellationToken)
     {
         return await _userRepository.GetClaimsAsync(user, cancellationToken);
     }

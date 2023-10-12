@@ -1,27 +1,38 @@
-﻿using Domain.Entities.Security;
+﻿using Domain.Entities.Shop;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Configurations.Base;
 
-namespace Persistence.Configurations;
+namespace Persistence.Configurations.Shop;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<Product> builder)
     {
-        //table
-        builder.ToTable(DatabaseTableName.User, DatabaseSchema.SecuritySchema);
+        //table setting section
+        builder.ToTable(DatabaseTableName.Product, DatabaseSchema.GeneralSchema);
         
         
-        //fields
+        //fix fields section
         builder.Property(t => t.Id)
             .IsRequired()
             .ValueGeneratedOnAdd();
-        
-        
-        //constraint
-        builder.HasIndex(a => a.Email)
-            .IsUnique();
+
+        builder.Property(t => t.Quantity)
+            .IsRequired();
+
+        builder.Property(t => t.Title)
+            .HasMaxLength(maxLength: 128)
+            .IsRequired();
+
+        builder.Property(t => t.Description)
+           .HasMaxLength(maxLength: 256);
+
+        //navigations
+        builder.HasOne(a => a.Category)
+            .WithMany(a => a.Products)
+            .HasForeignKey(a => a.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
         
         //public
         builder.Ignore(a => a.Row);

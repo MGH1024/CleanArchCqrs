@@ -1,16 +1,20 @@
 ﻿using System.Text.Json.Serialization;
+using Application.Models.Security;
+using Infrastructures.Extensions.SecurityHelpers;
 using Infrastructures.Middlewares;
 using MGH.Exceptions;
 using MGH.Exceptions.Models;
 using MGH.Swagger;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
 namespace Api;
 
-public static class RegisterServices
+public static class ApiServiceRegistration
 {
     public static IConfigurationRoot GetLogConfig(this ConfigurationBuilder configurationBuilder)
     {
@@ -96,6 +100,26 @@ public static class RegisterServices
         });
     }
 
+    public static void AddToken(this WebApplicationBuilder builder)
+    {
+
+        var token = builder.Configuration.GetSection("TokenOption").Get<TokenOption>();
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = token.Issuer,
+                    ValidAudience = token.Audience,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(token.SecurityKey)
+                };
+            });
+    }
+
 
     public static void RegisterApp (this WebApplication app )
     {
@@ -105,11 +129,11 @@ public static class RegisterServices
             app.UseSwaggerUI();
         }
 
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseHttpsRedirection();
         app.UseMiddleware<ApiResponseMiddleware>();
-        app.UseAuthorization();
         app.UseCors("CorsPolicy");
         app.MapControllers();
-        app.Run();
     }
 }
