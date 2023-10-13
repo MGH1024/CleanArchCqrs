@@ -1,8 +1,9 @@
-﻿using MGH.Domain;
+﻿using MGH.Domain.Abstracts;
+using MGH.Domain.Concretes;
 
 namespace Domain.Entities.Shop;
 
-public class Category : Entity<int>, IDropdownAble,ICodeAble,IPageable,IOrderAble
+public class Category : AuditableEntity<int>, IDropdownAble,ICodeAble,IPageable,IOrderAble
 {
     public string Title { get; set; }
 
@@ -14,7 +15,7 @@ public class Category : Entity<int>, IDropdownAble,ICodeAble,IPageable,IOrderAbl
 
 
     //pageable
-    public int Row { get;  }
+    public int Row { get; set; }
 
     public int TotalCount { get; set; }
 

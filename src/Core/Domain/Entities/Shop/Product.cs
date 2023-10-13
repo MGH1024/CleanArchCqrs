@@ -1,8 +1,10 @@
 ﻿using MGH.Domain;
+using MGH.Domain.Abstracts;
+using MGH.Domain.Concretes;
 
 namespace Domain.Entities.Shop;
 
-public class Product : Entity<int>,IDropdownAble,ICodeAble,IPageable
+public class Product : AuditableEntity<int>,IDropdownAble,ICodeAble,IPageable
 {
     public string Title { get; set; }
     public string Description { get; set; }

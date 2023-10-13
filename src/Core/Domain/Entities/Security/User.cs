@@ -1,10 +1,10 @@
-﻿using MGH.Domain;
+﻿using MGH.Domain.Abstracts;
+using MGH.Domain.Concretes;
 
 namespace Domain.Entities.Security;
 
-public class User :Entity<int>,IPageable,IDropdownAble
+public class User :AuditableEntity<int>,IPageable,IDropdownAble
 {
-    public new int Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
@@ -12,12 +12,12 @@ public class User :Entity<int>,IPageable,IDropdownAble
     public byte[] PasswordHash { get; set; }
 
 
-    public int Row { get; }
-    public int TotalCount { get; }
-    public int CurrentPage { get; }
-    public int PageSize { get; }
-    public string ListItemText { get; }
-    public string ListItemTextForAdmins { get; }
+    public int Row { get; set;}
+    public int TotalCount { get; set;}
+    public int CurrentPage { get;set; }
+    public int PageSize { get; set;}
+    public string ListItemText { get;set; }
+    public string ListItemTextForAdmins { get;set; }
     
     
     //navigations
