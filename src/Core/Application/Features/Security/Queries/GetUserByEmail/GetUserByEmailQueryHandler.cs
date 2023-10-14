@@ -1,5 +1,5 @@
-﻿using Application.Contracts.Infrastructure.Security;
-using Application.Contracts.Messaging;
+﻿using Application.Contracts.Messaging;
+using Application.Interfaces.Security;
 using Application.Models.Responses;
 using Domain.Entities.Security;
 using MGH.Exceptions;
@@ -22,10 +22,6 @@ public class GetUserByEmailQueryHandler : IQueryHandler<GetUserByEmailQuery, Api
         if (user is null)
             throw new EntityNotFoundException(typeof(User));
         
-        return new ApiResponse()
-        {
-            Data = user,
-            Messages =new List<string>{ "user success returned"}
-        };
+        return new ApiResponse(user,"user success returned");
     }
 }

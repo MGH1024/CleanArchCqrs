@@ -1,4 +1,4 @@
-﻿namespace Application.Contracts.Infrastructure.Validation
+﻿namespace Application.Interfaces.Validation
 {
     public interface IValidationService
     {

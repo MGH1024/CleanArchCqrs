@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Security.Commands.RegisterUser;
+﻿using Domain.Enums;
+
+namespace Application.Features.Security.Commands.RegisterUser;
 
 public record RegisterUserDto
 {
@@ -6,4 +8,5 @@ public record RegisterUserDto
     public string Password { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    public Gender Gender { get; set; }
 }

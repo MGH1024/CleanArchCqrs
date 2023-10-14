@@ -1,4 +1,6 @@
 ﻿using Application.Contracts.Messaging;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using Domain.Repositories;
 using MGH.Exceptions;
@@ -22,10 +24,7 @@ public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand,
             throw new BadRequestException("product not found");
 
         _unitOfWork.ProductRepository.DeleteProduct(product, cancellationToken);
-        await _unitOfWork.SaveAsync(cancellationToken);
-        return new ApiResponse
-        {
-            Messages = new List<string>{"delete success"}
-        };
+        await _unitOfWork.SaveChangeAsync(cancellationToken);
+        return new ApiResponse("delete success");
     }
 }

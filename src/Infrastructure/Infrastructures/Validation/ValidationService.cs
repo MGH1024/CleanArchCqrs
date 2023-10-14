@@ -1,4 +1,4 @@
-﻿using Application.Contracts.Infrastructure.Validation;
+﻿using Application.Interfaces.Validation;
 using MGH.Exceptions;
 
 namespace Infrastructures.Validation

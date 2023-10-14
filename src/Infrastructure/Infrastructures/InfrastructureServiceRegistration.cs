@@ -1,7 +1,8 @@
 ﻿using System.Reflection;
-using Application.Contracts.Infrastructure;
-using Application.Contracts.Infrastructure.Security;
-using Application.Contracts.Infrastructure.Validation;
+using Application.Interfaces;
+using Application.Interfaces.Public;
+using Application.Interfaces.Security;
+using Application.Interfaces.Validation;
 using Application.Models;
 using Application.Models.Email;
 using Infrastructures.Public;

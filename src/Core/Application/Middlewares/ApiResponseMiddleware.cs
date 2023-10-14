@@ -1,11 +1,11 @@
-﻿using MGH.Exceptions;
-using System.Net.Mime;
-using Microsoft.AspNetCore.Http;
-using Infrastructures.Extensions;
+﻿using System.Net.Mime;
+using Application.Extensions;
 using Application.Models.Responses;
+using MGH.Exceptions;
 using MGH.Exceptions.Base;
+using Microsoft.AspNetCore.Http;
 
-namespace Infrastructures.Middlewares;
+namespace Application.Middlewares;
 
 public class ApiResponseMiddleware
 {

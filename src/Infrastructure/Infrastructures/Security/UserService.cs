@@ -1,4 +1,4 @@
-﻿using Application.Contracts.Infrastructure.Security;
+﻿using Application.Interfaces.Security;
 using Domain.Entities.Security;
 using Domain.Repositories;
 

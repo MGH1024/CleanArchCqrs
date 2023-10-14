@@ -1,4 +1,6 @@
-﻿using Application.Models;
+﻿using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
+using Application.Models;
 using Application.Models.Database;
 using Domain.Repositories;
 using Persistence.Repositories;

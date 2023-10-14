@@ -1,9 +1,11 @@
-﻿using Application.Contracts.Infrastructure.Validation;
-using AutoMapper;
+﻿using AutoMapper;
 using NSubstitute;
 using TestProject.Base;
 using Domain.Repositories;
 using Application.Features.Category.Commands.CreateCategory;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
+using Application.Interfaces.Validation;
 using Moq;
 using TestProject.Base.Fixtures;
 using TestProject.Base.Mocks;

@@ -1,4 +1,6 @@
 ﻿using Application.Features.Category.Commands.CreateCategory;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using AutoMapper;
 using NSubstitute;
@@ -41,10 +43,10 @@ public class CreateCategoryCommandHandlerTests : IClassFixture<CreateCategoryCom
             .Handle(new CreateCategoryCommand { CreateCategory = dto }, CancellationToken.None);
 
         Assert.Equal(new ApiResponse
-        {
-            Messages = new List<string> { "Title is duplicate in Entity type: Domain.Entities.Shop.Category " },
-            Data = null,
-            ValidationMessages = null
-        }, result);
+        (
+            message: "Title is duplicate in Entity type: Domain.Entities.Shop.Category ",
+            data: null,
+            validationMessages: null
+        ), result);
     }
 }

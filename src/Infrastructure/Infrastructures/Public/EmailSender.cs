@@ -1,5 +1,6 @@
 ﻿using System.Net;
-using Application.Contracts.Infrastructure;
+using Application.Interfaces;
+using Application.Interfaces.Public;
 using Application.Models.Email;
 using Microsoft.Extensions.Options;
 using SendGrid;

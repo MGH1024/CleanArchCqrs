@@ -1,4 +1,6 @@
 ﻿using Application.Contracts.Messaging;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using Domain.Repositories;
 using MGH.Exceptions;
@@ -33,11 +35,8 @@ public class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand,
         _unitOfWork.ProductRepository
             .UpdateProduct(product, cancellationToken);
 
-        await _unitOfWork.SaveAsync(cancellationToken);
+        await _unitOfWork.SaveChangeAsync(cancellationToken);
 
-        return new ApiResponse()
-        {
-            Messages = new List<string> { "update success" }
-        };
+        return new ApiResponse("update success");
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Application.Contracts.Messaging;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
@@ -20,10 +22,6 @@ public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, ApiRe
         CancellationToken cancellationToken)
     {
         var categories = await _unitOfWork.CategoryRepository.GetAllAsync(cancellationToken);
-        return new ApiResponse
-        {
-            Data = _mapper.Map<List<CategoryDetailDto>>(categories),
-            Messages = new List<string>{"success"}
-        };
+        return new ApiResponse(_mapper.Map<List<CategoryDetailDto>>(categories),"success");
     }
 }

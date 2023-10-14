@@ -1,5 +1,7 @@
-﻿using Application.Contracts.Infrastructure.Validation;
-using Application.Contracts.Messaging;
+﻿using Application.Contracts.Messaging;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
+using Application.Interfaces.Validation;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
@@ -40,7 +42,7 @@ public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryComman
             .CreateCategoryAsync(category, cancellationToken);
 
         await _unitOfWork
-            .SaveAsync(cancellationToken);
+            .SaveChangeAsync(cancellationToken);
 
         return new ApiResponse(new List<string> { "created" });
     }

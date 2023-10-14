@@ -1,7 +1,7 @@
-﻿using Application.Contracts.Infrastructure.Security;
-using NSubstitute;
+﻿using NSubstitute;
 using Infrastructures.Validation;
-using Application.Contracts.Infrastructure.Validation;
+using Application.Interfaces.Security;
+using Application.Interfaces.Validation;
 
 namespace TestProject.Base.Fixtures;
 

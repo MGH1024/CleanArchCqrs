@@ -1,6 +1,6 @@
 ﻿using Application.Models.Validation;
 
-namespace Application.Contracts.Infrastructure.Validation
+namespace Application.Interfaces.Validation
 {
     public interface IValidationTool
     {

@@ -1,5 +1,7 @@
 ﻿using Application.Contracts.Messaging;
 using Application.Features.Product.Queries.GetProducts;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
@@ -24,11 +26,6 @@ public class GetProductQueryHandler : IQueryHandler<GetProductQuery, ApiResponse
         if (product is null)
             throw new BadRequestException("product not found");
 
-        return new ApiResponse
-        {
-           
-            Data = _mapper.Map<ProductDetailDto>(product),
-            Messages = new List<string>{"success"}
-        };
+        return new ApiResponse(_mapper.Map<ProductDetailDto>(product),"success");
     }
 }

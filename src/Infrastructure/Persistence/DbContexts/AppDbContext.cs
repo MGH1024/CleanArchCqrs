@@ -1,8 +1,8 @@
-﻿using Application.Contracts.Infrastructure;
+﻿
+using Application.Interfaces.Public;
 using Domain.Entities.Security;
 using Domain.Entities.Shop;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using Persistence.Interceptors;
 
 namespace Persistence.DbContexts;

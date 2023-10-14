@@ -1,9 +1,9 @@
-﻿using Application.Contracts.Infrastructure.Security;
-using Application.Features.Security.Commands.Login;
+﻿using Application.Features.Security.Commands.Login;
 using Application.Features.Security.Commands.RegisterUser;
+using Application.Interfaces.Security;
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
 using Domain.Entities.Security;
-using Domain.Repositories;
 using Infrastructures.Extensions.SecurityHelpers;
 
 namespace Infrastructures.Security;
@@ -28,7 +28,7 @@ public class AuthService : IAuthService
         var user = _mapper.Map<User>(registerUserDto);
         HashingHelper.AssignPasswordToUser(registerUserDto, user);
         await _userService.Add(user, cancellationToken);
-        await _unitOfWork.SaveAsync(cancellationToken);
+        await _unitOfWork.SaveChangeAsync(cancellationToken);
         return user;
     }
 

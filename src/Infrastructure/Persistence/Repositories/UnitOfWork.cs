@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Application.Contracts.Infrastructure;
+using Application.Interfaces;
+using Application.Interfaces.Public;
+using Application.Interfaces.UnitOfWork;
 using Domain.Repositories;
 using Persistence.DbContexts;
 
@@ -41,7 +43,7 @@ namespace Persistence.Repositories
         }
 
 
-        public async Task SaveAsync(CancellationToken cancellationToken)
+        public async Task SaveChangeAsync(CancellationToken cancellationToken)
         {
             var username = "";
             if (_httpContextAccessor.HttpContext != null)
@@ -55,6 +57,12 @@ namespace Persistence.Repositories
             }
 
             await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await _context.DisposeAsync();
+            GC.SuppressFinalize(this);
         }
     }
 }

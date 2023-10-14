@@ -1,4 +1,6 @@
 ﻿using Application.Contracts.Messaging;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using Domain.Repositories;
 using MGH.Exceptions;
@@ -31,11 +33,8 @@ public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryComman
         _unitOfWork.CategoryRepository
             .UpdateCategory(category);
 
-        await _unitOfWork.SaveAsync(cancellationToken);
+        await _unitOfWork.SaveChangeAsync(cancellationToken);
 
-        return new ApiResponse()
-        {
-            Messages = new List<string> {"update success"}
-        };
+        return new ApiResponse("update success");
     }
 }

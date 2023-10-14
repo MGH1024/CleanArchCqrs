@@ -1,4 +1,6 @@
 ﻿using Application.Contracts.Messaging;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
@@ -20,7 +22,7 @@ public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand,
     {
         var product = _mapper.Map<Domain.Entities.Shop.Product>(request.CreateProductDto);
         await _unitOfWork.ProductRepository.CreateProductAsync(product, cancellationToken);
-        await _unitOfWork.SaveAsync(cancellationToken);
+        await _unitOfWork.SaveChangeAsync(cancellationToken);
         return new ApiResponse(new List<string> { "create success" });
     }
 }

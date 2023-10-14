@@ -24,7 +24,7 @@ public class AuthenticationController : AppController
     [HttpPost("register")]
     public async Task<ActionResult> Register(RegisterUserDto registerUserDto)
     {
-        var command = new RegisterCommand{RegisterUserDto =registerUserDto };
+        var command = new RegisterUserCommand{RegisterUserDto =registerUserDto };
 
         return Ok(await Sender.Send(command));
     }

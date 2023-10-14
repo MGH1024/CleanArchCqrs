@@ -1,6 +1,6 @@
 ﻿using Domain.Entities.Security;
 
-namespace Application.Contracts.Infrastructure.Security;
+namespace Application.Interfaces.Security;
 
 public interface IUserService
 {

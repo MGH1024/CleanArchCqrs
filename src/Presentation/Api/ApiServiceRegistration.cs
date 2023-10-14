@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using Application.Middlewares;
 using Application.Models.Security;
 using Infrastructures.Extensions.SecurityHelpers;
-using Infrastructures.Middlewares;
 using MGH.Exceptions;
 using MGH.Exceptions.Models;
 using MGH.Swagger;

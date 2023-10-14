@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Api.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,6 +62,9 @@ namespace Api.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Address_CityId = table.Column<int>(type: "int", nullable: true),
+                    Address_FullAddress = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GetDate()"),
@@ -151,8 +154,8 @@ namespace Api.Migrations
             migrationBuilder.InsertData(
                 schema: "sec",
                 table: "Users",
-                columns: new[] { "Id", "CreatedAt", "DeletedAt", "DeletedBy", "Email", "FirstName", "LastName", "PasswordHash", "PasswordSalt", "UpdatedAt", "UpdatedBy" },
-                values: new object[] { 1, new DateTime(2023, 10, 13, 15, 1, 29, 828, DateTimeKind.Local).AddTicks(9001), null, null, "admin@gmail.com", "admin", "admin", new byte[] { 15, 213, 11, 15, 33, 237, 202, 86, 65, 245, 81, 73, 77, 20, 133, 167, 18, 192, 241, 143, 18, 118, 127, 59, 15, 45, 200, 166, 118, 91, 129, 199, 41, 5, 244, 2, 79, 151, 189, 242, 115, 163, 92, 233, 235, 14, 101, 19, 225, 181, 210, 33, 124, 238, 166, 216, 235, 82, 169, 92, 194, 181, 220, 194 }, new byte[] { 33, 34, 153, 101, 201, 141, 86, 161, 204, 40, 238, 173, 112, 255, 29, 197, 140, 175, 7, 15, 0, 154, 174, 197, 112, 69, 16, 235, 151, 98, 135, 10, 31, 94, 154, 181, 115, 246, 132, 149, 50, 49, 203, 174, 201, 102, 143, 205, 22, 216, 193, 45, 136, 211, 49, 119, 80, 76, 131, 195, 182, 208, 163, 59, 181, 53, 8, 36, 254, 169, 54, 6, 188, 79, 153, 229, 107, 127, 123, 25, 67, 65, 186, 140, 87, 216, 185, 122, 28, 46, 244, 32, 33, 178, 138, 151, 197, 181, 55, 102, 3, 56, 218, 8, 52, 212, 115, 129, 31, 245, 100, 23, 83, 208, 45, 2, 82, 192, 73, 195, 130, 24, 40, 231, 150, 136, 102, 214 }, null, null });
+                columns: new[] { "Id", "CreatedAt", "DeletedAt", "DeletedBy", "Email", "FirstName", "Gender", "LastName", "PasswordHash", "PasswordSalt", "UpdatedAt", "UpdatedBy", "Address_CityId", "Address_FullAddress" },
+                values: new object[] { 1, new DateTime(2023, 10, 13, 16, 26, 4, 435, DateTimeKind.Local).AddTicks(9750), null, null, "admin@gmail.com", "admin", 1, "admin", new byte[] { 241, 15, 45, 84, 76, 34, 230, 122, 67, 184, 76, 54, 239, 226, 12, 142, 159, 188, 58, 69, 242, 143, 145, 147, 208, 227, 37, 25, 228, 78, 102, 176, 45, 240, 221, 72, 88, 89, 216, 31, 202, 103, 88, 68, 243, 152, 30, 252, 45, 204, 150, 147, 2, 108, 147, 216, 225, 44, 137, 171, 227, 166, 18, 179 }, new byte[] { 80, 209, 141, 147, 212, 166, 36, 27, 164, 252, 225, 100, 32, 4, 118, 37, 68, 250, 42, 10, 156, 54, 57, 37, 248, 226, 64, 152, 213, 217, 81, 135, 36, 198, 145, 5, 24, 210, 244, 81, 141, 213, 33, 80, 43, 103, 242, 200, 109, 214, 107, 128, 87, 94, 210, 66, 35, 77, 85, 238, 25, 54, 69, 231, 145, 140, 168, 139, 150, 189, 116, 130, 48, 15, 103, 231, 66, 79, 46, 188, 47, 104, 103, 82, 64, 224, 9, 156, 42, 108, 56, 122, 133, 205, 37, 116, 141, 229, 238, 93, 125, 129, 148, 172, 150, 40, 24, 66, 188, 93, 207, 253, 87, 157, 131, 109, 109, 64, 226, 186, 243, 229, 168, 117, 95, 243, 16, 19 }, null, null, 1, "Tehran" });
 
             migrationBuilder.InsertData(
                 schema: "sec",

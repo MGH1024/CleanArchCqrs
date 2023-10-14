@@ -1,4 +1,6 @@
 ﻿using Application.Contracts.Messaging;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using Domain.Repositories;
 using MGH.Exceptions;
@@ -22,7 +24,7 @@ public class DeleteCategoryCommandHandler : ICommandHandler<DeleteCategoryComman
             throw new BadRequestException("category not found");
 
         _unitOfWork.CategoryRepository.DeleteCategory(category);
-        await _unitOfWork.SaveAsync(cancellationToken);
+        await _unitOfWork.SaveChangeAsync(cancellationToken);
         return new ApiResponse(new List<string> { "delete success" });
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Application.Contracts.Messaging;
 using Application.Features.Category.Queries.GetCategories;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
@@ -23,11 +25,7 @@ public class GetCategoryQueryHandler : IQueryHandler<GetCategoryQuery, ApiRespon
         var category = await _unitOfWork.CategoryRepository.GetByIdAsync(request.Id, cancellationToken);
         if (category is null)
             throw new BadRequestException("category not found");
-        
-        return new ApiResponse
-        {
-            Data = _mapper.Map<CategoryDetailDto>(category),
-            Messages = new List<string>{"success"}
-        };
+
+        return new ApiResponse(_mapper.Map<CategoryDetailDto>(category),"success");
     }
 }

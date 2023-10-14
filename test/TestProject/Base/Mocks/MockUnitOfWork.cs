@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
+using Moq;
 using Domain.Repositories;
 using TestProject.Categories.Mocks;
 

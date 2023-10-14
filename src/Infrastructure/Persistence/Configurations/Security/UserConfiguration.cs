@@ -1,4 +1,6 @@
 ﻿using Domain.Entities.Security;
+using Domain.Enums;
+using Domain.ValueObjects;
 using Infrastructures.Extensions.SecurityHelpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -19,6 +21,16 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .ValueGeneratedOnAdd();
 
+        //valueObjects
+        builder
+            .OwnsOne(a => a.Address)
+            .HasData(new Address
+                {
+                    UserId = 1,
+                    CityId = 1,
+                    FullAddress = "Tehran"
+                }
+            );
 
         //constraint
         builder.HasIndex(a => a.Email)
@@ -65,10 +77,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         (
             new User
             {
-                Id =1,
+                Id = 1,
                 Email = "admin@gmail.com",
                 FirstName = "admin",
                 LastName = "admin",
+                Gender = Gender.Male,
                 PasswordHash = hashedPassword.PasswordHash,
                 PasswordSalt = hashedPassword.PasswordSalt,
             }

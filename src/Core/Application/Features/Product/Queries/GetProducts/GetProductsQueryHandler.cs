@@ -1,4 +1,6 @@
 ﻿using Application.Contracts.Messaging;
+using Application.Interfaces;
+using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using AutoMapper;
 using Domain.Repositories;
@@ -20,11 +22,6 @@ public class GetProductsQueryHandler : IQueryHandler<GetProductsQuery, ApiRespon
         CancellationToken cancellationToken)
     {
         var products = await _unitOfWork.ProductRepository.GetAllAsync(cancellationToken);
-        return new ApiResponse
-        {
-            
-            Messages = new List<string>{"success"},
-            Data = _mapper.Map<List<ProductDetailDto>>(products),
-        };
+        return new ApiResponse(_mapper.Map<List<ProductDetailDto>>(products),"success");
     }
 }

@@ -1,5 +1,5 @@
-﻿using Application.Contracts.Infrastructure.Security;
-using Application.Contracts.Messaging;
+﻿using Application.Contracts.Messaging;
+using Application.Interfaces.Security;
 using Application.Models.Responses;
 using AutoMapper;
 
@@ -19,10 +19,6 @@ public class LoginCommandHandler : ICommandHandler<LoginCommand, ApiResponse>
     {
         var user = await _authService.LoginAsync(request.UserLoginDto, cancellationToken);
         var token =await _authService.CreateAccessTokenAsync(user, cancellationToken);
-
-        return new ApiResponse
-        {
-            Data = token
-        };
+        return new ApiResponse(token);
     }
 }
