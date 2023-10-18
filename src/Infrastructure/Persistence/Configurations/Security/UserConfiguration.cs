@@ -1,9 +1,7 @@
-﻿using Domain.Entities.Security;
-using Domain.Enums;
-using Domain.ValueObjects;
-using Infrastructures.Extensions.SecurityHelpers;
+﻿using MGH.Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MGH.Core.Security.Hashing;
 using Persistence.Configurations.Base;
 
 namespace Persistence.Configurations.Security;
@@ -12,79 +10,55 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        //table
-        builder.ToTable(DatabaseTableName.User, DatabaseSchema.SecuritySchema);
+        builder.ToTable(DatabaseTableName.User, DatabaseSchema.SecuritySchema).HasKey(u => u.Id);
+        
+        builder.Property(u => u.Id).HasColumnName("Id").IsRequired();
+        builder.Property(u => u.FirstName).HasColumnName("FirstName").IsRequired();
+        builder.Property(u => u.LastName).HasColumnName("LastName").IsRequired();
+        builder.Property(u => u.Email).HasColumnName("Email").IsRequired();
+        builder.Property(u => u.PasswordSalt).HasColumnName("PasswordSalt").IsRequired();
+        builder.Property(u => u.PasswordHash).HasColumnName("PasswordHash").IsRequired();
+        builder.Property(u => u.Status).HasColumnName("Status").HasDefaultValue(true);
+        builder.Property(u => u.AuthenticatorType).HasColumnName("AuthenticatorType").IsRequired();
+        builder.Property(uoc => uoc.CreatedAt).HasColumnName("CreatedAt").IsRequired();
+        builder.Property(uoc => uoc.UpdatedAt).HasColumnName("UpdatedAt");
+        builder.Property(uoc => uoc.DeletedAt).HasColumnName("DeletedAt");
+        builder.Property(uoc => uoc.CreatedBy).HasColumnName("CreatedBy").IsRequired();
+        builder.Property(uoc => uoc.UpdatedBy).HasColumnName("UpdatedBy");
+        builder.Property(uoc => uoc.DeletedBy).HasColumnName("DeletedBy");
 
+        builder.HasQueryFilter(u => !u.DeletedAt.HasValue);
 
-        //fields
-        builder.Property(t => t.Id)
-            .IsRequired()
-            .ValueGeneratedOnAdd();
+        builder.HasMany(u => u.UserOperationClaims);
+        builder.HasMany(u => u.RefreshTokens);
+        builder.HasMany(u => u.EmailAuthenticators);
+        builder.HasMany(u => u.OtpAuthenticators);
 
-        //valueObjects
-        builder
-            .OwnsOne(a => a.Address)
-            .HasData(new Address
-                {
-                    UserId = 1,
-                    CityId = 1,
-                    FullAddress = "Tehran"
-                }
-            );
+        builder.HasData(GetSeeds());
+    }
 
-        //constraint
-        builder.HasIndex(a => a.Email)
-            .IsUnique();
+    private IEnumerable<User> GetSeeds()
+    {
+        List<User> users = new();
 
-        //public
-        builder.Ignore(a => a.Row);
-        builder.Ignore(a => a.PageSize);
-        builder.Ignore(a => a.TotalCount);
-        builder.Ignore(a => a.CurrentPage);
-
-        builder.Ignore(a => a.ListItemText);
-        builder.Ignore(a => a.ListItemTextForAdmins);
-
-        builder.Property(t => t.CreatedBy)
-            .IsRequired()
-            .HasMaxLength(maxLength: 64);
-
-        builder.Property(t => t.CreatedAt)
-            .IsRequired();
-
-        builder.Property(t => t.UpdatedBy)
-            .HasMaxLength(maxLength: 64);
-
-        builder.Property(t => t.UpdatedAt)
-            .IsRequired(false);
-
-        builder.Property(t => t.DeletedBy)
-            .HasMaxLength(maxLength: 64);
-
-        builder.Property(t => t.DeletedAt)
-            .IsRequired(false);
-
-        builder.Property(a => a.CreatedBy)
-            .HasDefaultValue("user");
-
-        builder.Property(a => a.CreatedAt)
-            .HasDefaultValueSql("GetDate()");
-
-
-        //seed
-        var hashedPassword = HashingHelper.GetHashedPasswordByPassword("Abcd@1234");
-        builder.HasData
-        (
-            new User
+        HashingHelper.CreatePasswordHash(
+            password: "Abcd@1234",
+            passwordHash: out byte[] passwordHash,
+            passwordSalt: out byte[] passwordSalt
+        );
+        User adminUser =
+            new()
             {
                 Id = 1,
-                Email = "admin@gmail.com",
-                FirstName = "admin",
-                LastName = "admin",
-                Gender = Gender.Male,
-                PasswordHash = hashedPassword.PasswordHash,
-                PasswordSalt = hashedPassword.PasswordSalt,
-            }
-        );
+                FirstName = "Admin",
+                LastName = "GH",
+                Email = "admin@admin.com",
+                Status = true,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
+            };
+        users.Add(adminUser);
+
+        return users.ToArray();
     }
 }

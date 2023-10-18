@@ -5,12 +5,14 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <PackageReference Include="MGH.Domain" Version="1.0.2" />
+        <Folder Include="Entities" />
     </ItemGroup>
-    
+
     <ItemGroup>
-      <Folder Include="Entities" />
+        <PackageReference Include="MGH.Core.Domain" Version="1.0.5" />
+        <PackageReference Include="MGH.Core.Persistence" Version="1.0.2" />
+        <PackageReference Include="MGH.Core.Security" Version="1.0.1" />
     </ItemGroup>
 </Project>

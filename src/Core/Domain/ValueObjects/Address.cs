@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Security;
+﻿using MGH.Core.Security.Entities;
 
 namespace Domain.ValueObjects;
 

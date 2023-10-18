@@ -1,13 +1,11 @@
-﻿using Application.Contracts.Messaging;
-using Application.Interfaces;
-using Application.Interfaces.UnitOfWork;
+﻿using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using AutoMapper;
-using Domain.Repositories;
+using MediatR;
 
 namespace Application.Features.Product.Commands.CreateProduct;
 
-public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, ApiResponse>
+public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ApiResponse>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;

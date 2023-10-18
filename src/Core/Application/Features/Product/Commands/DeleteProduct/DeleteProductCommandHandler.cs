@@ -1,13 +1,11 @@
-﻿using Application.Contracts.Messaging;
-using Application.Interfaces;
-using Application.Interfaces.UnitOfWork;
+﻿using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
-using Domain.Repositories;
+using MediatR;
 using MGH.Exceptions;
 
 namespace Application.Features.Product.Commands.DeleteProduct;
 
-public class DeleteProductCommandHandler : ICommandHandler<DeleteProductCommand, ApiResponse>
+public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, ApiResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 

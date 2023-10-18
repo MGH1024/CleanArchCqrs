@@ -1,6 +1,5 @@
-﻿using MGH.Domain;
-using MGH.Domain.Abstracts;
-using MGH.Domain.Concretes;
+﻿using MGH.Core.Domain.Abstracts;
+using MGH.Core.Domain.Concretes;
 
 namespace Domain.Entities.Shop;
 

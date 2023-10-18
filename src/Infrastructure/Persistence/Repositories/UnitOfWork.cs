@@ -3,7 +3,7 @@ using Application.Interfaces;
 using Application.Interfaces.Public;
 using Application.Interfaces.UnitOfWork;
 using Domain.Repositories;
-using Persistence.DbContexts;
+using Persistence.Contexts;
 
 namespace Persistence.Repositories
 {

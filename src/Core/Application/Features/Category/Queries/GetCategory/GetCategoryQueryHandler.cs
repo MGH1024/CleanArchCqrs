@@ -1,15 +1,13 @@
-﻿using Application.Contracts.Messaging;
-using Application.Features.Category.Queries.GetCategories;
-using Application.Interfaces;
+﻿using Application.Features.Category.Queries.GetCategories;
 using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using AutoMapper;
-using Domain.Repositories;
+using MediatR;
 using MGH.Exceptions;
 
 namespace Application.Features.Category.Queries.GetCategory;
 
-public class GetCategoryQueryHandler : IQueryHandler<GetCategoryQuery, ApiResponse>
+public class GetCategoryQueryHandler : IRequestHandler<GetCategoryQuery, ApiResponse>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;

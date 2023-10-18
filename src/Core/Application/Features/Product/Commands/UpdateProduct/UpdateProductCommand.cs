@@ -1,9 +1,9 @@
-﻿using Application.Contracts.Messaging;
-using Application.Models.Responses;
+﻿using Application.Models.Responses;
+using MediatR;
 
 namespace Application.Features.Product.Commands.UpdateProduct;
 
-public class UpdateProductCommand : ICommand<ApiResponse>
+public class UpdateProductCommand : IRequest<ApiResponse>
 {
     public UpdateProductDto  UpdateProductDto { get; set; }
 }

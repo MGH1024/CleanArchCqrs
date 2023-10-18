@@ -1,13 +1,11 @@
-﻿using Application.Contracts.Messaging;
-using Application.Interfaces;
-using Application.Interfaces.UnitOfWork;
+﻿using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
-using Domain.Repositories;
+using MediatR;
 using MGH.Exceptions;
 
 namespace Application.Features.Category.Commands.UpdateCategory;
 
-public class UpdateCategoryCommandHandler : ICommandHandler<UpdateCategoryCommand, ApiResponse>
+public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, ApiResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 

@@ -1,15 +1,13 @@
-﻿using Application.Contracts.Messaging;
-using Application.Interfaces;
-using Application.Interfaces.UnitOfWork;
+﻿using Application.Interfaces.UnitOfWork;
 using Application.Interfaces.Validation;
 using Application.Models.Responses;
 using AutoMapper;
-using Domain.Repositories;
+using MediatR;
 using MGH.Exceptions;
 
 namespace Application.Features.Category.Commands.CreateCategory;
 
-public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryCommand, ApiResponse>
+public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, ApiResponse>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;

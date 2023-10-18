@@ -1,13 +1,11 @@
-﻿using Application.Contracts.Messaging;
-using Application.Interfaces;
-using Application.Interfaces.UnitOfWork;
+﻿using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using AutoMapper;
-using Domain.Repositories;
+using MediatR;
 
 namespace Application.Features.Category.Queries.GetCategories;
 
-public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, ApiResponse>
+public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, ApiResponse>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;

@@ -5,7 +5,6 @@ using Application.Features.Product.Commands.DeleteProduct;
 using Application.Features.Product.Commands.UpdateProduct;
 using Application.Features.Product.Queries.GetProduct;
 using Application.Features.Product.Queries.GetProducts;
-using Domain.Entities.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 

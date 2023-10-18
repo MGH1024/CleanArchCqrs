@@ -1,13 +1,18 @@
-﻿using Application.Features.Security.Commands.Login;
-using Application.Features.Security.Commands.RegisterUser;
-using Domain.Entities.Security;
-
+﻿using MGH.Core.Security.Entities;
+using MGH.Core.Security.JWT;
 namespace Application.Interfaces.Security;
+
 
 public interface IAuthService
 {
-    Task<User> RegisterAsync(RegisterUserDto registerUserDto, CancellationToken cancellationToken);
-    Task<User> LoginAsync(UserLoginDto loginDto, CancellationToken cancellationToken);
-    Task<bool> UserExistsAsync(string email ,CancellationToken cancellationToken);
-    Task<AccessTokenDto> CreateAccessTokenAsync(User user,CancellationToken cancellationToken);
+    public Task<AccessToken> CreateAccessToken(User user);
+    public Task<RefreshToken> CreateRefreshToken(User user, string ipAddress);
+    public Task<RefreshToken> GetRefreshTokenByToken(string token);
+    public Task<RefreshToken> AddRefreshToken(RefreshToken refreshToken);
+    public Task DeleteOldRefreshTokens(int userId);
+    public Task RevokeDescendantRefreshTokens(RefreshToken refreshToken, string ipAddress, string reason);
+
+    public Task RevokeRefreshToken(RefreshToken token, string ipAddress, string reason = null, string replacedByToken = null);
+
+    public Task<RefreshToken> RotateRefreshToken(User user, RefreshToken refreshToken, string ipAddress);
 }

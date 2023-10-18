@@ -1,9 +1,9 @@
-﻿using Application.Contracts.Messaging;
-using Application.Models.Responses;
+﻿using Application.Models.Responses;
+using MediatR;
 
 namespace Application.Features.Category.Commands.CreateCategory;
 
-public class CreateCategoryCommand:ICommand<ApiResponse>
+public class CreateCategoryCommand:IRequest<ApiResponse>
 {
     public CreateCategoryDto CreateCategory { get; set; }
 }

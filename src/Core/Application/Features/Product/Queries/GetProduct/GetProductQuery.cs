@@ -1,9 +1,9 @@
-﻿using Application.Contracts.Messaging;
-using Application.Models.Responses;
+﻿using Application.Models.Responses;
+using MediatR;
 
 namespace Application.Features.Product.Queries.GetProduct;
 
-public class GetProductQuery:IQuery<ApiResponse>
+public class GetProductQuery:IRequest<ApiResponse>
 {
     public int Id { get; set; }
 }

@@ -1,9 +1,9 @@
-﻿using Application.Contracts.Messaging;
-using Application.Models.Responses;
+﻿using Application.Models.Responses;
+using MediatR;
 
 namespace Application.Features.Category.Commands.UpdateCategory;
 
-public class UpdateCategoryCommand : ICommand<ApiResponse>
+public class UpdateCategoryCommand : IRequest<ApiResponse>
 {
     public UpdateCategoryDto  UpdateCategoryDto { get; set; }
 }

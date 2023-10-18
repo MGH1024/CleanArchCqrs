@@ -1,15 +1,13 @@
-﻿using Application.Contracts.Messaging;
-using Application.Features.Product.Queries.GetProducts;
-using Application.Interfaces;
+﻿using Application.Features.Product.Queries.GetProducts;
 using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;
 using AutoMapper;
-using Domain.Repositories;
+using MediatR;
 using MGH.Exceptions;
 
 namespace Application.Features.Product.Queries.GetProduct;
 
-public class GetProductQueryHandler : IQueryHandler<GetProductQuery, ApiResponse>
+public class GetProductQueryHandler : IRequestHandler<GetProductQuery, ApiResponse>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
