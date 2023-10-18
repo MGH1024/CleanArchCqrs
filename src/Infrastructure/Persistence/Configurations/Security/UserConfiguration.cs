@@ -11,7 +11,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable(DatabaseTableName.User, DatabaseSchema.SecuritySchema).HasKey(u => u.Id);
-        
+
         builder.Property(u => u.Id).HasColumnName("Id").IsRequired();
         builder.Property(u => u.FirstName).HasColumnName("FirstName").IsRequired();
         builder.Property(u => u.LastName).HasColumnName("LastName").IsRequired();
@@ -55,7 +55,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 Email = "admin@admin.com",
                 Status = true,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+                CreatedBy = "admin",
+                CreatedAt = DateTime.Now
             };
         users.Add(adminUser);
 

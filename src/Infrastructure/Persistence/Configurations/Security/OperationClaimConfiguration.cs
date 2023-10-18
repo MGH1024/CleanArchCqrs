@@ -11,7 +11,7 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
     public void Configure(EntityTypeBuilder<OperationClaim> builder)
     {
         builder.ToTable(DatabaseTableName.OperationClaim, DatabaseSchema.SecuritySchema).HasKey(oc => oc.Id);
-        
+
         builder.Property(oc => oc.Id).HasColumnName("Id").IsRequired();
         builder.Property(oc => oc.Name).HasColumnName("Name").IsRequired();
         builder.Property(uoc => uoc.CreatedAt).HasColumnName("CreatedAt").IsRequired();
@@ -34,7 +34,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         HashSet<OperationClaim> seeds =
             new()
             {
-                new OperationClaim { Id = ++id, Name = GeneralOperationClaims.Admin }
+                new OperationClaim
+                    { Id = ++id, Name = GeneralOperationClaims.Admin, CreatedBy = "admin", CreatedAt = DateTime.Now }
             };
 
         return seeds;

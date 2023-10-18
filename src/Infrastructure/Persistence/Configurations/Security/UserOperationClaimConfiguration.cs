@@ -33,7 +33,11 @@ public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOper
     {
         List<UserOperationClaim> userOperationClaims = new();
 
-        UserOperationClaim adminUserOperationClaim = new(id: 1, userId: 1, operationClaimId: 1);
+        UserOperationClaim adminUserOperationClaim = new(id: 1, userId: 1, operationClaimId: 1)
+        {
+            CreatedAt = DateTime.Now,
+            CreatedBy = "admin",
+        };
         userOperationClaims.Add(adminUserOperationClaim);
 
         return userOperationClaims;
