@@ -20,6 +20,8 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddMemoryCache();
+    builder.AddSwagger();
+    builder.AddBaseMvc();
    
     builder.AddCors();
     builder.Host.UseSerilog();

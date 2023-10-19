@@ -19,7 +19,7 @@
         <PackageReference Include="MGH.Exceptions" Version="1.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="6.0.0" />
-        <PackageReference Include="MGH.Core.Persistence" Version="1.0.3" />
+<!--        <PackageReference Include="MGH.Core.Persistence" Version="1.0.3" />-->
     </ItemGroup>
 
     <ItemGroup>
@@ -29,6 +29,12 @@
     <ItemGroup>
       <Compile Remove="Exceptions\Common\BadRequestException.cs" />
       <Compile Remove="Models\Validation\ValidationError.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="MGH.Core.Persistence">
+        <HintPath>..\..\..\..\MGH\Core\MGH.Core.Persistence\bin\Debug\net7.0\MGH.Core.Persistence.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

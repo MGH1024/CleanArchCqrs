@@ -41,32 +41,41 @@ public class RegisterCommand : IRequest<RegisteredResponse>
 
         public async Task<RegisteredResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            await _authBusinessRules.UserEmailShouldBeNotExists(request.UserForRegisterDto.Email);
+            try
+            {
+                await _authBusinessRules.UserEmailShouldBeNotExists(request.UserForRegisterDto.Email);
 
-            HashingHelper.CreatePasswordHash(
-                request.UserForRegisterDto.Password,
-                passwordHash: out byte[] passwordHash,
-                passwordSalt: out byte[] passwordSalt
-            );
-            User newUser =
-                new()
-                {
-                    Email = request.UserForRegisterDto.Email,
-                    FirstName = request.UserForRegisterDto.FirstName,
-                    LastName = request.UserForRegisterDto.LastName,
-                    PasswordHash = passwordHash,
-                    PasswordSalt = passwordSalt,
-                    Status = true
-                };
-            User createdUser = await _userRepository.AddAsync(newUser);
+                HashingHelper.CreatePasswordHash(
+                    request.UserForRegisterDto.Password,
+                    passwordHash: out byte[] passwordHash,
+                    passwordSalt: out byte[] passwordSalt
+                );
+                User newUser =
+                    new()
+                    {
+                        Email = request.UserForRegisterDto.Email,
+                        FirstName = request.UserForRegisterDto.FirstName,
+                        LastName = request.UserForRegisterDto.LastName,
+                        PasswordHash = passwordHash,
+                        PasswordSalt = passwordSalt,
+                        Status = true
+                    };
+                User createdUser = await _userRepository.AddAsync(newUser);
 
-            AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
+                AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
 
-            MGH.Core.Security.Entities.RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(createdUser, request.IpAddress);
-            MGH.Core.Security.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+                MGH.Core.Security.Entities.RefreshToken createdRefreshToken = await _authService.CreateRefreshToken(createdUser, request.IpAddress);
+                MGH.Core.Security.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
 
-            RegisteredResponse registeredResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
-            return registeredResponse;
+                RegisteredResponse registeredResponse = new() { AccessToken = createdAccessToken, RefreshToken = addedRefreshToken };
+                return registeredResponse;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
     }
 }
