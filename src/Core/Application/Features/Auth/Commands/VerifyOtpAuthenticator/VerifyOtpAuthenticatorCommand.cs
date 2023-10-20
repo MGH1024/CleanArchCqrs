@@ -1,6 +1,6 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Interfaces.Security;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MediatR;
 using MGH.Core.Security.Entities;
 using MGH.Core.Security.Enums;
@@ -27,17 +27,17 @@ public class VerifyOtpAuthenticatorCommand : IRequest
     {
         private readonly AuthBusinessRules _authBusinessRules;
         private readonly IAuthenticatorService _authenticatorService;
-        private readonly IOtpAuthenticatorRepository _otpAuthenticatorRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IUserService _userService;
 
         public VerifyOtpAuthenticatorCommandHandler(
-            IOtpAuthenticatorRepository otpAuthenticatorRepository,
+            IUnitOfWork unitOfWork,
             AuthBusinessRules authBusinessRules,
             IUserService userService,
             IAuthenticatorService authenticatorService
         )
         {
-            _otpAuthenticatorRepository = otpAuthenticatorRepository;
+            _unitOfWork = unitOfWork;
             _authBusinessRules = authBusinessRules;
             _userService = userService;
             _authenticatorService = authenticatorService;
@@ -45,7 +45,7 @@ public class VerifyOtpAuthenticatorCommand : IRequest
 
         public async Task Handle(VerifyOtpAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            OtpAuthenticator otpAuthenticator = await _otpAuthenticatorRepository.GetAsync(
+            OtpAuthenticator otpAuthenticator = await _unitOfWork.OtpAuthenticatorRepository.GetAsync(
                 predicate: e => e.UserId == request.UserId,
                 cancellationToken: cancellationToken
             );
@@ -59,7 +59,7 @@ public class VerifyOtpAuthenticatorCommand : IRequest
 
             await _authenticatorService.VerifyAuthenticatorCode(user, request.ActivationCode);
 
-            await _otpAuthenticatorRepository.UpdateAsync(otpAuthenticator);
+            await _unitOfWork.OtpAuthenticatorRepository.UpdateAsync(otpAuthenticator);
             await _userService.UpdateAsync(user);
         }
     }

@@ -1,6 +1,6 @@
 using Application.Features.Users.Rules;
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
-using Domain.Repositories;
 using MediatR;
 using MGH.Core.Application.Pipelines.Authorization;
 using MGH.Core.Security.Entities;
@@ -36,13 +36,13 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
 
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreatedUserResponse>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserBusinessRules _userBusinessRules;
 
-        public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules)
+        public CreateUserCommandHandler(IUnitOfWork userRepository, IMapper mapper, UserBusinessRules userBusinessRules)
         {
-            _userRepository = userRepository;
+            _unitOfWork = userRepository;
             _mapper = mapper;
             _userBusinessRules = userBusinessRules;
         }
@@ -50,7 +50,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
         public async Task<CreatedUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             await _userBusinessRules.UserEmailShouldNotExistsWhenInsert(request.Email);
-            User user = _mapper.Map<User>(request);
+            var user = _mapper.Map<User>(request);
 
             HashingHelper.CreatePasswordHash(
                 request.Password,
@@ -59,9 +59,9 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
             );
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            User createdUser = await _userRepository.AddAsync(user);
+            var createdUser = await _unitOfWork.UserRepository.AddAsync(user);
 
-            CreatedUserResponse response = _mapper.Map<CreatedUserResponse>(createdUser);
+            var response = _mapper.Map<CreatedUserResponse>(createdUser);
             return response;
         }
     }

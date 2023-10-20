@@ -1,6 +1,6 @@
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
 using Core.Application.Requests;
-using Domain.Repositories;
 using MediatR;
 using MGH.Core.Application.Responses;
 using MGH.Core.Persistence.Paging;
@@ -24,18 +24,18 @@ public class GetListUserQuery : IRequest<GetListResponse<GetListUserListItemDto>
 
     public class GetListUserQueryHandler : IRequestHandler<GetListUserQuery, GetListResponse<GetListUserListItemDto>>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetListUserQueryHandler(IUserRepository userRepository, IMapper mapper)
+        public GetListUserQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         public async Task<GetListResponse<GetListUserListItemDto>> Handle(GetListUserQuery request, CancellationToken cancellationToken)
         {
-            IPaginate<User> users = await _userRepository.GetListAsync(
+            IPaginate<User> users = await _unitOfWork.UserRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken

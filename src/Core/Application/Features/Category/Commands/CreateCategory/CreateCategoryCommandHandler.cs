@@ -15,9 +15,9 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
 
     public CreateCategoryCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, IValidationService validationService)
     {
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-        _validationService = validationService ?? throw new ArgumentNullException(nameof(validationService));
+        _mapper = mapper ;
+        _unitOfWork = unitOfWork ;
+        _validationService = validationService;
     }
 
     public async Task<ApiResponse> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)

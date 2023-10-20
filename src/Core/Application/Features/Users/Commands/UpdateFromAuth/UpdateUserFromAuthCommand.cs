@@ -1,5 +1,6 @@
 ﻿using Application.Features.Users.Rules;
 using Application.Interfaces.Security;
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
 using Domain.Repositories;
 using MediatR;
@@ -33,19 +34,19 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
 
     public class UpdateUserFromAuthCommandHandler : IRequestHandler<UpdateUserFromAuthCommand, UpdatedUserFromAuthResponse>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserBusinessRules _userBusinessRules;
         private readonly IAuthService _authService;
 
         public UpdateUserFromAuthCommandHandler(
-            IUserRepository userRepository,
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             UserBusinessRules userBusinessRules,
             IAuthService authService
         )
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userBusinessRules = userBusinessRules;
             _authService = authService;
@@ -53,7 +54,7 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
 
         public async Task<UpdatedUserFromAuthResponse> Handle(UpdateUserFromAuthCommand request, CancellationToken cancellationToken)
         {
-            User user = await _userRepository.GetAsync(predicate: u => u.Id == request.Id, cancellationToken: cancellationToken);
+            User user = await _unitOfWork.UserRepository.GetAsync(predicate: u => u.Id == request.Id, cancellationToken: cancellationToken);
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _userBusinessRules.UserPasswordShouldBeMatched(user: user!, request.Password);
             await _userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user!.Id, user.Email);
@@ -69,7 +70,7 @@ public class UpdateUserFromAuthCommand : IRequest<UpdatedUserFromAuthResponse>
                 user!.PasswordHash = passwordHash;
                 user!.PasswordSalt = passwordSalt;
             }
-            User updatedUser = await _userRepository.UpdateAsync(user!);
+            User updatedUser = await _unitOfWork.UserRepository.UpdateAsync(user!);
 
             UpdatedUserFromAuthResponse response = _mapper.Map<UpdatedUserFromAuthResponse>(updatedUser);
             response.AccessToken = await _authService.CreateAccessToken(user!);

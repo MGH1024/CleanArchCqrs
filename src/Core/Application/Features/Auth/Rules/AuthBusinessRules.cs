@@ -1,5 +1,5 @@
 using Application.Features.Auth.Constants;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MGH.Core.Application.Rules;
 using MGH.Core.CrossCutting.Exceptions.Types;
 using MGH.Core.Security.Entities;
@@ -10,13 +10,11 @@ namespace Application.Features.Auth.Rules;
 
 public class AuthBusinessRules : BaseBusinessRules
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public AuthBusinessRules(IUserRepository userRepository, IEmailAuthenticatorRepository emailAuthenticatorRepository)
+    public AuthBusinessRules(IUnitOfWork unitOfWork)
     {
-        _userRepository = userRepository;
-        _emailAuthenticatorRepository = emailAuthenticatorRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public Task EmailAuthenticatorShouldBeExists(EmailAuthenticator emailAuthenticator)
@@ -77,14 +75,14 @@ public class AuthBusinessRules : BaseBusinessRules
 
     public async Task UserEmailShouldBeNotExists(string email)
     {
-        bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Email == email, enableTracking: false);
+        bool doesExists = await _unitOfWork.UserRepository.AnyAsync(predicate: u => u.Email == email, enableTracking: false);
         if (doesExists)
             throw new BusinessException(AuthMessages.UserMailAlreadyExists);
     }
 
     public async Task UserPasswordShouldBeMatch(int id, string password)
     {
-        User user = await _userRepository.GetAsync(predicate: u => u.Id == id, enableTracking: false);
+        User user = await _unitOfWork.UserRepository.GetAsync(predicate: u => u.Id == id, enableTracking: false);
         await UserShouldBeExistsWhenSelected(user);
         if (!HashingHelper.VerifyPasswordHash(password, user!.PasswordHash, user.PasswordSalt))
             throw new BusinessException(AuthMessages.PasswordDontMatch);

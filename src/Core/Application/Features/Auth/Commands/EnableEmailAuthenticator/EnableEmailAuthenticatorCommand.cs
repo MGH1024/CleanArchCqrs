@@ -3,7 +3,7 @@ using MediatR;
 using MimeKit;
 using System.Web;
 using Application.Interfaces.Security;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MGH.Core.Mailing;
 using MGH.Core.Security.Entities;
 using MGH.Core.Security.Enums;
@@ -30,20 +30,20 @@ public class EnableEmailAuthenticatorCommand : IRequest
     {
         private readonly AuthBusinessRules _authBusinessRules;
         private readonly IAuthenticatorService _authenticatorService;
-        private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMailService _mailService;
         private readonly IUserService _userService;
 
         public EnableEmailAuthenticatorCommandHandler(
             IUserService userService,
-            IEmailAuthenticatorRepository emailAuthenticatorRepository,
+            IUnitOfWork unitOfWork,
             IMailService mailService,
             AuthBusinessRules authBusinessRules,
             IAuthenticatorService authenticatorService
         )
         {
             _userService = userService;
-            _emailAuthenticatorRepository = emailAuthenticatorRepository;
+            _unitOfWork = unitOfWork;
             _mailService = mailService;
             _authBusinessRules = authBusinessRules;
             _authenticatorService = authenticatorService;
@@ -59,7 +59,7 @@ public class EnableEmailAuthenticatorCommand : IRequest
             await _userService.UpdateAsync(user);
 
             EmailAuthenticator emailAuthenticator = await _authenticatorService.CreateEmailAuthenticator(user);
-            EmailAuthenticator addedEmailAuthenticator = await _emailAuthenticatorRepository.AddAsync(emailAuthenticator);
+            EmailAuthenticator addedEmailAuthenticator = await _unitOfWork.EmailAuthenticatorRepository.AddAsync(emailAuthenticator);
 
             var toEmailList = new List<MailboxAddress> { new(name: $"{user.FirstName} {user.LastName}", user.Email) };
 

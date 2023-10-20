@@ -1,6 +1,6 @@
 using Application.Features.UserOperationClaims.Rules;
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
-using Domain.Repositories;
 using MediatR;
 using MGH.Core.Security.Entities;
 
@@ -12,17 +12,17 @@ public class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaim
 
     public class GetByIdUserOperationClaimQueryHandler : IRequestHandler<GetByIdUserOperationClaimQuery, GetByIdUserOperationClaimResponse>
     {
-        private readonly IUserOperationClaimRepository _userOperationClaimRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
 
         public GetByIdUserOperationClaimQueryHandler(
-            IUserOperationClaimRepository userOperationClaimRepository,
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             UserOperationClaimBusinessRules userOperationClaimBusinessRules
         )
         {
-            _userOperationClaimRepository = userOperationClaimRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
         }
@@ -32,7 +32,7 @@ public class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaim
             CancellationToken cancellationToken
         )
         {
-            UserOperationClaim userOperationClaim = await _userOperationClaimRepository.GetAsync(
+            UserOperationClaim userOperationClaim = await _unitOfWork.UserOperationClaimRepository.GetAsync(
                 predicate: b => b.Id == request.Id,
                 cancellationToken: cancellationToken
             );

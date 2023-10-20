@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Application.Features.Users.Rules;
 using Application.Interfaces.Security;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MGH.Core.Persistence.Paging;
 using MGH.Core.Security.Entities;
 using Microsoft.EntityFrameworkCore.Query;
@@ -10,12 +10,12 @@ namespace Infrastructures.Security;
 
 public class UserManager : IUserService
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly UserBusinessRules _userBusinessRules;
 
-    public UserManager(IUserRepository userRepository, UserBusinessRules userBusinessRules)
+    public UserManager(IUnitOfWork unitOfWork, UserBusinessRules userBusinessRules)
     {
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
         _userBusinessRules = userBusinessRules;
     }
 
@@ -27,7 +27,7 @@ public class UserManager : IUserService
         CancellationToken cancellationToken = default
     )
     {
-        User user = await _userRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+        User user = await _unitOfWork.UserRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
         return user;
     }
 
@@ -42,7 +42,7 @@ public class UserManager : IUserService
         CancellationToken cancellationToken = default
     )
     {
-        IPaginate<User> userList = await _userRepository.GetListAsync(
+        IPaginate<User> userList = await _unitOfWork.UserRepository.GetListAsync(
             predicate,
             orderBy,
             include,
@@ -59,7 +59,7 @@ public class UserManager : IUserService
     {
         await _userBusinessRules.UserEmailShouldNotExistsWhenInsert(user.Email);
 
-        User addedUser = await _userRepository.AddAsync(user);
+        User addedUser = await _unitOfWork.UserRepository.AddAsync(user);
 
         return addedUser;
     }
@@ -68,14 +68,14 @@ public class UserManager : IUserService
     {
         await _userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user.Id, user.Email);
 
-        User updatedUser = await _userRepository.UpdateAsync(user);
+        User updatedUser = await _unitOfWork.UserRepository.UpdateAsync(user);
 
         return updatedUser;
     }
 
     public async Task<User> DeleteAsync(User user, bool permanent = false)
     {
-        User deletedUser = await _userRepository.DeleteAsync(user);
+        User deletedUser = await _unitOfWork.UserRepository.DeleteAsync(user);
 
         return deletedUser;
     }

@@ -1,6 +1,6 @@
 ﻿using Application.Features.OperationClaims.Rules;
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
-using Domain.Repositories;
 using MediatR;
 using MGH.Core.Application.Pipelines.Authorization;
 using MGH.Core.Security.Entities;
@@ -26,17 +26,17 @@ public class CreateOperationClaimCommand : IRequest<CreatedOperationClaimRespons
 
     public class CreateOperationClaimCommandHandler : IRequestHandler<CreateOperationClaimCommand, CreatedOperationClaimResponse>
     {
-        private readonly IOperationClaimRepository _operationClaimRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly OperationClaimBusinessRules _operationClaimBusinessRules;
 
         public CreateOperationClaimCommandHandler(
-            IOperationClaimRepository operationClaimRepository,
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             OperationClaimBusinessRules operationClaimBusinessRules
         )
         {
-            _operationClaimRepository = operationClaimRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _operationClaimBusinessRules = operationClaimBusinessRules;
         }
@@ -46,7 +46,7 @@ public class CreateOperationClaimCommand : IRequest<CreatedOperationClaimRespons
             await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenCreating(request.Name);
             OperationClaim mappedOperationClaim = _mapper.Map<OperationClaim>(request);
 
-            OperationClaim createdOperationClaim = await _operationClaimRepository.AddAsync(mappedOperationClaim);
+            OperationClaim createdOperationClaim = await _unitOfWork.OperationClaimRepository.AddAsync(mappedOperationClaim);
 
             CreatedOperationClaimResponse response = _mapper.Map<CreatedOperationClaimResponse>(createdOperationClaim);
             return response;

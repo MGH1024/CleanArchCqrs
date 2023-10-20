@@ -1,6 +1,6 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Interfaces.Security;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MediatR;
 using MGH.Core.Application.DTOs.Security;
 using MGH.Core.Security.Entities;
@@ -28,13 +28,13 @@ public class RegisterCommand : IRequest<RegisteredResponse>
 
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisteredResponse>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IAuthService _authService;
         private readonly AuthBusinessRules _authBusinessRules;
 
-        public RegisterCommandHandler(IUserRepository userRepository, IAuthService authService, AuthBusinessRules authBusinessRules)
+        public RegisterCommandHandler(IUnitOfWork unitOfWork, IAuthService authService, AuthBusinessRules authBusinessRules)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _authService = authService;
             _authBusinessRules = authBusinessRules;
         }
@@ -59,7 +59,7 @@ public class RegisterCommand : IRequest<RegisteredResponse>
                         PasswordHash = passwordHash,
                         PasswordSalt = passwordSalt,
                     };
-                User createdUser = await _userRepository.AddAsync(newUser);
+                User createdUser = await _unitOfWork.UserRepository.AddAsync(newUser);
 
                 AccessToken createdAccessToken = await _authService.CreateAccessToken(createdUser);
 

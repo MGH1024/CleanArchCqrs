@@ -1,4 +1,5 @@
 using Application.Features.UserOperationClaims.Rules;
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
 using Domain.Repositories;
 using MediatR;
@@ -18,17 +19,17 @@ public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClai
     public class CreateUserOperationClaimCommandHandler
         : IRequestHandler<CreateUserOperationClaimCommand, CreatedUserOperationClaimResponse>
     {
-        private readonly IUserOperationClaimRepository _userOperationClaimRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
 
         public CreateUserOperationClaimCommandHandler(
-            IUserOperationClaimRepository userOperationClaimRepository,
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             UserOperationClaimBusinessRules userOperationClaimBusinessRules
         )
         {
-            _userOperationClaimRepository = userOperationClaimRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
         }
@@ -45,7 +46,7 @@ public class CreateUserOperationClaimCommand : IRequest<CreatedUserOperationClai
             UserOperationClaim mappedUserOperationClaim = _mapper.Map<UserOperationClaim>(request);
 
             UserOperationClaim createdUserOperationClaim =
-                await _userOperationClaimRepository.AddAsync(mappedUserOperationClaim);
+                await _unitOfWork.UserOperationClaimRepository.AddAsync(mappedUserOperationClaim);
 
             CreatedUserOperationClaimResponse createdUserOperationClaimDto =
                 _mapper.Map<CreatedUserOperationClaimResponse>(

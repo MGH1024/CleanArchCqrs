@@ -1,6 +1,6 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Interfaces.Security;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MGH.Core.Security.Entities;
 using MGH.Core.Security.JWT;
 using Microsoft.EntityFrameworkCore;
@@ -10,22 +10,19 @@ namespace Infrastructures.Security;
 
 public class AuthManager : IAuthService
 {
-    private readonly IRefreshTokenRepository _refreshTokenRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ITokenHelper _tokenHelper;
     private readonly TokenOptions _tokenOptions;
     private readonly AuthBusinessRules _authBusinessRules;
-    private readonly IUserOperationClaimRepository _userOperationClaimRepository;
 
     public AuthManager(
-        IUserOperationClaimRepository userOperationClaimRepository,
-        IRefreshTokenRepository refreshTokenRepository,
+        IUnitOfWork unitOfWork,
         ITokenHelper tokenHelper,
         IConfiguration configuration,
         AuthBusinessRules authBusinessRules
     )
     {
-        _userOperationClaimRepository = userOperationClaimRepository;
-        _refreshTokenRepository = refreshTokenRepository;
+        _unitOfWork = unitOfWork;
         _tokenHelper = tokenHelper;
         _authBusinessRules = authBusinessRules;
 
@@ -37,7 +34,7 @@ public class AuthManager : IAuthService
 
     public async Task<AccessToken> CreateAccessToken(User user)
     {
-        IList<OperationClaim> operationClaims = await _userOperationClaimRepository
+        IList<OperationClaim> operationClaims = await _unitOfWork.UserOperationClaimRepository
             .Query()
             .AsNoTracking()
             .Where(p => p.UserId == user.Id)
@@ -50,13 +47,13 @@ public class AuthManager : IAuthService
 
     public async Task<RefreshToken> AddRefreshToken(RefreshToken refreshToken)
     {
-        RefreshToken addedRefreshToken = await _refreshTokenRepository.AddAsync(refreshToken);
+        RefreshToken addedRefreshToken = await _unitOfWork.RefreshTokenRepository.AddAsync(refreshToken);
         return addedRefreshToken;
     }
 
     public async Task DeleteOldRefreshTokens(int userId)
     {
-        List<RefreshToken> refreshTokens = await _refreshTokenRepository
+        List<RefreshToken> refreshTokens = await _unitOfWork.RefreshTokenRepository
             .Query()
             .AsNoTracking()
             .Where(
@@ -68,12 +65,12 @@ public class AuthManager : IAuthService
             )
             .ToListAsync();
 
-        await _refreshTokenRepository.DeleteRangeAsync(refreshTokens);
+        await _unitOfWork.RefreshTokenRepository.DeleteRangeAsync(refreshTokens);
     }
 
     public async Task<RefreshToken> GetRefreshTokenByToken(string token)
     {
-        RefreshToken refreshToken = await _refreshTokenRepository.GetAsync(predicate: r => r.Token == token);
+        RefreshToken refreshToken = await _unitOfWork.RefreshTokenRepository.GetAsync(predicate: r => r.Token == token);
         return refreshToken;
     }
 
@@ -83,7 +80,7 @@ public class AuthManager : IAuthService
         refreshToken.RevokedByIp = ipAddress;
         refreshToken.ReasonRevoked = reason;
         refreshToken.ReplacedByToken = replacedByToken;
-        await _refreshTokenRepository.UpdateAsync(refreshToken);
+        await _unitOfWork.RefreshTokenRepository.UpdateAsync(refreshToken);
     }
 
     public async Task<RefreshToken> RotateRefreshToken(User user, RefreshToken refreshToken, string ipAddress)
@@ -95,7 +92,7 @@ public class AuthManager : IAuthService
 
     public async Task RevokeDescendantRefreshTokens(RefreshToken refreshToken, string ipAddress, string reason)
     {
-        RefreshToken childToken = await _refreshTokenRepository.GetAsync(predicate: r => r.Token == refreshToken.ReplacedByToken);
+        RefreshToken childToken = await _unitOfWork.RefreshTokenRepository.GetAsync(predicate: r => r.Token == refreshToken.ReplacedByToken);
 
         if (childToken?.Revoked != null && childToken.Expires <= DateTime.UtcNow)
             await RevokeRefreshToken(childToken, ipAddress, reason);

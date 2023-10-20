@@ -1,7 +1,6 @@
 ﻿using Application.Features.Auth.Rules;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MediatR;
-using MGH.Core.Security.Entities;
 
 namespace Application.Features.Auth.Commands.VerifyEmailAuthenticator;
 
@@ -22,20 +21,20 @@ public class VerifyEmailAuthenticatorCommand : IRequest
     public class VerifyEmailAuthenticatorCommandHandler : IRequestHandler<VerifyEmailAuthenticatorCommand>
     {
         private readonly AuthBusinessRules _authBusinessRules;
-        private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public VerifyEmailAuthenticatorCommandHandler(
-            IEmailAuthenticatorRepository emailAuthenticatorRepository,
+            IUnitOfWork unitOfWork,
             AuthBusinessRules authBusinessRules
         )
         {
-            _emailAuthenticatorRepository = emailAuthenticatorRepository;
+            _unitOfWork = unitOfWork;
             _authBusinessRules = authBusinessRules;
         }
 
         public async Task Handle(VerifyEmailAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            EmailAuthenticator emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(
+            var emailAuthenticator = await _unitOfWork.EmailAuthenticatorRepository.GetAsync(
                 predicate: e => e.ActivationKey == request.ActivationKey,
                 cancellationToken: cancellationToken
             );
@@ -44,7 +43,7 @@ public class VerifyEmailAuthenticatorCommand : IRequest
 
             emailAuthenticator!.ActivationKey = null;
             emailAuthenticator.IsVerified = true;
-            await _emailAuthenticatorRepository.UpdateAsync(emailAuthenticator);
+            await _unitOfWork.EmailAuthenticatorRepository.UpdateAsync(emailAuthenticator);
         }
     }
 }

@@ -1,6 +1,6 @@
 using Application.Features.OperationClaims.Rules;
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
-using Domain.Repositories;
 using MediatR;
 using MGH.Core.Security.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -13,24 +13,24 @@ public class GetByIdOperationClaimQuery : IRequest<GetByIdOperationClaimResponse
 
     public class GetByIdOperationClaimQueryHandler : IRequestHandler<GetByIdOperationClaimQuery, GetByIdOperationClaimResponse>
     {
-        private readonly IOperationClaimRepository _operationClaimRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly OperationClaimBusinessRules _operationClaimBusinessRules;
 
         public GetByIdOperationClaimQueryHandler(
-            IOperationClaimRepository operationClaimRepository,
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             OperationClaimBusinessRules operationClaimBusinessRules
         )
         {
-            _operationClaimRepository = operationClaimRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _operationClaimBusinessRules = operationClaimBusinessRules;
         }
 
         public async Task<GetByIdOperationClaimResponse> Handle(GetByIdOperationClaimQuery request, CancellationToken cancellationToken)
         {
-            OperationClaim operationClaim = await _operationClaimRepository.GetAsync(
+            OperationClaim operationClaim = await _unitOfWork.OperationClaimRepository.GetAsync(
                 predicate: b => b.Id == request.Id,
                 include: q => q.Include(oc => oc.UserOperationClaims),
                 cancellationToken: cancellationToken

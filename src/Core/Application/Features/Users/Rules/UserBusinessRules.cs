@@ -1,5 +1,5 @@
 using Application.Features.Auth.Constants;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MGH.Core.Application.Rules;
 using MGH.Core.CrossCutting.Exceptions.Types;
 using MGH.Core.Security.Entities;
@@ -9,11 +9,11 @@ namespace Application.Features.Users.Rules;
 
 public class UserBusinessRules : BaseBusinessRules
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UserBusinessRules(IUserRepository userRepository)
+    public UserBusinessRules(IUnitOfWork unitOfWork)
     {
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public Task UserShouldBeExistsWhenSelected(User user)
@@ -25,7 +25,7 @@ public class UserBusinessRules : BaseBusinessRules
 
     public async Task UserIdShouldBeExistsWhenSelected(int id)
     {
-        bool doesExist = await _userRepository.AnyAsync(predicate: u => u.Id == id, enableTracking: false);
+        bool doesExist = await _unitOfWork.UserRepository.AnyAsync(predicate: u => u.Id == id, enableTracking: false);
         if (doesExist)
             throw new BusinessException(AuthMessages.UserDontExists);
     }
@@ -39,14 +39,14 @@ public class UserBusinessRules : BaseBusinessRules
 
     public async Task UserEmailShouldNotExistsWhenInsert(string email)
     {
-        bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Email == email, enableTracking: false);
+        bool doesExists = await _unitOfWork.UserRepository.AnyAsync(predicate: u => u.Email == email, enableTracking: false);
         if (doesExists)
             throw new BusinessException(AuthMessages.UserMailAlreadyExists);
     }
 
     public async Task UserEmailShouldNotExistsWhenUpdate(int id, string email)
     {
-        bool doesExists = await _userRepository.AnyAsync(predicate: u => u.Id != id && u.Email == email, enableTracking: false);
+        bool doesExists = await _unitOfWork.UserRepository.AnyAsync(predicate: u => u.Id != id && u.Email == email, enableTracking: false);
         if (doesExists)
             throw new BusinessException(AuthMessages.UserMailAlreadyExists);
     }

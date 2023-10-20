@@ -1,7 +1,7 @@
 using Application.Features.Users.Constants;
 using Application.Features.Users.Rules;
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
-using Domain.Repositories;
 using MediatR;
 using MGH.Core.Application.Pipelines.Authorization;
 using MGH.Core.Security.Entities;
@@ -39,20 +39,20 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserResponse>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserBusinessRules _userBusinessRules;
 
-        public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules)
+        public UpdateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, UserBusinessRules userBusinessRules)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userBusinessRules = userBusinessRules;
         }
 
         public async Task<UpdatedUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            User user = await _userRepository.GetAsync(predicate: u => u.Id == request.Id, cancellationToken: cancellationToken);
+            User user = await _unitOfWork.UserRepository.GetAsync(predicate: u => u.Id == request.Id, cancellationToken: cancellationToken);
             await _userBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _userBusinessRules.UserEmailShouldNotExistsWhenUpdate(user!.Id, user.Email);
             user = _mapper.Map(request, user);
@@ -64,7 +64,7 @@ public class UpdateUserCommand : IRequest<UpdatedUserResponse>, ISecuredRequest
             );
             user!.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-            await _userRepository.UpdateAsync(user);
+            await _unitOfWork.UserRepository.UpdateAsync(user);
 
             UpdatedUserResponse response = _mapper.Map<UpdatedUserResponse>(user);
             return response;

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Application.Features.UserOperationClaims.Rules;
 using Application.Interfaces.Security;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MGH.Core.Persistence.Paging;
 using MGH.Core.Security.Entities;
 using Microsoft.EntityFrameworkCore.Query;
@@ -10,15 +10,15 @@ namespace Infrastructures.Security;
 
 public class UserUserOperationClaimManager : IUserOperationClaimService
 {
-    private readonly IUserOperationClaimRepository _userUserOperationClaimRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly UserOperationClaimBusinessRules _userUserOperationClaimBusinessRules;
 
     public UserUserOperationClaimManager(
-        IUserOperationClaimRepository userUserOperationClaimRepository,
+        IUnitOfWork unitOfWork,
         UserOperationClaimBusinessRules userUserOperationClaimBusinessRules
     )
     {
-        _userUserOperationClaimRepository = userUserOperationClaimRepository;
+        _unitOfWork = unitOfWork;
         _userUserOperationClaimBusinessRules = userUserOperationClaimBusinessRules;
     }
 
@@ -30,7 +30,7 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
         CancellationToken cancellationToken = default
     )
     {
-        UserOperationClaim userUserOperationClaim = await _userUserOperationClaimRepository.GetAsync(
+        UserOperationClaim userUserOperationClaim = await _unitOfWork.UserOperationClaimRepository.GetAsync(
             predicate,
             include,
             withDeleted,
@@ -51,7 +51,7 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
         CancellationToken cancellationToken = default
     )
     {
-        IPaginate<UserOperationClaim> userUserOperationClaimList = await _userUserOperationClaimRepository.GetListAsync(
+        IPaginate<UserOperationClaim> userUserOperationClaimList = await _unitOfWork.UserOperationClaimRepository.GetListAsync(
             predicate,
             orderBy,
             include,
@@ -71,7 +71,7 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
             userUserOperationClaim.OperationClaimId
         );
 
-        UserOperationClaim addedUserOperationClaim = await _userUserOperationClaimRepository.AddAsync(userUserOperationClaim);
+        UserOperationClaim addedUserOperationClaim = await _unitOfWork.UserOperationClaimRepository.AddAsync(userUserOperationClaim);
 
         return addedUserOperationClaim;
     }
@@ -84,14 +84,14 @@ public class UserUserOperationClaimManager : IUserOperationClaimService
             userUserOperationClaim.OperationClaimId
         );
 
-        UserOperationClaim updatedUserOperationClaim = await _userUserOperationClaimRepository.UpdateAsync(userUserOperationClaim);
+        UserOperationClaim updatedUserOperationClaim = await _unitOfWork.UserOperationClaimRepository.UpdateAsync(userUserOperationClaim);
 
         return updatedUserOperationClaim;
     }
 
     public async Task<UserOperationClaim> DeleteAsync(UserOperationClaim userUserOperationClaim, bool permanent = false)
     {
-        UserOperationClaim deletedUserOperationClaim = await _userUserOperationClaimRepository.DeleteAsync(userUserOperationClaim);
+        UserOperationClaim deletedUserOperationClaim = await _unitOfWork.UserOperationClaimRepository.DeleteAsync(userUserOperationClaim);
 
         return deletedUserOperationClaim;
     }

@@ -1,6 +1,6 @@
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
 using Core.Application.Requests;
-using Domain.Repositories;
 using MediatR;
 using MGH.Core.Application.Responses;
 using MGH.Core.Persistence.Paging;
@@ -25,12 +25,12 @@ public class GetListUserOperationClaimQuery : IRequest<GetListResponse<GetListUs
     public class GetListUserOperationClaimQueryHandler
         : IRequestHandler<GetListUserOperationClaimQuery, GetListResponse<GetListUserOperationClaimListItemDto>>
     {
-        private readonly IUserOperationClaimRepository _userOperationClaimRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetListUserOperationClaimQueryHandler(IUserOperationClaimRepository userOperationClaimRepository, IMapper mapper)
+        public GetListUserOperationClaimQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _userOperationClaimRepository = userOperationClaimRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -39,7 +39,7 @@ public class GetListUserOperationClaimQuery : IRequest<GetListResponse<GetListUs
             CancellationToken cancellationToken
         )
         {
-            IPaginate<UserOperationClaim> userOperationClaims = await _userOperationClaimRepository.GetListAsync(
+            IPaginate<UserOperationClaim> userOperationClaims = await _unitOfWork.UserOperationClaimRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize
             );

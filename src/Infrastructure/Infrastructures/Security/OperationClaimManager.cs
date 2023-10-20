@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Application.Features.OperationClaims.Rules;
 using Application.Interfaces.Security;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MGH.Core.Persistence.Paging;
 using MGH.Core.Security.Entities;
 using Microsoft.EntityFrameworkCore.Query;
@@ -10,16 +10,14 @@ namespace Infrastructures.Security;
 
 public class OperationClaimManager : IOperationClaimService
 {
-    private readonly IOperationClaimRepository _operationClaimRepository;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly OperationClaimBusinessRules _operationClaimBusinessRules;
 
     public OperationClaimManager(
-        IOperationClaimRepository operationClaimRepository,
-        OperationClaimBusinessRules operationClaimBusinessRules
-    )
+        OperationClaimBusinessRules operationClaimBusinessRules, IUnitOfWork unitOfWork)
     {
-        _operationClaimRepository = operationClaimRepository;
         _operationClaimBusinessRules = operationClaimBusinessRules;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<OperationClaim> GetAsync(
@@ -30,7 +28,7 @@ public class OperationClaimManager : IOperationClaimService
         CancellationToken cancellationToken = default
     )
     {
-        OperationClaim operationClaim = await _operationClaimRepository.GetAsync(
+        OperationClaim operationClaim = await _unitOfWork.OperationClaimRepository.GetAsync(
             predicate,
             include,
             withDeleted,
@@ -51,7 +49,7 @@ public class OperationClaimManager : IOperationClaimService
         CancellationToken cancellationToken = default
     )
     {
-        IPaginate<OperationClaim> operationClaimList = await _operationClaimRepository.GetListAsync(
+        IPaginate<OperationClaim> operationClaimList = await _unitOfWork.OperationClaimRepository.GetListAsync(
             predicate,
             orderBy,
             include,
@@ -68,7 +66,7 @@ public class OperationClaimManager : IOperationClaimService
     {
         await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenCreating(operationClaim.Name);
 
-        OperationClaim addedOperationClaim = await _operationClaimRepository.AddAsync(operationClaim);
+        OperationClaim addedOperationClaim = await _unitOfWork.OperationClaimRepository.AddAsync(operationClaim);
 
         return addedOperationClaim;
     }
@@ -77,14 +75,14 @@ public class OperationClaimManager : IOperationClaimService
     {
         await _operationClaimBusinessRules.OperationClaimNameShouldNotExistWhenUpdating(operationClaim.Id, operationClaim.Name);
 
-        OperationClaim updatedOperationClaim = await _operationClaimRepository.UpdateAsync(operationClaim);
+        OperationClaim updatedOperationClaim = await _unitOfWork.OperationClaimRepository.UpdateAsync(operationClaim);
 
         return updatedOperationClaim;
     }
 
     public async Task<OperationClaim> DeleteAsync(OperationClaim operationClaim, bool permanent = false)
     {
-        OperationClaim deletedOperationClaim = await _operationClaimRepository.DeleteAsync(operationClaim);
+        OperationClaim deletedOperationClaim = await _unitOfWork.OperationClaimRepository.DeleteAsync(operationClaim);
 
         return deletedOperationClaim;
     }

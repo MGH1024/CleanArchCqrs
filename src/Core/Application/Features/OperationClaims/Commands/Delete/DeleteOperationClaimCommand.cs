@@ -1,7 +1,7 @@
 using Application.Features.OperationClaims.Constants;
 using Application.Features.OperationClaims.Rules;
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
-using Domain.Repositories;
 using MediatR;
 using MGH.Core.Application.Pipelines.Authorization;
 using MGH.Core.Security.Entities;
@@ -18,31 +18,31 @@ public class DeleteOperationClaimCommand : IRequest<DeletedOperationClaimRespons
 
     public class DeleteOperationClaimCommandHandler : IRequestHandler<DeleteOperationClaimCommand, DeletedOperationClaimResponse>
     {
-        private readonly IOperationClaimRepository _operationClaimRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly OperationClaimBusinessRules _operationClaimBusinessRules;
 
         public DeleteOperationClaimCommandHandler(
-            IOperationClaimRepository operationClaimRepository,
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             OperationClaimBusinessRules operationClaimBusinessRules
         )
         {
-            _operationClaimRepository = operationClaimRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _operationClaimBusinessRules = operationClaimBusinessRules;
         }
 
         public async Task<DeletedOperationClaimResponse> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
         {
-            OperationClaim operationClaim = await _operationClaimRepository.GetAsync(
+            OperationClaim operationClaim = await _unitOfWork.OperationClaimRepository.GetAsync(
                 predicate: oc => oc.Id == request.Id,
                 include: q => q.Include(oc => oc.UserOperationClaims),
                 cancellationToken: cancellationToken
             );
             await _operationClaimBusinessRules.OperationClaimShouldExistWhenSelected(operationClaim);
 
-            await _operationClaimRepository.DeleteAsync(entity: operationClaim!);
+            await _unitOfWork.OperationClaimRepository.DeleteAsync(entity: operationClaim!);
 
             DeletedOperationClaimResponse response = _mapper.Map<DeletedOperationClaimResponse>(operationClaim);
             return response;

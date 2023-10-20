@@ -1,7 +1,7 @@
 using Application.Features.UserOperationClaims.Constants;
 using Application.Features.UserOperationClaims.Rules;
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
-using Domain.Repositories;
 using MediatR;
 using MGH.Core.Application.Pipelines.Authorization;
 using MGH.Core.Security.Entities;
@@ -20,17 +20,17 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
     public class UpdateUserOperationClaimCommandHandler
         : IRequestHandler<UpdateUserOperationClaimCommand, UpdatedUserOperationClaimResponse>
     {
-        private readonly IUserOperationClaimRepository _userOperationClaimRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
 
         public UpdateUserOperationClaimCommandHandler(
-            IUserOperationClaimRepository userOperationClaimRepository,
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             UserOperationClaimBusinessRules userOperationClaimBusinessRules
         )
         {
-            _userOperationClaimRepository = userOperationClaimRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
         }
@@ -40,7 +40,7 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
             CancellationToken cancellationToken
         )
         {
-            UserOperationClaim userOperationClaim = await _userOperationClaimRepository.GetAsync(
+            UserOperationClaim userOperationClaim = await _unitOfWork.UserOperationClaimRepository.GetAsync(
                 predicate: uoc => uoc.Id == request.Id,
                 enableTracking: false,
                 cancellationToken: cancellationToken
@@ -53,7 +53,7 @@ public class UpdateUserOperationClaimCommand : IRequest<UpdatedUserOperationClai
             );
             UserOperationClaim mappedUserOperationClaim = _mapper.Map(request, destination: userOperationClaim!);
 
-            UserOperationClaim updatedUserOperationClaim = await _userOperationClaimRepository.UpdateAsync(mappedUserOperationClaim);
+            UserOperationClaim updatedUserOperationClaim = await _unitOfWork.UserOperationClaimRepository.UpdateAsync(mappedUserOperationClaim);
 
             UpdatedUserOperationClaimResponse updatedUserOperationClaimDto = _mapper.Map<UpdatedUserOperationClaimResponse>(
                 updatedUserOperationClaim

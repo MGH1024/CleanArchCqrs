@@ -1,5 +1,5 @@
 using Application.Features.OperationClaims.Constants;
-using Domain.Repositories;
+using Application.Interfaces.UnitOfWork;
 using MGH.Core.Application.Rules;
 using MGH.Core.CrossCutting.Exceptions.Types;
 using MGH.Core.Security.Entities;
@@ -8,11 +8,11 @@ namespace Application.Features.OperationClaims.Rules;
 
 public class OperationClaimBusinessRules : BaseBusinessRules
 {
-    private readonly IOperationClaimRepository _operationClaimRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public OperationClaimBusinessRules(IOperationClaimRepository operationClaimRepository)
+    public OperationClaimBusinessRules(IUnitOfWork unitOfWork)
     {
-        _operationClaimRepository = operationClaimRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public Task OperationClaimShouldExistWhenSelected(OperationClaim operationClaim)
@@ -24,21 +24,21 @@ public class OperationClaimBusinessRules : BaseBusinessRules
 
     public async Task OperationClaimIdShouldExistWhenSelected(int id)
     {
-        bool doesExist = await _operationClaimRepository.AnyAsync(predicate: b => b.Id == id, enableTracking: false);
+        bool doesExist = await _unitOfWork.OperationClaimRepository.AnyAsync(predicate: b => b.Id == id, enableTracking: false);
         if (doesExist)
             throw new BusinessException(OperationClaimsMessages.NotExists);
     }
 
     public async Task OperationClaimNameShouldNotExistWhenCreating(string name)
     {
-        bool doesExist = await _operationClaimRepository.AnyAsync(predicate: b => b.Name == name, enableTracking: false);
+        bool doesExist = await _unitOfWork.OperationClaimRepository.AnyAsync(predicate: b => b.Name == name, enableTracking: false);
         if (doesExist)
             throw new BusinessException(OperationClaimsMessages.AlreadyExists);
     }
 
     public async Task OperationClaimNameShouldNotExistWhenUpdating(int id, string name)
     {
-        bool doesExist = await _operationClaimRepository.AnyAsync(predicate: b => b.Id != id && b.Name == name, enableTracking: false);
+        bool doesExist = await _unitOfWork.OperationClaimRepository.AnyAsync(predicate: b => b.Id != id && b.Name == name, enableTracking: false);
         if (doesExist)
             throw new BusinessException(OperationClaimsMessages.AlreadyExists);
     }

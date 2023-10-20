@@ -1,3 +1,4 @@
+using Application.Interfaces.UnitOfWork;
 using AutoMapper;
 using Core.Application.Requests;
 using Domain.Repositories;
@@ -25,12 +26,12 @@ public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperat
     public class GetListOperationClaimQueryHandler
         : IRequestHandler<GetListOperationClaimQuery, GetListResponse<GetListOperationClaimListItemDto>>
     {
-        private readonly IOperationClaimRepository _operationClaimRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public GetListOperationClaimQueryHandler(IOperationClaimRepository operationClaimRepository, IMapper mapper)
+        public GetListOperationClaimQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _operationClaimRepository = operationClaimRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -39,7 +40,7 @@ public class GetListOperationClaimQuery : IRequest<GetListResponse<GetListOperat
             CancellationToken cancellationToken
         )
         {
-            IPaginate<OperationClaim> operationClaims = await _operationClaimRepository.GetListAsync(
+            IPaginate<OperationClaim> operationClaims = await _unitOfWork.OperationClaimRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken
