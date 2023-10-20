@@ -1,14 +1,12 @@
-﻿
-
-using Domain.Repositories;
+﻿using Domain.Repositories;
 using MGH.Core.Persistence.Repositories;
 using MGH.Core.Security.Entities;
-using Microsoft.EntityFrameworkCore;
+using Persistence.Contexts;
 
 namespace Persistence.Repositories;
 
-public class RefreshTokenRepository : EfRepositoryBase<RefreshToken, int, DbContext>, IRefreshTokenRepository
+public class RefreshTokenRepository : EfRepositoryBase<RefreshToken, int, AppDbContext>, IRefreshTokenRepository
 {
-    public RefreshTokenRepository(DbContext context)
+    public RefreshTokenRepository(AppDbContext context)
         : base(context) { }
 }

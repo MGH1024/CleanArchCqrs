@@ -1,13 +1,13 @@
 ﻿using Domain.Repositories;
 using MGH.Core.Persistence.Repositories;
 using MGH.Core.Security.Entities;
-using Microsoft.EntityFrameworkCore;
+using Persistence.Contexts;
 
 
 namespace Persistence.Repositories;
 
-public class OperationClaimRepository : EfRepositoryBase<OperationClaim, int, DbContext>, IOperationClaimRepository
+public class OperationClaimRepository : EfRepositoryBase<OperationClaim, int, AppDbContext>, IOperationClaimRepository
 {
-    public OperationClaimRepository(DbContext context)
+    public OperationClaimRepository(AppDbContext context)
         : base(context) { }
 }

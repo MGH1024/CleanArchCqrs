@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Api.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -72,7 +72,6 @@ namespace Api.Migrations
                     Email = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     AuthenticatorType = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
@@ -248,19 +247,19 @@ namespace Api.Migrations
                 schema: "sec",
                 table: "OperationClaims",
                 columns: new[] { "Id", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "Name", "UpdatedAt", "UpdatedBy" },
-                values: new object[] { 1, new DateTime(2023, 10, 19, 1, 22, 49, 825, DateTimeKind.Local).AddTicks(9185), "admin", null, null, "Admin", null, null });
+                values: new object[] { 1, new DateTime(2023, 10, 20, 18, 50, 47, 356, DateTimeKind.Local).AddTicks(8651), "admin", null, null, "Admin", null, null });
 
             migrationBuilder.InsertData(
                 schema: "sec",
                 table: "Users",
-                columns: new[] { "Id", "AuthenticatorType", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "Email", "FirstName", "LastName", "PasswordHash", "PasswordSalt", "Status", "UpdatedAt", "UpdatedBy" },
-                values: new object[] { 1, 0, new DateTime(2023, 10, 19, 1, 22, 49, 828, DateTimeKind.Local).AddTicks(740), "admin", null, null, "admin@admin.com", "Admin", "GH", new byte[] { 6, 44, 124, 63, 81, 186, 58, 116, 161, 61, 212, 185, 52, 95, 210, 56, 92, 69, 223, 126, 46, 133, 41, 6, 138, 200, 89, 53, 75, 115, 102, 181, 106, 41, 79, 226, 132, 83, 115, 215, 109, 68, 215, 214, 176, 60, 161, 137, 78, 190, 37, 53, 149, 40, 22, 18, 111, 194, 76, 124, 224, 31, 128, 78 }, new byte[] { 22, 170, 214, 66, 73, 51, 28, 0, 170, 0, 141, 113, 104, 233, 66, 174, 174, 7, 248, 95, 145, 118, 216, 110, 101, 164, 48, 73, 210, 184, 166, 189, 163, 129, 3, 19, 181, 220, 96, 3, 72, 113, 163, 163, 76, 142, 34, 67, 5, 84, 189, 153, 31, 200, 72, 6, 57, 139, 152, 49, 116, 137, 199, 229, 80, 43, 41, 255, 28, 240, 4, 96, 204, 156, 230, 208, 126, 220, 59, 118, 186, 55, 94, 186, 215, 223, 251, 78, 22, 150, 56, 62, 188, 11, 155, 30, 14, 35, 164, 172, 77, 167, 10, 66, 192, 161, 218, 198, 51, 79, 164, 105, 253, 246, 66, 183, 117, 113, 78, 255, 213, 254, 59, 225, 244, 16, 176, 208 }, true, null, null });
+                columns: new[] { "Id", "AuthenticatorType", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "Email", "FirstName", "LastName", "PasswordHash", "PasswordSalt", "UpdatedAt", "UpdatedBy" },
+                values: new object[] { 1, 0, new DateTime(2023, 10, 20, 18, 50, 47, 358, DateTimeKind.Local).AddTicks(8649), "admin", null, null, "admin@admin.com", "Admin", "GH", new byte[] { 143, 26, 54, 32, 54, 53, 32, 39, 171, 107, 70, 209, 100, 33, 13, 238, 8, 81, 197, 190, 139, 228, 113, 142, 186, 184, 189, 103, 31, 32, 28, 99, 182, 30, 127, 116, 182, 77, 87, 103, 213, 118, 175, 47, 14, 21, 128, 90, 224, 155, 74, 160, 39, 127, 155, 102, 61, 176, 245, 158, 166, 41, 14, 220 }, new byte[] { 80, 70, 148, 175, 253, 50, 230, 236, 219, 64, 249, 125, 231, 236, 194, 162, 42, 183, 124, 253, 176, 159, 55, 129, 215, 203, 43, 15, 129, 176, 255, 22, 88, 37, 26, 81, 132, 96, 118, 242, 244, 18, 212, 19, 2, 93, 70, 201, 173, 187, 55, 95, 27, 181, 38, 82, 209, 24, 124, 29, 116, 8, 56, 14, 129, 76, 242, 248, 27, 155, 164, 248, 45, 152, 123, 244, 47, 19, 190, 131, 33, 200, 162, 138, 3, 252, 1, 110, 132, 202, 38, 168, 242, 119, 206, 210, 230, 28, 153, 84, 61, 140, 127, 108, 253, 211, 197, 54, 222, 243, 55, 163, 192, 52, 184, 31, 160, 91, 106, 42, 106, 7, 114, 189, 190, 145, 102, 133 }, null, null });
 
             migrationBuilder.InsertData(
                 schema: "sec",
                 table: "UserOperationClaims",
                 columns: new[] { "Id", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "OperationClaimId", "UpdatedAt", "UpdatedBy", "UserId" },
-                values: new object[] { 1, new DateTime(2023, 10, 19, 1, 22, 49, 828, DateTimeKind.Local).AddTicks(7465), "admin", null, null, 1, null, null, 1 });
+                values: new object[] { 1, new DateTime(2023, 10, 20, 18, 50, 47, 359, DateTimeKind.Local).AddTicks(4230), "admin", null, null, 1, null, null, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmailAuthenticators_UserId",

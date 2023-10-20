@@ -1,12 +1,12 @@
 ﻿using Domain.Repositories;
 using MGH.Core.Persistence.Repositories;
 using MGH.Core.Security.Entities;
-using Microsoft.EntityFrameworkCore;
+using Persistence.Contexts;
 
 namespace Persistence.Repositories;
 
-public class OtpAuthenticatorRepository : EfRepositoryBase<OtpAuthenticator, int, DbContext>, IOtpAuthenticatorRepository
+public class OtpAuthenticatorRepository : EfRepositoryBase<OtpAuthenticator, int, AppDbContext>, IOtpAuthenticatorRepository
 {
-    public OtpAuthenticatorRepository(DbContext context)
+    public OtpAuthenticatorRepository(AppDbContext context)
         : base(context) { }
 }

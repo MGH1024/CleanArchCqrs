@@ -30,6 +30,7 @@ public static class InfrastructureServiceRegistration
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IValidationService, ValidationService>();
         services.AddTransient<IValidationTool, FluentValidationTool>();
+        services.AddScoped<IEmailAuthenticatorHelper, EmailAuthenticatorHelper>();
         services.AddTransient<IAuthenticatorService, AuthenticatorManager>();
         services.AddTransient<IAuthService, AuthManager>();
         services.AddTransient<ImageServiceBase,CloudinaryImageServiceAdapter>();
@@ -42,7 +43,6 @@ public static class InfrastructureServiceRegistration
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         
         services.AddScoped<ITokenHelper, JwtHelper>();
-        services.AddScoped<IEmailAuthenticatorHelper, EmailAuthenticatorHelper>();
         services.AddScoped<IOtpAuthenticatorHelper, OtpNetOtpAuthenticatorHelper>();
         
         return services;

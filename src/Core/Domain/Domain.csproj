@@ -13,6 +13,6 @@
     <ItemGroup>
         <PackageReference Include="MGH.Core.Domain" Version="1.0.5" />
         <PackageReference Include="MGH.Core.Persistence" Version="1.0.3" />
-        <PackageReference Include="MGH.Core.Security" Version="1.0.1" />
+        <PackageReference Include="MGH.Core.Security" Version="1.0.2" />
     </ItemGroup>
 </Project>

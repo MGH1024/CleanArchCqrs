@@ -18,7 +18,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Email).HasColumnName("Email").IsRequired();
         builder.Property(u => u.PasswordSalt).HasColumnName("PasswordSalt").IsRequired();
         builder.Property(u => u.PasswordHash).HasColumnName("PasswordHash").IsRequired();
-        builder.Property(u => u.Status).HasColumnName("Status").HasDefaultValue(true);
         builder.Property(u => u.AuthenticatorType).HasColumnName("AuthenticatorType").IsRequired();
         builder.Property(uoc => uoc.CreatedAt).HasColumnName("CreatedAt").IsRequired();
         builder.Property(uoc => uoc.UpdatedAt).HasColumnName("UpdatedAt");
@@ -53,7 +52,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
                 FirstName = "Admin",
                 LastName = "GH",
                 Email = "admin@admin.com",
-                Status = true,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 CreatedBy = "admin",

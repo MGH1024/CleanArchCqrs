@@ -1,13 +1,13 @@
 ﻿using Domain.Repositories;
 using MGH.Core.Persistence.Repositories;
 using MGH.Core.Security.Entities;
-using Microsoft.EntityFrameworkCore;
+using Persistence.Contexts;
 
 namespace Persistence.Repositories;
 
-public class UserRepository : EfRepositoryBase<User, int, DbContext>, IUserRepository
+public class UserRepository : EfRepositoryBase<User, int, AppDbContext>, IUserRepository
 {
-    public UserRepository(DbContext context)
+    public UserRepository(AppDbContext context)
         : base(context)
     {
     }

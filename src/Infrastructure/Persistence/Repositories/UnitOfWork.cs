@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Application.Interfaces;
 using Application.Interfaces.Public;
 using Application.Interfaces.UnitOfWork;
 using Domain.Repositories;
@@ -13,13 +12,13 @@ namespace Persistence.Repositories
         private readonly IDateTime _dateTime;
         private ICategoryRepository _categoryRepository;
         private IProductRepository _productRepository;
-        private IUserRepository _userRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
 
         public UnitOfWork(AppDbContext context,
             IHttpContextAccessor httpContextAccessor,
-            ICategoryRepository categoryRepository, IUserRepository userRepository, IDateTime dateTime,
+            ICategoryRepository categoryRepository,
+            IDateTime dateTime,
             IProductRepository productRepository)
         {
             _context = context;
@@ -27,7 +26,6 @@ namespace Persistence.Repositories
             _httpContextAccessor = httpContextAccessor;
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
-            _userRepository = userRepository;
         }
 
         public ICategoryRepository CategoryRepository =>

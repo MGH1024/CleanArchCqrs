@@ -38,10 +38,9 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IUnitOfWork,UnitOfWork>();
         services.AddScoped<ICategoryRepository,CategoryRepository>();
         services.AddScoped<IProductRepository,ProductRepository>();
-        services.AddScoped<IUserRepository,UserRepository>();
         services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         
-        services.AddDbContext<DbContext>(options => options.UseInMemoryDatabase("nArchitecture"));
+        services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("CleanArch"));
         services.AddScoped<IEmailAuthenticatorRepository, EmailAuthenticatorRepository>();
         services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
         services.AddScoped<IOtpAuthenticatorRepository, OtpAuthenticatorRepository>();
