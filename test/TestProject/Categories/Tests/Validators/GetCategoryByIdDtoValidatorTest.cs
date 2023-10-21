@@ -14,8 +14,14 @@ public class DeleteCategoryByIdDtoValidatorTest
         var dto = new GetCategoryByIdDtoBuilder()
             .WithId(id)
             .Build();
-        var validator = new GetCategoryByIdDtoValidator();
-        var result = validator.TestValidate(dto);
+
+        var command = new GetCategoryQuery
+        {
+            Id = dto.Id,
+        };
+
+        var validator = new GetCategoryQueryValidator();
+        var result = validator.TestValidate(command);
 
         result.ShouldHaveValidationErrorFor(x => x.Id);
     }

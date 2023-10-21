@@ -16,10 +16,16 @@ public class UpdateCategoryDtoValidatorTests
             .WithDescription("desc")
             .WithTitle(title)
             .Build();
-        var validator = new UpdateCategoryDtoValidator();
-        var result = validator.TestValidate(dto);
 
-        result.ShouldHaveValidationErrorFor(x => x.Title);
+        var command = new UpdateCategoryCommand
+        {
+            UpdateCategoryDto = dto,
+        };
+
+        var validator = new UpdateCategoryCommandValidator();
+        var result = validator.TestValidate(command);
+
+        result.ShouldHaveValidationErrorFor(x => x.UpdateCategoryDto.Title);
     }
 
 
@@ -33,9 +39,15 @@ public class UpdateCategoryDtoValidatorTests
             .WithDescription("desc")
             .WithTitle("title")
             .Build();
-        var validator = new UpdateCategoryDtoValidator();
-        var result = validator.TestValidate(dto);
 
-        result.ShouldHaveValidationErrorFor(x => x.Code);
+        var command = new UpdateCategoryCommand
+        {
+            UpdateCategoryDto = dto,
+        };
+
+        var validator = new UpdateCategoryCommandValidator();
+        var result = validator.TestValidate(command);
+
+        result.ShouldHaveValidationErrorFor(x => x.UpdateCategoryDto.Code);
     }
 }

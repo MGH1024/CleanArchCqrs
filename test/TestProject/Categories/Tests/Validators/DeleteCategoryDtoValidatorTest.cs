@@ -12,11 +12,16 @@ public class DeleteCategoryDtoValidatorTest
     public void GivenInvalidId_WhenValidate_ThenWillInvalid(int id)
     {
         var dto = new DeleteCategoryDtoBuilder()
-           .WithId(id)
+            .WithId(id)
             .Build();
-        var validator = new DeleteCategoryDtoValidator();
-        var result = validator.TestValidate(dto);
 
-        result.ShouldHaveValidationErrorFor(x => x.Id);
+        var command = new DeleteCategoryCommand
+        {
+            DeleteCategoryDto = dto,
+        };
+        var validator = new DeleteCategoryCommandValidator();
+        var result = validator.TestValidate(command);
+
+        result.ShouldHaveValidationErrorFor(x => x.DeleteCategoryDto.Id);
     }
 }

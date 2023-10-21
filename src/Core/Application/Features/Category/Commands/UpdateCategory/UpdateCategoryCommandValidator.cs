@@ -6,13 +6,13 @@ namespace Application.Features.Category.Commands.UpdateCategory;
 public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
 {
 
-    public UpdateCategoryCommandValidator(ICategoryRepository categoryRepository)
+    public UpdateCategoryCommandValidator()
     {
         RuleFor(a => a.UpdateCategoryDto.Title)
-            .NotEmpty().WithMessage("not empty")
-            .MaximumLength(64).WithMessage("length error");
+            .NotEmpty()
+            .MaximumLength(64);
 
         RuleFor(x => x.UpdateCategoryDto.Code)
-            .GreaterThan(0).WithMessage("must greater than 0");
+            .GreaterThan(0);
     }
 }

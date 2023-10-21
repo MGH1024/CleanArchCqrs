@@ -7,7 +7,6 @@ namespace TestProject.Categories.Tests.Validators;
 
 public class CreateCategoryDtoValidatorTests : IClassFixture<CreateCategoryCommandHandlerFixture>
 {
-
     [Theory]
     [InlineData("")]
     [InlineData(null)]
@@ -18,13 +17,17 @@ public class CreateCategoryDtoValidatorTests : IClassFixture<CreateCategoryComma
             .WithDescription("desc")
             .WithTitle(title)
             .Build();
-        var validator = new CreateCategoryDtoValidator();
-        var result = validator.TestValidate(dto);
+        var command = new CreateCategoryCommand
+        {
+            CreateCategory = dto,
+        };
+        var validator = new CreateCategoryCommandValidator();
+        var result = validator.TestValidate(command);
 
-        result.ShouldHaveValidationErrorFor(x => x.Title);
+        result.ShouldHaveValidationErrorFor(x => x.CreateCategory.Title);
     }
-    
-    
+
+
     [Theory]
     [InlineData(0)]
     [InlineData(-1)]
@@ -35,9 +38,15 @@ public class CreateCategoryDtoValidatorTests : IClassFixture<CreateCategoryComma
             .WithDescription("desc")
             .WithTitle("title")
             .Build();
-        var validator = new CreateCategoryDtoValidator();
-        var result = validator.TestValidate(dto);
+        
+        var command = new CreateCategoryCommand
+        {
+            CreateCategory = dto,
+        };
+        
+        var validator = new CreateCategoryCommandValidator();
+        var result = validator.TestValidate(command);
 
-        result.ShouldHaveValidationErrorFor(x => x.Code);
+        result.ShouldHaveValidationErrorFor(x => x.CreateCategory.Code);
     }
 }

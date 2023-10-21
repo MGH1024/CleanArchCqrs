@@ -5,13 +5,13 @@ namespace Application.Features.Category.Commands.CreateCategory;
 
 public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
 {
-    public CreateCategoryCommandValidator(ICategoryRepository categoryRepository)
+    public CreateCategoryCommandValidator()
     {
         RuleFor(a => a.CreateCategory.Title)
-            .NotEmpty().WithMessage("not empty")
-            .MaximumLength(64).WithMessage("length error");
+            .NotEmpty()
+            .MaximumLength(64);
 
         RuleFor(x => x.CreateCategory.Code)
-            .GreaterThan(0).WithMessage("must greater than 0");
+            .GreaterThan(0);
     }
 }
