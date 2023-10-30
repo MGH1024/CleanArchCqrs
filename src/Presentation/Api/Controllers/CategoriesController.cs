@@ -1,11 +1,10 @@
+using MediatR;
 using Application.Features.Categories.Commands.CreateCategory;
 using Application.Features.Categories.Commands.DeleteCategory;
 using Application.Features.Categories.Commands.UpdateCategory;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.Features.Category.Queries.GetCategories;
 using Application.Features.Category.Queries.GetCategory;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Api.Controllers;

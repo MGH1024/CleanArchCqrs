@@ -35,7 +35,15 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             new()
             {
                 new OperationClaim
-                    { Id = ++id, Name = GeneralOperationClaims.Admin, CreatedBy = "admin", CreatedAt = DateTime.Now }
+                {
+                    Id = ++id, Name = "ProductManagement", CreatedBy = "admin",
+                    CreatedAt = DateTime.Now
+                },
+                new OperationClaim
+                {
+                    Id = ++id, Name = "CategoryManagement", CreatedBy = "admin",
+                    CreatedAt = DateTime.Now
+                },
             };
 
         return seeds;

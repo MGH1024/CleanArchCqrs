@@ -20,31 +20,8 @@ builder.Services.AddInfrastructuresServices(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddMemoryCache();
+builder.AddAuthentication();
 builder.AddAuthorization();
-
-
-const string tokenOptionsConfigurationSection = "TokenOptions";
-var tokenOptions =
-    builder.Configuration.GetSection(tokenOptionsConfigurationSection).Get<TokenOptions>()
-    ?? throw new InvalidOperationException($"\"{tokenOptionsConfigurationSection}" +
-                                           $"\" section cannot found in configuration.");
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidIssuer = tokenOptions.Issuer,
-            ValidAudience = tokenOptions.Audience,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
-        };
-    });
-
-
 builder.AddSwagger();
 builder.AddBaseMvc();
 builder.AddCors();

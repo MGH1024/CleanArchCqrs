@@ -1,11 +1,15 @@
 ﻿using System.Text.Json.Serialization;
 using Application.Middlewares;
 using Application.Models.Security;
+using MGH.Core.Security.Encryption;
+using MGH.Core.Security.JWT;
 using MGH.Exceptions;
 using MGH.Exceptions.Models;
 using MGH.Swagger;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
@@ -105,6 +109,27 @@ public static class ApiServiceRegistration
             op.AddPolicy("Admin", policy =>
                 policy.RequireRole(admin));
         });
+    }
+
+    public static void AddAuthentication(this WebApplicationBuilder builder)
+    {
+        const string tokenOptionsConfigurationSection = "TokenOptions";
+        var tokenOptions = builder.Configuration.GetSection(tokenOptionsConfigurationSection).Get<TokenOptions>();
+        builder.Services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidIssuer = tokenOptions.Issuer,
+                    ValidAudience = tokenOptions.Audience,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+                };
+            });
     }
 
     public static void RegisterApp(this WebApplication app)

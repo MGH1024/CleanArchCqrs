@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Api.Migrations
 {
     /// <inheritdoc />
@@ -247,19 +249,27 @@ namespace Api.Migrations
                 schema: "sec",
                 table: "OperationClaims",
                 columns: new[] { "Id", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "Name", "UpdatedAt", "UpdatedBy" },
-                values: new object[] { 1, new DateTime(2023, 10, 20, 18, 50, 47, 356, DateTimeKind.Local).AddTicks(8651), "admin", null, null, "Admin", null, null });
+                values: new object[,]
+                {
+                    { 1, new DateTime(2023, 10, 30, 22, 18, 3, 742, DateTimeKind.Local).AddTicks(4050), "admin", null, null, "ProductManagement", null, null },
+                    { 2, new DateTime(2023, 10, 30, 22, 18, 3, 742, DateTimeKind.Local).AddTicks(4078), "admin", null, null, "CategoryManagement", null, null }
+                });
 
             migrationBuilder.InsertData(
                 schema: "sec",
                 table: "Users",
                 columns: new[] { "Id", "AuthenticatorType", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "Email", "FirstName", "LastName", "PasswordHash", "PasswordSalt", "UpdatedAt", "UpdatedBy" },
-                values: new object[] { 1, 0, new DateTime(2023, 10, 20, 18, 50, 47, 358, DateTimeKind.Local).AddTicks(8649), "admin", null, null, "admin@admin.com", "Admin", "GH", new byte[] { 143, 26, 54, 32, 54, 53, 32, 39, 171, 107, 70, 209, 100, 33, 13, 238, 8, 81, 197, 190, 139, 228, 113, 142, 186, 184, 189, 103, 31, 32, 28, 99, 182, 30, 127, 116, 182, 77, 87, 103, 213, 118, 175, 47, 14, 21, 128, 90, 224, 155, 74, 160, 39, 127, 155, 102, 61, 176, 245, 158, 166, 41, 14, 220 }, new byte[] { 80, 70, 148, 175, 253, 50, 230, 236, 219, 64, 249, 125, 231, 236, 194, 162, 42, 183, 124, 253, 176, 159, 55, 129, 215, 203, 43, 15, 129, 176, 255, 22, 88, 37, 26, 81, 132, 96, 118, 242, 244, 18, 212, 19, 2, 93, 70, 201, 173, 187, 55, 95, 27, 181, 38, 82, 209, 24, 124, 29, 116, 8, 56, 14, 129, 76, 242, 248, 27, 155, 164, 248, 45, 152, 123, 244, 47, 19, 190, 131, 33, 200, 162, 138, 3, 252, 1, 110, 132, 202, 38, 168, 242, 119, 206, 210, 230, 28, 153, 84, 61, 140, 127, 108, 253, 211, 197, 54, 222, 243, 55, 163, 192, 52, 184, 31, 160, 91, 106, 42, 106, 7, 114, 189, 190, 145, 102, 133 }, null, null });
+                values: new object[] { 1, 0, new DateTime(2023, 10, 30, 22, 18, 3, 744, DateTimeKind.Local).AddTicks(6233), "admin", null, null, "admin@admin.com", "Admin", "GH", new byte[] { 196, 33, 249, 133, 170, 66, 89, 63, 103, 24, 198, 54, 104, 80, 227, 239, 2, 207, 4, 254, 195, 249, 170, 74, 144, 162, 97, 55, 129, 166, 52, 95, 37, 221, 175, 203, 152, 177, 232, 23, 51, 133, 240, 4, 112, 103, 192, 21, 115, 191, 15, 167, 99, 15, 169, 202, 193, 135, 39, 116, 61, 38, 171, 183 }, new byte[] { 108, 38, 32, 99, 157, 140, 214, 126, 63, 129, 35, 80, 109, 155, 15, 166, 176, 19, 254, 233, 146, 23, 202, 214, 22, 235, 28, 12, 102, 190, 169, 114, 6, 170, 185, 106, 228, 47, 246, 161, 255, 44, 64, 189, 191, 160, 115, 157, 155, 183, 159, 183, 49, 251, 85, 250, 9, 101, 208, 54, 69, 49, 77, 124, 46, 105, 97, 220, 208, 254, 25, 38, 30, 70, 41, 134, 246, 97, 132, 109, 35, 51, 207, 8, 88, 144, 236, 171, 114, 224, 100, 146, 209, 220, 47, 26, 29, 134, 8, 158, 99, 125, 121, 137, 112, 219, 78, 98, 4, 243, 165, 159, 5, 225, 69, 71, 244, 16, 89, 30, 124, 176, 73, 248, 161, 69, 117, 103 }, null, null });
 
             migrationBuilder.InsertData(
                 schema: "sec",
                 table: "UserOperationClaims",
                 columns: new[] { "Id", "CreatedAt", "CreatedBy", "DeletedAt", "DeletedBy", "OperationClaimId", "UpdatedAt", "UpdatedBy", "UserId" },
-                values: new object[] { 1, new DateTime(2023, 10, 20, 18, 50, 47, 359, DateTimeKind.Local).AddTicks(4230), "admin", null, null, 1, null, null, 1 });
+                values: new object[,]
+                {
+                    { 1, new DateTime(2023, 10, 30, 22, 18, 3, 745, DateTimeKind.Local).AddTicks(5288), "admin", null, null, 1, null, null, 1 },
+                    { 2, new DateTime(2023, 10, 30, 22, 18, 3, 745, DateTimeKind.Local).AddTicks(5308), "admin", null, null, 2, null, null, 1 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmailAuthenticators_UserId",
