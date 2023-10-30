@@ -4,7 +4,7 @@ using Application.Models.Responses;
 using MediatR;
 using MGH.Exceptions;
 
-namespace Application.Features.Category.Commands.UpdateCategory;
+namespace Application.Features.Categories.Commands.UpdateCategory;
 
 public class UpdateCategoryCommand : IRequest<ApiResponse>
 {

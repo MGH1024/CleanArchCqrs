@@ -12,10 +12,7 @@ public abstract class AppController : ControllerBase
         Sender = sender;
     }
 
-    protected string IpAddress =>
-        HttpContext.Connection.RemoteIpAddress != null ? HttpContext.Connection.RemoteIpAddress.ToString() : "";
-    
-    protected string GetIpAddress()
+    protected string IpAddress()
     {
         var ipAddress = Request.Headers.TryGetValue("X-Forwarded-For", out var header)
             ? header.ToString()

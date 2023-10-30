@@ -1,4 +1,4 @@
-﻿using Application.Features.Category.Commands.DeleteCategory;
+﻿using Application.Features.Categories.Commands.DeleteCategory;
 
 namespace TestProject.Categories.Builders;
 

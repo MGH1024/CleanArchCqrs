@@ -1,7 +1,6 @@
-﻿using Domain.Repositories;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace Application.Features.Category.Commands.UpdateCategory;
+namespace Application.Features.Categories.Commands.UpdateCategory;
 
 public class UpdateCategoryCommandValidator : AbstractValidator<UpdateCategoryCommand>
 {

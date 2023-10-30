@@ -1,11 +1,11 @@
-﻿using Application.Features.Category.Commands.CreateCategory;
+﻿using Application.Features.Categories.Commands.CreateCategory;
 using Application.Interfaces.UnitOfWork;
 using Application.Interfaces.Validation;
-using MediatR;
 using Application.Models.Responses;
+using MediatR;
 using MGH.Exceptions;
 
-namespace Application.Features.Category.Commands.DeleteCategory;
+namespace Application.Features.Categories.Commands.DeleteCategory;
 
 public class DeleteCategoryCommand : IRequest<ApiResponse>
 {

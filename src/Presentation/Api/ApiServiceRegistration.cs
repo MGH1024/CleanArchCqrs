@@ -96,6 +96,7 @@ public static class ApiServiceRegistration
                     .AllowAnyHeader());
         });
     }
+
     public static void AddAuthorization(this WebApplicationBuilder builder)
     {
         var admin = builder.Configuration.GetSection("Policies").Get<Policies>().Admin;
@@ -105,7 +106,8 @@ public static class ApiServiceRegistration
                 policy.RequireRole(admin));
         });
     }
-    public static void RegisterApp (this WebApplication app )
+
+    public static void RegisterApp(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {

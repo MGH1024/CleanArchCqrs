@@ -1,7 +1,6 @@
-﻿using Domain.Repositories;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace Application.Features.Category.Commands.CreateCategory;
+namespace Application.Features.Categories.Commands.CreateCategory;
 
 public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
 {

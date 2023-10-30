@@ -1,9 +1,7 @@
-﻿using AutoMapper;
+﻿using Application.Features.Categories.Commands.CreateCategory;
+using Application.Features.Category.Rules;
+using AutoMapper;
 using NSubstitute;
-using TestProject.Base;
-using Domain.Repositories;
-using Application.Features.Category.Commands.CreateCategory;
-using Application.Interfaces;
 using Application.Interfaces.UnitOfWork;
 using Application.Interfaces.Validation;
 using Moq;
@@ -15,10 +13,12 @@ namespace TestProject.Categories.Fixtures;
 public class CreateCategoryCommandHandlerFixture
 {
     public readonly IMapper Mapper;
+
     //public readonly IUnitOfWork UnitOfWork;
     public readonly IValidationService ValidationService;
     public CreateCategoryCommandHandler CreateCategoryCommandHandler;
     public Mock<IUnitOfWork> UnitOfWorkMock;
+    public CategoryBusinessRules CategoryBusinessRules;
 
     public CreateCategoryCommandHandlerFixture()
     {
@@ -26,6 +26,8 @@ public class CreateCategoryCommandHandlerFixture
         //UnitOfWork = Substitute.For<IUnitOfWork>();
         ValidationService = new ValidationServiceFixture().ValidationService;
         UnitOfWorkMock = MockUnitOfWork.GetUnitOfWork();
-        CreateCategoryCommandHandler = new CreateCategoryCommandHandler(Mapper, UnitOfWorkMock.Object, ValidationService);
+        CategoryBusinessRules = new CategoryBusinessRules();
+        CreateCategoryCommandHandler =
+            new CreateCategoryCommandHandler(Mapper, UnitOfWorkMock.Object, ValidationService, CategoryBusinessRules);
     }
 }

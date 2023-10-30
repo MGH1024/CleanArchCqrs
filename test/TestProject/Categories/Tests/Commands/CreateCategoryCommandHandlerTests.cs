@@ -1,4 +1,4 @@
-﻿using Application.Features.Category.Commands.CreateCategory;
+﻿using Application.Features.Categories.Commands.CreateCategory;
 using Application.Interfaces;
 using Application.Interfaces.UnitOfWork;
 using Application.Models.Responses;

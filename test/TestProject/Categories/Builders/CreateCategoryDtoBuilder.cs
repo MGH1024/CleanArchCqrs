@@ -1,4 +1,4 @@
-﻿using Application.Features.Category.Commands.CreateCategory;
+﻿using Application.Features.Categories.Commands.CreateCategory;
 
 namespace TestProject.Categories.Builders;
 

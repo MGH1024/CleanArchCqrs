@@ -3,7 +3,7 @@ using MGH.Core.Domain.Concretes;
 
 namespace Domain.Entities.Shop;
 
-public class Category : AuditableEntity<int>, IDropdownAble,ICodeAble,IPageable,IOrderAble
+public class Category : AuditableEntity<int>, IDropdownAble, ICodeAble, IPageable, IOrderAble
 {
     public string Title { get; set; }
 
@@ -45,8 +45,8 @@ public class Category : AuditableEntity<int>, IDropdownAble,ICodeAble,IPageable,
 
     //orderable
     public int Order { get; set; }
-    
-    
+
+
     //navigations
     public virtual ICollection<Product> Products { get; set; }
 }

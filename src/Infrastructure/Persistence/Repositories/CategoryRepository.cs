@@ -42,7 +42,7 @@ namespace Persistence.Repositories
             _appDbContext.Categories.Remove(category);
         }
 
-        public async Task<Category> GetCategoryByTitleAsync(string title,CancellationToken cancellationToken)
+        public async Task<Category> GetByTitleAsync(string title,CancellationToken cancellationToken)
         {
             return await _appDbContext
                 .Categories

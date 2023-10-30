@@ -6,6 +6,7 @@ using MGH.Core.Security.Entities;
 using MGH.Core.Security.Enums;
 using MGH.Core.Security.JWT;
 
+
 namespace Application.Features.Auth.Commands.Login;
 
 public class LoginCommand : IRequest<LoggedResponse>
@@ -48,10 +49,11 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoggedResponse>
 
     public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        User user = await _userService.GetAsync(
+        var user = await _userService.GetAsync(
             predicate: u => u.Email == request.UserForLoginDto.Email,
             cancellationToken: cancellationToken
         );
+        
         await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
         await _authBusinessRules.UserPasswordShouldBeMatch(user!.Id, request.UserForLoginDto.Password);
 
@@ -69,14 +71,12 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoggedResponse>
             await _authenticatorService.VerifyAuthenticatorCode(user, request.UserForLoginDto.AuthenticatorCode);
         }
 
-        AccessToken createdAccessToken = await _authService.CreateAccessToken(user);
+        var createdAccessToken = await _authService.CreateAccessToken(user);
 
-        MGH.Core.Security.Entities.RefreshToken createdRefreshToken =
-            await _authService.CreateRefreshToken(user, request.IpAddress);
-        MGH.Core.Security.Entities.RefreshToken addedRefreshToken =
-            await _authService.AddRefreshToken(createdRefreshToken);
+        var createdRefreshToken = await _authService.CreateRefreshToken(user, request.IpAddress);
+        var addedRefreshToken = await _authService.AddRefreshToken(createdRefreshToken);
+        
         await _authService.DeleteOldRefreshTokens(user.Id);
-
         loggedResponse.AccessToken = createdAccessToken;
         loggedResponse.RefreshToken = addedRefreshToken;
         return loggedResponse;

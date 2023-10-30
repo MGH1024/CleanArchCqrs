@@ -1,4 +1,4 @@
-﻿using Application.Features.Category.Commands.UpdateCategory;
+﻿using Application.Features.Categories.Commands.UpdateCategory;
 using FluentValidation.TestHelper;
 using TestProject.Categories.Builders;
 

@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Category.Commands.UpdateCategory;
+﻿namespace Application.Features.Categories.Commands.UpdateCategory;
 
 public record UpdateCategoryDto
 {

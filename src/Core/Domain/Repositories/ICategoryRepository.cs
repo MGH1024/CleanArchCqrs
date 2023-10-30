@@ -9,6 +9,6 @@ public interface ICategoryRepository
     Task<Category> CreateCategoryAsync(Category category, CancellationToken cancellationToken);
     void UpdateCategory(Category category);
     void DeleteCategory(Category category);
-    Task<Category> GetCategoryByTitleAsync(string title,CancellationToken cancellationToken);
+    Task<Category> GetByTitleAsync(string title,CancellationToken cancellationToken);
     Task<bool> IsCategoryRegisteredAsync(string title,CancellationToken cancellationToken);
 }
